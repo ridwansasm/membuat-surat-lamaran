@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Surat Lamaran - Made with Ridwan</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e0f7fa; /* Warna Biru Laut Terang */
+            color: #01579b;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h1 { color: #0277bd; }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #81d4fa;
+            border-radius: 8px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        input:focus { border-color: #0288d1; }
+
+        button {
+            background-color: #0288d1;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button:hover { background-color: #01579b; }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-weight: bold;
+            color: #0277bd;
+        }
+
+        .hidden { display: none; }
+
+        .tab-container {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .tab-header {
+            border-bottom: 2px solid #0288d1;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-size: 0.9em;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="page1" class="container">
+        <div class="card">
+            <h2>Selamat Datang</h2>
+            <p>Masukkan Nama Lengkap Anda untuk memulai:</p>
+            <input type="text" id="initialName" placeholder="Contoh: Budi Santoso">
+            <button onclick="goToPage2()">Submit</button>
+        </div>
+    </div>
+
+    <div id="page2" class="container hidden">
+        <div class="tab-container">
+            <h1 id="welcomeTitle">Welcome</h1>
+            
+            <div class="tab-header">TAB 1: SURAT LAMARAN KERJA</div>
+            
+            <div id="formFields">
+                <div class="input-group">
+                    <label>Nama Kamu</label>
+                    <input type="text" id="fieldNama" placeholder="Nama Lengkap">
+                </div>
+                <div class="input-group">
+                    <label>Nama PT</label>
+                    <input type="text" id="fieldPT" placeholder="Tujuan Perusahaan">
+                </div>
+                <div class="input-group">
+                    <label>Nama Universitas</label>
+                    <input type="text" id="fieldUniv" placeholder="Nama Universitas">
+                </div>
+                <div class="input-group">
+                    <label>Nama Jurusan</label>
+                    <input type="text" id="fieldJurusan" placeholder="Nama Jurusan">
+                </div>
+                <div class="input-group">
+                    <label>Nama Penjurusan (Konsentrasi)</label>
+                    <input type="text" id="fieldPenjurusan" placeholder="Contoh: Manajemen Informatika">
+                </div>
+                <div class="input-group">
+                    <label>Tahun Lulus</label>
+                    <input type="text" id="fieldTahun" placeholder="Contoh: 2024">
+                </div>
+                <div class="input-group">
+                    <label>Nilai IPK</label>
+                    <input type="text" id="fieldIPK" placeholder="Contoh: 3.80">
+                </div>
+                <div class="input-group">
+                    <label>Nama Posisi</label>
+                    <input type="text" id="fieldPosisi" placeholder="Posisi yang dilamar">
+                </div>
+                <div class="input-group">
+                    <label>Nomor Telepon</label>
+                    <input type="text" id="fieldTelp" placeholder="Contoh: 0812xxx">
+                </div>
+                
+                <button onclick="downloadPDF()">Download 1</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">Made with Ridwan</div>
+
+    <script>
+        const { jsPDF } = window.jspdf;
+
+        function goToPage2() {
+            const name = document.getElementById('initialName').value;
+            if (name.trim() === "") {
+                alert("Silakan isi nama terlebih dahulu!");
+                return;
+            }
+
+            // Pindah halaman
+            document.getElementById('page1').classList.add('hidden');
+            document.getElementById('page2').classList.remove('hidden');
+
+            // Set Header dan Input Nama di hal 2
+            document.getElementById('welcomeTitle').innerText = "Welcome " + name;
+            document.getElementById('fieldNama').value = name;
+        }
+
+        function downloadPDF() {
+            const doc = new jsPDF();
+            
+            // Mengambil value dari input
+            const data = {
+                nama: document.getElementById('fieldNama').value,
+                pt: document.getElementById('fieldPT').value,
+                univ: document.getElementById('fieldUniv').value,
+                jurusan: document.getElementById('fieldJurusan').value,
+                penjurusan: document.getElementById('fieldPenjurusan').value,
+                tahun: document.getElementById('fieldTahun').value,
+                ipk: document.getElementById('fieldIPK').value,
+                posisi: document.getElementById('fieldPosisi').value,
+                telp: document.getElementById('fieldTelp').value
+            };
+
+            // Menyusun isi PDF berdasarkan TEMPLATE SURAT LAMARAN KERJA.pdf
+            doc.setFontSize(11);
+            doc.text("Yth.", 20, 30);
+            doc.text("HRD/User " + data.pt, 20, 35);
+            doc.text("di Tempat", 20, 40);
+
+            doc.text("Dengan Hormat,", 20, 55);
+            
+            const p1 = `Perkenalkan saya ${data.nama}. Saya merupakan Fresh Graduate dari ${data.univ} jurusan ${data.jurusan} Bidang ${data.penjurusan}, saya lulus tahun ${data.tahun} dengan nilai IPK ${data.ipk}.`;
+            const splitP1 = doc.splitTextToSize(p1, 170);
+            doc.text(splitP1, 20, 65);
+
+            const p2 = `Saya bermaksud untuk melamar pekerjaan pada posisi ${data.posisi}. Bersama email ini, saya lampirkan CV untuk bahan pertimbangan.`;
+            const splitP2 = doc.splitTextToSize(p2, 170);
+            doc.text(splitP2, 20, 85);
+
+            const p3 = `Saya berharap dapat berdiskusi lebih lanjut mengenai kontribusi yang dapat saya berikan, serta dapat dihubungi melalui email ini atau pada nomor ${data.telp}.`;
+            const splitP3 = doc.splitTextToSize(p3, 170);
+            doc.text(splitP3, 20, 105);
+
+            doc.text("Terima Kasih atas perhatiannya.", 20, 125);
+            
+            doc.text("Hormat saya,", 20, 140);
+            doc.text(data.nama, 20, 160);
+
+            // Simpan PDF
+            doc.save("Surat_Lamaran_" + data.nama + ".pdf");
+        }
+    </script>
+</body>
+</html>
