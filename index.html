@@ -8,7 +8,7 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #e0f7fa; /* Warna Biru Laut Terang */
+            background-color: #e0f7fa; 
             color: #01579b;
             margin: 0;
             display: flex;
@@ -63,6 +63,16 @@
 
         button:hover { background-color: #01579b; }
 
+        /* Style khusus untuk tombol salin */
+        .btn-copy {
+            background-color: #009688;
+            margin-bottom: 10px;
+        }
+        
+        .btn-copy:hover {
+            background-color: #00796b;
+        }
+
         .footer {
             text-align: center;
             padding: 20px;
@@ -78,6 +88,7 @@
             background: white;
             padding: 20px;
             border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
 
         .tab-header {
@@ -85,6 +96,7 @@
             margin-bottom: 20px;
             padding-bottom: 10px;
             font-weight: bold;
+            text-align: center;
         }
 
         .input-group {
@@ -113,9 +125,9 @@
 
     <div id="page2" class="container hidden">
         <div class="tab-container">
-            <h1 id="welcomeTitle">Welcome</h1>
+            <h1 id="welcomeTitle" style="text-align: center;">Welcome</h1>
             
-            <div class="tab-header"> SURAT LAMARAN KERJA</div>
+            <div class="tab-header">SURAT LAMARAN KERJA</div>
             
             <div id="formFields">
                 <div class="input-group">
@@ -155,6 +167,7 @@
                     <input type="text" id="fieldTelp" placeholder="Contoh: 0812xxx">
                 </div>
                 
+                <button class="btn-copy" onclick="copyToClipboard()">Salin Teks Surat</button>
                 <button onclick="downloadPDF()">Download PDF</button>
             </div>
         </div>
@@ -171,21 +184,15 @@
                 alert("Silakan isi nama terlebih dahulu!");
                 return;
             }
-
-            // Pindah halaman
             document.getElementById('page1').classList.add('hidden');
             document.getElementById('page2').classList.remove('hidden');
-
-            // Set Header dan Input Nama di hal 2
             document.getElementById('welcomeTitle').innerText = "Welcome " + name;
             document.getElementById('fieldNama').value = name;
         }
 
-        function downloadPDF() {
-            const doc = new jsPDF();
-            
-            // Mengambil value dari input
-            const data = {
+        // Fungsi untuk mengumpulkan data dari form
+        function getFormData() {
+            return {
                 nama: document.getElementById('fieldNama').value,
                 pt: document.getElementById('fieldPT').value,
                 univ: document.getElementById('fieldUniv').value,
@@ -196,13 +203,44 @@
                 posisi: document.getElementById('fieldPosisi').value,
                 telp: document.getElementById('fieldTelp').value
             };
+        }
 
-            // Menyusun isi PDF berdasarkan TEMPLATE SURAT LAMARAN KERJA.pdf
+        // Fungsi Baru untuk Salin Teks
+        function copyToClipboard() {
+            const data = getFormData();
+            
+            const teksSurat = `Yth.
+HRD/User ${data.pt}
+di Tempat
+
+Dengan Hormat,
+
+Perkenalkan saya ${data.nama}. Saya merupakan Lulusan dari ${data.univ} jurusan ${data.jurusan} Bidang ${data.penjurusan}, saya lulus tahun ${data.tahun} dengan nilai IPK ${data.ipk}.
+
+Saya bermaksud untuk melamar pekerjaan pada posisi ${data.posisi}. Bersama email ini, saya lampirkan CV untuk bahan pertimbangan.
+
+Saya berharap dapat berdiskusi lebih lanjut mengenai kontribusi yang dapat saya berikan, serta dapat dihubungi melalui nomor ${data.telp}.
+
+Terima Kasih atas perhatiannya.
+
+Hormat saya,
+${data.nama}`;
+
+            navigator.clipboard.writeText(teksSurat).then(() => {
+                alert("Teks surat berhasil disalin ke clipboard!");
+            }).catch(err => {
+                alert("Gagal menyalin teks: ", err);
+            });
+        }
+
+        function downloadPDF() {
+            const doc = new jsPDF();
+            const data = getFormData();
+
             doc.setFontSize(11);
             doc.text("Yth.", 20, 30);
             doc.text("HRD/User " + data.pt, 20, 35);
             doc.text("di Tempat", 20, 40);
-
             doc.text("Dengan Hormat,", 20, 55);
             
             const p1 = `Perkenalkan saya ${data.nama}. Saya merupakan Lulusan dari ${data.univ} jurusan ${data.jurusan} Bidang ${data.penjurusan}, saya lulus tahun ${data.tahun} dengan nilai IPK ${data.ipk}.`;
@@ -218,11 +256,9 @@
             doc.text(splitP3, 20, 105);
 
             doc.text("Terima Kasih atas perhatiannya.", 20, 125);
-            
             doc.text("Hormat saya,", 20, 140);
             doc.text(data.nama, 20, 160);
 
-            // Simpan PDF
             doc.save("Surat_Lamaran_" + data.nama + ".pdf");
         }
     </script>
