@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Generator Surat Lamaran - Made with Ridwan</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js  "></script>
 <style>
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -30,9 +30,8 @@ body {
     width: 100%;
     max-width: 500px;
     text-align: center;
-    position: relative;
 }
-h1 { color: #0277bd; margin-top: 10px; }
+h1 { color: #0277bd; }
 input {
     width: 100%;
     padding: 12px;
@@ -56,22 +55,6 @@ button {
     margin-top: 10px;
 }
 button:hover { background-color: #01579b; }
-
-/* Style Language Selector */
-.lang-selector {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: #f1f8e9;
-    padding: 5px 10px;
-    border-radius: 20px;
-    border: 1px solid #81d4fa;
-    font-size: 0.9em;
-    cursor: pointer;
-    outline: none;
-    color: #01579b;
-    font-weight: bold;
-}
 
 /* Style khusus untuk tombol berdasarkan bahasa */
 .btn-id { background-color: #0288d1; }
@@ -97,7 +80,6 @@ button:hover { background-color: #01579b; }
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    position: relative;
 }
 .tab-header {
     border-bottom: 2px solid #0288d1;
@@ -153,94 +135,80 @@ label {
 
 <div id="page1" class="container">
     <div class="card">
-        <!-- Dropdown Bahasa -->
-        <select class="lang-selector" id="langSelectPage1" onchange="changeLanguage(this.value)">
-            <option value="id">🇮🇩 ID</option>
-            <option value="en">🇬🇧 EN</option>
-            <option value="jp">🇯🇵 JP</option>
-        </select>
-        
-        <h2 id="textWelcomeTitle">Selamat Datang</h2>
-        <p id="textWelcomeDesc">Masukkan Nama Lengkap Anda untuk memulai:</p>
+        <h2>Selamat Datang</h2>
+        <p>Masukkan Nama Lengkap Anda untuk memulai:</p>
         <input type="text" id="initialName" placeholder="Contoh: Budi Santoso">
-        <button id="btnSubmit" onclick="goToPage2()">Submit</button>
+        <button onclick="goToPage2()">Submit</button>
     </div>
 </div>
 
 <div id="page2" class="container hidden">
     <div class="tab-container">
-        <!-- Dropdown Bahasa -->
-        <select class="lang-selector" id="langSelectPage2" onchange="changeLanguage(this.value)">
-            <option value="id">🇮🇩 ID</option>
-            <option value="en">🇬🇧 EN</option>
-            <option value="jp">🇯🇵 JP</option>
-        </select>
-
         <h1 id="welcomeTitle" style="text-align: center;">Welcome</h1>
-        <div class="tab-header" id="textHeaderTitle">SURAT LAMARAN KERJA</div>
+        <div class="tab-header">SURAT LAMARAN KERJA</div>
         <div id="formFields">
             <div class="input-group">
-                <label id="labelNama">Nama Kamu</label>
+                <label>Nama Kamu</label>
                 <input type="text" id="fieldNama" placeholder="Nama Lengkap">
             </div>
             <div class="input-group">
-                <label id="labelPT">Nama PT</label>
+                <label>Nama PT</label>
                 <input type="text" id="fieldPT" placeholder="Tujuan Perusahaan">
             </div>
             <div class="input-group">
-                <label id="labelUniv">Nama Universitas</label>
+                <label>Nama Universitas</label>
                 <input type="text" id="fieldUniv" placeholder="Nama Universitas">
             </div>
             <div class="input-group">
-                <label id="labelJurusan">Nama Jurusan</label>
+                <label>Nama Jurusan</label>
                 <input type="text" id="fieldJurusan" placeholder="Nama Jurusan">
             </div>
             <div class="input-group">
-                <label id="labelPenjurusan">Nama Penjurusan (Konsentrasi)</label>
+                <label>Nama Penjurusan (Konsentrasi)</label>
                 <input type="text" id="fieldPenjurusan" placeholder="Contoh: Manajemen Informatika">
             </div>
             <div class="input-group">
-                <label id="labelTahun">Tahun Lulus</label>
+                <label>Tahun Lulus</label>
                 <input type="text" id="fieldTahun" placeholder="Contoh: 2024">
             </div>
             <div class="input-group">
-                <label id="labelIPK">Nilai IPK</label>
+                <label>Nilai IPK</label>
                 <input type="text" id="fieldIPK" placeholder="Contoh: 3.80">
             </div>
             <div class="input-group">
-                <label id="labelPosisi">Nama Posisi</label>
+                <label>Nama Posisi</label>
                 <input type="text" id="fieldPosisi" placeholder="Posisi yang dilamar">
             </div>
             <div class="input-group">
-                <label id="labelTelp">Nomor Telepon</label>
+                <label>Nomor Telepon</label>
                 <input type="text" id="fieldTelp" placeholder="Contoh: 0812xxx">
             </div>
 
             <!-- Bagian Tombol Bahasa Indonesia -->
             <div class="lang-section">
-                <span class="lang-title">🇮🇩 <span id="titleID">Bahasa Indonesia</span></span>
+                <span class="lang-title">🇮🇩 Bahasa Indonesia</span>
                 <div class="btn-group">
-                    <button class="btn-id" onclick="copyToClipboard('id')"><span id="btnCopyID">Salin Teks</span></button>
-                    <button class="btn-id" onclick="downloadPDF('id')"><span id="btnDlID">Download PDF</span></button>
+                    <button class="btn-id" onclick="copyToClipboard('id')">Salin Teks</button>
+                    <button class="btn-id" onclick="downloadPDF('id')">Download PDF</button>
                 </div>
             </div>
 
             <!-- Bagian Tombol Bahasa Inggris -->
             <div class="lang-section" style="background-color: #e8f5e9;">
-                <span class="lang-title" style="color: #2e7d32;">🇬🇧 <span id="titleEN">English</span></span>
+                <span class="lang-title" style="color: #2e7d32;">🇬🇧 English</span>
                 <div class="btn-group">
-                    <button class="btn-en" onclick="copyToClipboard('en')"><span id="btnCopyEN">Copy Text</span></button>
-                    <button class="btn-en" onclick="downloadPDF('en')"><span id="btnDlEN">Download PDF</span></button>
+                    <button class="btn-en" onclick="copyToClipboard('en')">Copy Text</button>
+                    <button class="btn-en" onclick="downloadPDF('en')">Download PDF</button>
                 </div>
             </div>
 
             <!-- Bagian Tombol Bahasa Jepang (Hanya Salin Teks) -->
             <div class="lang-section" style="background-color: #f3e5f5;">
-                <span class="lang-title" style="color: #6a1b9a;">🇯🇵 <span id="titleJP">Japanese (日本語)</span></span>
+                <span class="lang-title" style="color: #6a1b9a;">🇯🇵 Japanese (日本語)</span>
                 <div class="btn-group-jp">
-                    <button class="btn-jp" onclick="copyToClipboard('jp')"><span id="btnCopyJP">テキストをコピー (Salin Teks)</span></button>
+                    <button class="btn-jp" onclick="copyToClipboard('jp')">テキストをコピー (Salin Teks)</button>
                 </div>
-                <p id="jpNote" style="font-size: 0.8em; color: #6a1b9a; text-align: center; margin-top: 10px;">
+                <p style="font-size: 0.8em; color: #6a1b9a; text-align: center; margin-top: 10px;">
                     *Download PDF tidak tersedia untuk Bahasa Jepang
                 </p>
             </div>
@@ -254,160 +222,16 @@ label {
 <script>
 const { jsPDF } = window.jspdf;
 
-// Variabel global untuk bahasa saat ini dan nama user
-let currentLang = 'id';
-let currentUserName = "";
-
-// Database Terjemahan
-const translations = {
-    id: {
-        welcomeTitle: "Selamat Datang",
-        welcomeDesc: "Masukkan Nama Lengkap Anda untuk memulai:",
-        btnSubmit: "Submit",
-        headerTitle: "SURAT LAMARAN KERJA",
-        labelNama: "Nama Kamu",
-        labelPT: "Nama PT",
-        labelUniv: "Nama Universitas",
-        labelJurusan: "Nama Jurusan",
-        labelPenjurusan: "Nama Penjurusan (Konsentrasi)",
-        labelTahun: "Tahun Lulus",
-        labelIPK: "Nilai IPK",
-        labelPosisi: "Nama Posisi",
-        labelTelp: "Nomor Telepon",
-        titleID: "Bahasa Indonesia",
-        titleEN: "English",
-        titleJP: "Japanese (日本語)",
-        btnCopy: "Salin Teks",
-        btnDl: "Download PDF",
-        btnCopyJP: "テキストをコピー (Salin Teks)",
-        jpNote: "*Download PDF tidak tersedia untuk Bahasa Jepang",
-        alertFillName: "Silakan isi nama terlebih dahulu!",
-        alertCopied: "Teks surat berhasil disalin!",
-        alertFail: "Gagal menyalin teks: ",
-        greeting: "Selamat Datang"
-    },
-    en: {
-        welcomeTitle: "Welcome",
-        welcomeDesc: "Enter Your Full Name to start:",
-        btnSubmit: "Submit",
-        headerTitle: "JOB APPLICATION LETTER",
-        labelNama: "Your Name",
-        labelPT: "Company Name",
-        labelUniv: "University Name",
-        labelJurusan: "Major Name",
-        labelPenjurusan: "Concentration",
-        labelTahun: "Graduation Year",
-        labelIPK: "GPA Score",
-        labelPosisi: "Position Name",
-        labelTelp: "Phone Number",
-        titleID: "Indonesian",
-        titleEN: "English",
-        titleJP: "Japanese (日本語)",
-        btnCopy: "Copy Text",
-        btnDl: "Download PDF",
-        btnCopyJP: "Copy Text",
-        btnDl: "Download PDF",
-        titleID: "Indonesian",
-        titleEN: "English",
-        titleJP: "Japanese (日本語)",
-        btnCopy: "Copy Text",
-        btnCopyJP: "Copy Text (Japanese)",
-        jpNote: "*PDF Download is not available for Japanese",
-        alertFillName: "Please enter your name first!",
-        alertCopied: "Text copied successfully!",
-        alertFail: "Failed to copy text: ",
-        greeting: "Welcome"
-    },
-    jp: {
-        welcomeTitle: "ようこそ",
-        welcomeDesc: "開始するにはフルネームを入力してください：",
-        btnSubmit: "送信",
-        headerTitle: "職務経歴書",
-        labelNama: "氏名",
-        labelPT: "会社名",
-        labelUniv: "大学名",
-        labelJurusan: "学部",
-        labelPenjurusan: "専攻",
-        labelTahun: "卒業年",
-        labelIPK: "GPA",
-        labelPosisi: "職種",
-        labelTelp: "電話番号",
-        titleID: "インドネシア語",
-        titleEN: "英語",
-        titleJP: "日本語",
-        btnCopy: "テキストをコピー",
-        btnDl: "PDFをダウンロード",
-        btnCopyJP: "テキストをコピー",
-        jpNote: "*PDFダウンロードは日本語には対応していません",
-        alertFillName: "名前を入力してください！",
-        alertCopied: "テキストがコピーされました！",
-        alertFail: "コピー失敗: ",
-        greeting: "ようこそ"
-    }
-};
-
-// Fungsi untuk mengubah bahasa UI
-function changeLanguage(lang) {
-    currentLang = lang;
-    
-    // Sinkronkan dropdown (jika ada 2 dropdown di halaman berbeda)
-    if(document.getElementById('langSelectPage1')) document.getElementById('langSelectPage1').value = lang;
-    if(document.getElementById('langSelectPage2')) document.getElementById('langSelectPage2').value = lang;
-
-    const t = translations[lang];
-
-    // Update Page 1
-    if(document.getElementById('textWelcomeTitle')) document.getElementById('textWelcomeTitle').innerText = t.welcomeTitle;
-    if(document.getElementById('textWelcomeDesc')) document.getElementById('textWelcomeDesc').innerText = t.welcomeDesc;
-    if(document.getElementById('btnSubmit')) document.getElementById('btnSubmit').innerText = t.btnSubmit;
-
-    // Update Page 2 Form Labels
-    if(document.getElementById('textHeaderTitle')) document.getElementById('textHeaderTitle').innerText = t.headerTitle;
-    if(document.getElementById('labelNama')) document.getElementById('labelNama').innerText = t.labelNama;
-    if(document.getElementById('labelPT')) document.getElementById('labelPT').innerText = t.labelPT;
-    if(document.getElementById('labelUniv')) document.getElementById('labelUniv').innerText = t.labelUniv;
-    if(document.getElementById('labelJurusan')) document.getElementById('labelJurusan').innerText = t.labelJurusan;
-    if(document.getElementById('labelPenjurusan')) document.getElementById('labelPenjurusan').innerText = t.labelPenjurusan;
-    if(document.getElementById('labelTahun')) document.getElementById('labelTahun').innerText = t.labelTahun;
-    if(document.getElementById('labelIPK')) document.getElementById('labelIPK').innerText = t.labelIPK;
-    if(document.getElementById('labelPosisi')) document.getElementById('labelPosisi').innerText = t.labelPosisi;
-    if(document.getElementById('labelTelp')) document.getElementById('labelTelp').innerText = t.labelTelp;
-
-    // Update Section Titles
-    if(document.getElementById('titleID')) document.getElementById('titleID').innerText = t.titleID;
-    if(document.getElementById('titleEN')) document.getElementById('titleEN').innerText = t.titleEN;
-    if(document.getElementById('titleJP')) document.getElementById('titleJP').innerText = t.titleJP;
-
-    // Update Buttons
-    if(document.getElementById('btnCopyID')) document.getElementById('btnCopyID').innerText = t.btnCopy;
-    if(document.getElementById('btnDlID')) document.getElementById('btnDlID').innerText = t.btnDl;
-    if(document.getElementById('btnCopyEN')) document.getElementById('btnCopyEN').innerText = t.btnCopy;
-    if(document.getElementById('btnDlEN')) document.getElementById('btnDlEN').innerText = t.btnDl;
-    if(document.getElementById('btnCopyJP')) document.getElementById('btnCopyJP').innerText = t.btnCopyJP;
-    if(document.getElementById('jpNote')) document.getElementById('jpNote').innerText = t.jpNote;
-
-    // Update Welcome Title on Page 2 (Dynamic name)
-    if(!document.getElementById('page2').classList.contains('hidden')) {
-        document.getElementById('welcomeTitle').innerText = t.greeting + " " + currentUserName;
-    }
-}
-
 function goToPage2() {
     const name = document.getElementById('initialName').value;
     if (name.trim() === "") {
-        alert(translations[currentLang].alertFillName);
+        alert("Silakan isi nama terlebih dahulu!");
         return;
     }
-    currentUserName = name;
     document.getElementById('page1').classList.add('hidden');
     document.getElementById('page2').classList.remove('hidden');
-    
-    // Set Name and Greeting
-    document.getElementById('welcomeTitle').innerText = translations[currentLang].greeting + " " + name;
+    document.getElementById('welcomeTitle').innerText = "Welcome " + name;
     document.getElementById('fieldNama').value = name;
-    
-    // Pastikan bahasa page 2 sama dengan page 1
-    changeLanguage(currentLang);
 }
 
 function getFormData() {
@@ -441,11 +265,12 @@ I hope to have the opportunity to discuss how I can contribute to your company. 
 Thank you for your attention.
 
 Sincerely,
- ${data.nama}`;
+${data.nama}`;
     } else if (lang === 'jp') {
+        // Template Jepang dengan Kanji, Hiragana, dan Katakana yang benar
         return `拝啓
 
- ${data.pt} 人事部 御中
+${data.pt} 人事部 御中
 
 平素は格別のご高配を賜り、厚く御礼申し上げます。
 
@@ -458,7 +283,7 @@ Sincerely,
 
 敬具
 
- ${data.nama}`;
+${data.nama}`;
     } else { // Default ID
         return `Yth.
 HRD/User ${data.pt}
@@ -475,7 +300,7 @@ Saya berharap dapat berdiskusi lebih lanjut mengenai kontribusi yang dapat saya 
 Terima Kasih atas perhatiannya.
 
 Hormat saya,
- ${data.nama}`;
+${data.nama}`;
     }
 }
 
@@ -483,9 +308,12 @@ function copyToClipboard(lang) {
     const data = getFormData();
     const teksSurat = getLetterTemplate(lang, data);
     navigator.clipboard.writeText(teksSurat).then(() => {
-        alert(translations[currentLang].alertCopied);
+        let msg = "Teks surat berhasil disalin!";
+        if(lang === 'en') msg = "Text copied successfully!";
+        if(lang === 'jp') msg = "テキストがコピーされました！";
+        alert(msg);
     }).catch(err => {
-        alert(translations[currentLang].alertFail + err);
+        alert("Gagal menyalin teks: ", err);
     });
 }
 
@@ -496,6 +324,7 @@ function downloadPDF(lang) {
 
     doc.setFontSize(11);
     
+    // Menggunakan splitTextToSize untuk menangani pembungkus kata otomatis
     const lines = doc.splitTextToSize(template, 170);
     doc.text(lines, 20, 20);
 
