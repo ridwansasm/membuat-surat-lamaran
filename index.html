@@ -6,14 +6,14 @@
 <title>Generator Surat Lamaran - Made with Ridwan</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+    background-color: #e0f7fa;
     color: #01579b;
-    min-height: 100vh;
+    margin: 0;
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
 }
 .container {
     flex: 1;
@@ -25,202 +25,111 @@ body {
 .card {
     background: white;
     padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     width: 100%;
     max-width: 500px;
     text-align: center;
-    animation: slideUp 0.4s ease;
+    position: relative;
 }
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-h1, h2 { color: #0277bd; margin-bottom: 15px; }
-p { margin: 10px 0; line-height: 1.5; }
-
-input, textarea {
+h1 { color: #0277bd; margin-top: 10px; }
+input {
     width: 100%;
-    padding: 12px 15px;
-    margin: 8px 0;
+    padding: 12px;
+    margin: 10px 0;
     border: 2px solid #81d4fa;
-    border-radius: 10px;
-    font-size: 14px;
-    transition: all 0.3s;
-    background: #fafafa;
-}
-input:focus, textarea:focus {
-    border-color: #0288d1;
-    background: white;
+    border-radius: 8px;
+    box-sizing: border-box;
     outline: none;
-    box-shadow: 0 0 0 3px rgba(2,136,209,0.1);
 }
-input::placeholder, textarea::placeholder {
-    color: #90a4ae;
-    font-size: 13px;
-}
-
+input:focus { border-color: #0288d1; }
 button {
-    background: linear-gradient(135deg, #0288d1, #0277bd);
+    background-color: #0288d1;
     color: white;
     padding: 12px 25px;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     cursor: pointer;
-    font-weight: 600;
-    font-size: 14px;
-    transition: all 0.3s;
+    font-weight: bold;
+    transition: 0.3s;
     width: 100%;
     margin-top: 10px;
 }
-button:hover { 
-    transform: translateY(-2px); 
-    box-shadow: 0 5px 15px rgba(2,136,209,0.4);
-}
-button:active { transform: scale(0.98); }
-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
-}
+button:hover { background-color: #01579b; }
 
-/* Language Switcher */
-.lang-switcher {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin: 15px 0 20px;
-    flex-wrap: wrap;
-}
-.lang-btn {
-    padding: 8px 16px;
-    border: 2px solid #0288d1;
-    background: white;
-    color: #0288d1;
-    border-radius: 25px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 13px;
-    transition: all 0.3s;
-    min-width: 75px;
-}
-.lang-btn:hover, .lang-btn.active {
-    background: #0288d1;
-    color: white;
-    transform: scale(1.05);
-}
-.lang-btn.en { border-color: #43a047; color: #43a047; }
-.lang-btn.en:hover, .lang-btn.en.active {
-    background: #43a047;
-    color: white;
-}
-.lang-btn.jp { border-color: #8e24aa; color: #8e24aa; }
-.lang-btn.jp:hover, .lang-btn.jp.active {
-    background: #8e24aa;
-    color: white;
-}
-
-.tab-container {
-    width: 100%;
-    max-width: 650px;
-    background: white;
-    padding: 25px;
+/* Style Language Selector */
+.lang-selector {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #f1f8e9;
+    padding: 5px 10px;
     border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    border: 1px solid #81d4fa;
+    font-size: 0.9em;
+    cursor: pointer;
+    outline: none;
+    color: #01579b;
+    font-weight: bold;
 }
-.tab-header {
-    border-bottom: 3px solid #0288d1;
-    margin: 10px 0 20px;
-    padding-bottom: 12px;
-    font-weight: 700;
+
+/* Style khusus untuk tombol berdasarkan bahasa */
+.btn-id { background-color: #0288d1; }
+.btn-id:hover { background-color: #01579b; }
+
+.btn-en { background-color: #43a047; }
+.btn-en:hover { background-color: #2e7d32; }
+
+.btn-jp { background-color: #8e24aa; }
+.btn-jp:hover { background-color: #6a1b9a; }
+
+.footer {
     text-align: center;
-    font-size: 1.2em;
+    padding: 20px;
+    font-weight: bold;
     color: #0277bd;
 }
-
-.input-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-    margin-bottom: 20px;
+.hidden { display: none; }
+.tab-container {
+    width: 100%;
+    max-width: 600px;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    position: relative;
 }
-@media (min-width: 600px) {
-    .input-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-    .input-grid .full-width {
-        grid-column: 1 / -1;
-    }
+.tab-header {
+    border-bottom: 2px solid #0288d1;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    font-weight: bold;
+    text-align: center;
 }
 .input-group {
     text-align: left;
+    margin-bottom: 15px;
 }
 label {
-    font-size: 0.85em;
-    font-weight: 600;
-    display: block;
-    margin-bottom: 4px;
-    color: #0277bd;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-label .required { color: #e53935; font-size: 1.1em; }
-
-/* Preview Section */
-.preview-section {
-    margin: 20px 0;
-    padding: 15px;
-    background: #f5f5f5;
-    border-radius: 10px;
-    border-left: 4px solid #0288d1;
-}
-.preview-title {
-    font-weight: 600;
-    margin-bottom: 10px;
-    color: #0277bd;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-.preview-content {
     font-size: 0.9em;
-    line-height: 1.6;
-    white-space: pre-wrap;
-    max-height: 200px;
-    overflow-y: auto;
-    background: white;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #e0e0e0;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
 }
-
-/* Action Buttons */
+/* Grup Tombol */
 .lang-section {
-    margin-top: 15px;
+    margin-top: 20px;
     padding: 15px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #f1f8e9, #e8f5e9);
-    border: 1px solid #c8e6c9;
-}
-.lang-section.en {
-    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
-    border-color: #a5d6a7;
-}
-.lang-section.jp {
-    background: linear-gradient(135deg, #f3e5f5, #e1bee7);
-    border-color: #ce93d8;
+    border: 1px solid #e1f5fe;
+    border-radius: 8px;
+    background-color: #f1f8e9;
 }
 .lang-title {
-    font-weight: 700;
-    margin-bottom: 12px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
     text-align: center;
     color: #0277bd;
-    font-size: 1em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
 }
 .btn-group {
     display: flex;
@@ -228,766 +137,373 @@ label .required { color: #e53935; font-size: 1.1em; }
 }
 .btn-group button {
     width: 50%;
-    margin-top: 0;
-    padding: 10px;
-    font-size: 13px;
+    margin-top: 5px;
 }
-.btn-group-jp { display: block; }
+/* Khusus untuk Jepang hanya 1 tombol (full width) */
+.btn-group-jp {
+    display: block;
+}
 .btn-group-jp button {
     width: 100%;
-    margin-top: 0;
-    padding: 10px;
-}
-.btn-id { background: linear-gradient(135deg, #0288d1, #0277bd); }
-.btn-en { background: linear-gradient(135deg, #43a047, #2e7d32); }
-.btn-jp { background: linear-gradient(135deg, #8e24aa, #6a1b9a); }
-
-.footer {
-    text-align: center;
-    padding: 20px;
-    font-weight: 600;
-    color: #0277bd;
-    font-size: 14px;
-}
-.hidden { display: none !important; }
-
-/* Toast Notification */
-.toast {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    padding: 12px 20px;
-    background: #323232;
-    color: white;
-    border-radius: 8px;
-    font-size: 14px;
-    z-index: 1000;
-    animation: slideIn 0.3s ease;
-    max-width: 300px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
-.toast.success { background: #43a047; }
-.toast.error { background: #e53935; }
-@keyframes slideIn {
-    from { transform: translateX(100px); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-}
-
-/* Loading Spinner */
-.spinner {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    border: 2px solid rgba(255,255,255,0.3);
-    border-radius: 50%;
-    border-top-color: white;
-    animation: spin 0.8s linear infinite;
-    margin-right: 8px;
-    vertical-align: middle;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-
-/* Responsive */
-@media (max-width: 480px) {
-    .card, .tab-container { padding: 20px; margin: 10px; }
-    .btn-group { flex-direction: column; }
-    .btn-group button { width: 100%; }
-    .lang-switcher { gap: 5px; }
-    .lang-btn { padding: 6px 12px; font-size: 12px; min-width: 65px; }
+    margin-top: 5px;
 }
 </style>
 </head>
 <body>
 
-<!-- Page 1: Welcome -->
 <div id="page1" class="container">
     <div class="card">
-        <h2 data-i18n="welcome_title">Selamat Datang</h2>
-        <p data-i18n="welcome_desc">Masukkan Nama Lengkap Anda untuk memulai:</p>
-        <input type="text" id="initialName" data-i18n-placeholder="ph_name" placeholder="Contoh: Budi Santoso" autocomplete="name">
-        <button onclick="goToPage2()" data-i18n="btn_submit">Mulai</button>
+        <!-- Dropdown Bahasa -->
+        <select class="lang-selector" id="langSelectPage1" onchange="changeLanguage(this.value)">
+            <option value="id">🇮🇩 ID</option>
+            <option value="en">🇬🇧 EN</option>
+            <option value="jp">🇯🇵 JP</option>
+        </select>
+        
+        <h2 id="textWelcomeTitle">Selamat Datang</h2>
+        <p id="textWelcomeDesc">Masukkan Nama Lengkap Anda untuk memulai:</p>
+        <input type="text" id="initialName" placeholder="Contoh: Budi Santoso">
+        <button id="btnSubmit" onclick="goToPage2()">Submit</button>
     </div>
 </div>
 
-<!-- Page 2: Form -->
 <div id="page2" class="container hidden">
     <div class="tab-container">
-        <!-- Language Switcher -->
-        <div class="lang-switcher">
-            <button class="lang-btn active" data-lang="id" onclick="changeLanguage('id')">🇮🇩 ID</button>
-            <button class="lang-btn en" data-lang="en" onclick="changeLanguage('en')">🇬🇧 EN</button>
-            <button class="lang-btn jp" data-lang="jp" onclick="changeLanguage('jp')">🇯🇵 JP</button>
-        </div>
-        
-        <h1 id="welcomeTitle" style="text-align:center;"></h1>
-        <div class="tab-header" data-i18n="form_title">SURAT LAMARAN KERJA</div>
-        
-        <!-- Real-time Preview -->
-        <div class="preview-section">
-            <div class="preview-title">
-                <span>👁️</span>
-                <span data-i18n="preview_title">Preview Surat</span>
-            </div>
-            <div class="preview-content" id="livePreview">
-                <em data-i18n="preview_empty">Isi form untuk melihat preview...</em>
-            </div>
-        </div>
-        
-        <div class="input-grid">
-            <div class="input-group full-width">
-                <label data-i18n="label_name">Nama Lengkap <span class="required">*</span></label>
-                <input type="text" id="fieldNama" data-i18n-placeholder="ph_name" placeholder="Nama Lengkap" required>
-            </div>
-            <div class="input-group">
-                <label data-i18n="label_company">Perusahaan Tujuan</label>
-                <input type="text" id="fieldPT" data-i18n-placeholder="ph_company" placeholder="Nama PT/Perusahaan">
-            </div>
-            <div class="input-group">
-                <label data-i18n="label_position">Posisi Dilamar</label>
-                <input type="text" id="fieldPosisi" data-i18n-placeholder="ph_position" placeholder="Contoh: Staff Admin">
-            </div>
-            <div class="input-group">
-                <label data-i18n="label_university">Universitas</label>
-                <input type="text" id="fieldUniv" data-i18n-placeholder="ph_university" placeholder="Nama Universitas">
-            </div>
-            <div class="input-group">
-                <label data-i18n="label_major">Jurusan</label>
-                <input type="text" id="fieldJurusan" data-i18n-placeholder="ph_major" placeholder="Contoh: Teknik Informatika">
-            </div>
-            <div class="input-group full-width">
-                <label data-i18n="label_concentration">Konsentrasi/Peminatan</label>
-                <input type="text" id="fieldPenjurusan" data-i18n-placeholder="ph_concentration" placeholder="Contoh: Jaringan Komputer">
-            </div>
-            <div class="input-group">
-                <label data-i18n="label_gradyear">Tahun Lulus</label>
-                <input type="text" id="fieldTahun" data-i18n-placeholder="ph_gradyear" placeholder="Contoh: 2024" maxlength="4" pattern="[0-9]{4}">
-            </div>
-            <div class="input-group">
-                <label data-i18n="label_gpa">IPK</label>
-                <input type="text" id="fieldIPK" data-i18n-placeholder="ph_gpa" placeholder="Contoh: 3.80" maxlength="4" pattern="[0-4]\.[0-9]{2}">
-            </div>
-            <div class="input-group full-width">
-                <label data-i18n="label_phone">Kontak (WhatsApp/Telepon)</label>
-                <input type="tel" id="fieldTelp" data-i18n-placeholder="ph_phone" placeholder="Contoh: 0812-3456-7890">
-            </div>
-        </div>
+        <!-- Dropdown Bahasa -->
+        <select class="lang-selector" id="langSelectPage2" onchange="changeLanguage(this.value)">
+            <option value="id">🇮🇩 ID</option>
+            <option value="en">🇬🇧 EN</option>
+            <option value="jp">🇯🇵 JP</option>
+        </select>
 
-        <!-- Action Buttons: Indonesian -->
-        <div class="lang-section">
-            <span class="lang-title">🇮🇩 <span data-i18n="lang_id">Bahasa Indonesia</span></span>
-            <div class="btn-group">
-                <button class="btn-id" onclick="copyToClipboard('id')" data-i18n="btn_copy">📋 Salin</button>
-                <button class="btn-id" onclick="downloadPDF('id')" data-i18n="btn_pdf">📄 PDF</button>
+        <h1 id="welcomeTitle" style="text-align: center;">Welcome</h1>
+        <div class="tab-header" id="textHeaderTitle">SURAT LAMARAN KERJA</div>
+        <div id="formFields">
+            <div class="input-group">
+                <label id="labelNama">Nama Kamu</label>
+                <input type="text" id="fieldNama" placeholder="Nama Lengkap">
             </div>
-        </div>
+            <div class="input-group">
+                <label id="labelPT">Nama PT</label>
+                <input type="text" id="fieldPT" placeholder="Tujuan Perusahaan">
+            </div>
+            <div class="input-group">
+                <label id="labelUniv">Nama Universitas</label>
+                <input type="text" id="fieldUniv" placeholder="Nama Universitas">
+            </div>
+            <div class="input-group">
+                <label id="labelJurusan">Nama Jurusan</label>
+                <input type="text" id="fieldJurusan" placeholder="Nama Jurusan">
+            </div>
+            <div class="input-group">
+                <label id="labelPenjurusan">Nama Penjurusan (Konsentrasi)</label>
+                <input type="text" id="fieldPenjurusan" placeholder="Contoh: Manajemen Informatika">
+            </div>
+            <div class="input-group">
+                <label id="labelTahun">Tahun Lulus</label>
+                <input type="text" id="fieldTahun" placeholder="Contoh: 2024">
+            </div>
+            <div class="input-group">
+                <label id="labelIPK">Nilai IPK</label>
+                <input type="text" id="fieldIPK" placeholder="Contoh: 3.80">
+            </div>
+            <div class="input-group">
+                <label id="labelPosisi">Nama Posisi</label>
+                <input type="text" id="fieldPosisi" placeholder="Posisi yang dilamar">
+            </div>
+            <div class="input-group">
+                <label id="labelTelp">Nomor Telepon</label>
+                <input type="text" id="fieldTelp" placeholder="Contoh: 0812xxx">
+            </div>
 
-        <!-- Action Buttons: English -->
-        <div class="lang-section en">
-            <span class="lang-title" style="color:#2e7d32">🇬🇧 <span data-i18n="lang_en">English</span></span>
-            <div class="btn-group">
-                <button class="btn-en" onclick="copyToClipboard('en')" data-i18n="btn_copy">📋 Copy</button>
-                <button class="btn-en" onclick="downloadPDF('en')" data-i18n="btn_pdf">📄 PDF</button>
+            <!-- Bagian Tombol Bahasa Indonesia -->
+            <div class="lang-section">
+                <span class="lang-title">🇮🇩 <span id="titleID">Bahasa Indonesia</span></span>
+                <div class="btn-group">
+                    <button class="btn-id" onclick="copyToClipboard('id')"><span id="btnCopyID">Salin Teks</span></button>
+                    <button class="btn-id" onclick="downloadPDF('id')"><span id="btnDlID">Download PDF</span></button>
+                </div>
             </div>
-        </div>
 
-        <!-- Action Buttons: Japanese -->
-        <div class="lang-section jp">
-            <span class="lang-title" style="color:#6a1b9a">🇯🇵 <span data-i18n="lang_jp">日本語</span></span>
-            <div class="btn-group-jp">
-                <button class="btn-jp" onclick="copyToClipboard('jp')" data-i18n="btn_copy_jp">📋 テキストをコピー</button>
+            <!-- Bagian Tombol Bahasa Inggris -->
+            <div class="lang-section" style="background-color: #e8f5e9;">
+                <span class="lang-title" style="color: #2e7d32;">🇬🇧 <span id="titleEN">English</span></span>
+                <div class="btn-group">
+                    <button class="btn-en" onclick="copyToClipboard('en')"><span id="btnCopyEN">Copy Text</span></button>
+                    <button class="btn-en" onclick="downloadPDF('en')"><span id="btnDlEN">Download PDF</span></button>
+                </div>
             </div>
-            <p style="font-size:0.75em; color:#6a1b9a; text-align:center; margin-top:8px;" data-i18n="pdf_note_jp">
-                ※ PDF japonais tidak tersedia (keterbatasan font)
-            </p>
+
+            <!-- Bagian Tombol Bahasa Jepang (Hanya Salin Teks) -->
+            <div class="lang-section" style="background-color: #f3e5f5;">
+                <span class="lang-title" style="color: #6a1b9a;">🇯🇵 <span id="titleJP">Japanese (日本語)</span></span>
+                <div class="btn-group-jp">
+                    <button class="btn-jp" onclick="copyToClipboard('jp')"><span id="btnCopyJP">テキストをコピー (Salin Teks)</span></button>
+                </div>
+                <p id="jpNote" style="font-size: 0.8em; color: #6a1b9a; text-align: center; margin-top: 10px;">
+                    *Download PDF tidak tersedia untuk Bahasa Jepang
+                </p>
+            </div>
+
         </div>
     </div>
 </div>
 
-<div class="footer" data-i18n="footer">Made with ❤️ Komodo Mojokerto</div>
-
-<!-- Toast Container -->
-<div id="toastContainer"></div>
+<div class="footer">Made with Komodo Mojokerto</div>
 
 <script>
 const { jsPDF } = window.jspdf;
 
-// ==================== PROFESSIONAL TRANSLATIONS ====================
-// Diterjemahkan secara akurat oleh native speaker + verified
+// Variabel global untuk bahasa saat ini dan nama user
+let currentLang = 'id';
+let currentUserName = "";
+
+// Database Terjemahan
 const translations = {
     id: {
-        // UI Elements
-        welcome_title: "Selamat Datang",
-        welcome_desc: "Masukkan Nama Lengkap Anda untuk memulai:",
-        ph_name: "Contoh: Budi Santoso",
-        btn_submit: "Mulai",
-        form_title: "SURAT LAMARAN KERJA",
-        preview_title: "👁️ Preview Surat",
-        preview_empty: "Isi form untuk melihat preview...",
-        
-        // Form Labels
-        label_name: "Nama Lengkap",
-        label_company: "Perusahaan Tujuan",
-        label_position: "Posisi Dilamar",
-        label_university: "Universitas",
-        label_major: "Jurusan",
-        label_concentration: "Konsentrasi/Peminatan",
-        label_gradyear: "Tahun Lulus",
-        label_gpa: "IPK",
-        label_phone: "Kontak (WhatsApp/Telepon)",
-        
-        // Placeholders
-        ph_company: "Nama PT/Perusahaan",
-        ph_position: "Contoh: Staff Admin",
-        ph_university: "Nama Universitas",
-        ph_major: "Contoh: Teknik Informatika",
-        ph_concentration: "Contoh: Jaringan Komputer",
-        ph_gradyear: "Contoh: 2024",
-        ph_gpa: "Contoh: 3.80",
-        ph_phone: "Contoh: 0812-3456-7890",
-        
-        // Languages & Buttons
-        lang_id: "Bahasa Indonesia",
-        lang_en: "English",
-        lang_jp: "日本語",
-        btn_copy: "📋 Salin",
-        btn_pdf: "📄 PDF",
-        btn_copy_jp: "📋 テキストをコピー",
-        pdf_note_jp: "※ PDF untuk Bahasa Jepang tidak tersedia (keterbatasan font)",
-        footer: "Made with ❤️ Komodo Mojokerto",
-        
-        // Messages
-        msg_empty_name: "⚠️ Harap isi nama lengkap terlebih dahulu!",
-        msg_copy_success: "✅ Teks berhasil disalin ke clipboard!",
-        msg_copy_error: "❌ Gagal menyalin: ",
-        msg_pdf_generating: "⏳ Membuat PDF...",
-        msg_pdf_success: "✅ PDF berhasil diunduh!",
-        msg_pdf_error: "❌ Gagal membuat PDF",
-        msg_auto_saved: "💾 Data tersimpan otomatis",
-        msg_unsaved: "Perubahan belum disimpan. Yakin ingin keluar?",
-        
-        // Letter Templates (Professionally Written)
-        letter_id_opening: `Yth. HRD ${'$'}{company}
-di Tempat
-
-Dengan hormat,`,
-        letter_id_intro: `Perkenalkan, nama saya ${'$'}{name}. Saya merupakan lulusan dari ${'$'}{university}, jurusan ${'$'}{major} dengan peminatan ${'$'}{concentration}. Saya lulus pada tahun ${'$'}{gradYear} dengan IPK ${'$'}{gpa}.`,
-        letter_id_body: `Melalui surat ini, saya bermaksud mengajukan lamaran untuk posisi ${'$'}{position} di perusahaan yang Bapak/Ibu pimpin. Saya yakin kompetensi dan semangat belajar saya dapat memberikan kontribusi positif bagi perusahaan.`,
-        letter_id_closing: `Sebagai bahan pertimbangan, saya lampirkan Curriculum Vitae (CV) dan dokumen pendukung lainnya. Saya sangat berharap dapat diberi kesempatan untuk wawancara guna membahas lebih lanjut potensi kontribusi saya.
-
-Demikian surat lamaran ini saya sampaikan. Atas perhatian dan kesempatan yang diberikan, saya ucapkan terima kasih.
-
-Hormat saya,
-${'$'}{name}
-${'$'}{phone}`,
-
-        // English translations
-        letter_en_opening: `Dear Hiring Manager,
-${'$'}{company}
-
-Subject: Application for ${'$'}{position} Position`,
-        letter_en_intro: `My name is ${'$'}{name}. I am a graduate of ${'$'}{university}, majoring in ${'$'}{major} with a concentration in ${'$'}{concentration}. I graduated in ${'$'}{gradYear} with a GPA of ${'$'}{gpa}.`,
-        letter_en_body: `I am writing to express my strong interest in the ${'$'}{position} position at your esteemed company. I am confident that my academic background, skills, and dedication would allow me to make valuable contributions to your team.`,
-        letter_en_closing: `Please find attached my Curriculum Vitae and supporting documents for your review. I would greatly appreciate the opportunity to discuss how I can contribute to your organization in an interview.
-
-Thank you for your time and consideration.
-
-Sincerely,
-${'$'}{name}
-${'$'}{phone}`,
-
-        // Japanese translations (Authentic Business Japanese)
-        letter_jp_opening: `拝啓
-
-${'$'}{company} 採用ご担当者様
-
-平素より格別のご高配を賜り、厚く御礼申し上げます。`,
-        letter_jp_intro: `私、${'$'}{name} と申します。${'$'}{university} において ${'$'}{major} を専攻し、${'$'}{concentration} の分野に重点を置いて学習してまいりました。${'$'}{gradYear} 年に卒業し、GPA ${'$'}{gpa} の成績を修めました。`,
-        letter_jp_body: `この度、貴社の ${'$'}{position} 職位に応募したく、ご連絡いたしました。私の学術的バックグラウンドとスキルが、貴社の発展に貢献できると確信しております。`,
-        letter_jp_closing: `つきましては、履歴書及び関連書類を添付いたしましたので、ご査収のほどよろしくお願い申し上げます。面接の機会を賜ることができましたら、改めてご挨拶申し上げ、詳細をお話しさせていただきたく存じます。
-
-まずは略儀ながら書中をもちまして、応募のご挨拶申し上げます。
-
-敬具
-
-${'$'}{name}
-${'$'}{phone}`
+        welcomeTitle: "Selamat Datang",
+        welcomeDesc: "Masukkan Nama Lengkap Anda untuk memulai:",
+        btnSubmit: "Submit",
+        headerTitle: "SURAT LAMARAN KERJA",
+        labelNama: "Nama Kamu",
+        labelPT: "Nama PT",
+        labelUniv: "Nama Universitas",
+        labelJurusan: "Nama Jurusan",
+        labelPenjurusan: "Nama Penjurusan (Konsentrasi)",
+        labelTahun: "Tahun Lulus",
+        labelIPK: "Nilai IPK",
+        labelPosisi: "Nama Posisi",
+        labelTelp: "Nomor Telepon",
+        titleID: "Bahasa Indonesia",
+        titleEN: "English",
+        titleJP: "Japanese (日本語)",
+        btnCopy: "Salin Teks",
+        btnDl: "Download PDF",
+        btnCopyJP: "テキストをコピー (Salin Teks)",
+        jpNote: "*Download PDF tidak tersedia untuk Bahasa Jepang",
+        alertFillName: "Silakan isi nama terlebih dahulu!",
+        alertCopied: "Teks surat berhasil disalin!",
+        alertFail: "Gagal menyalin teks: ",
+        greeting: "Selamat Datang"
     },
-    
     en: {
-        welcome_title: "Welcome",
-        welcome_desc: "Enter your full name to get started:",
-        ph_name: "Example: John Smith",
-        btn_submit: "Get Started",
-        form_title: "COVER LETTER GENERATOR",
-        preview_title: "👁️ Live Preview",
-        preview_empty: "Fill the form to see preview...",
-        
-        label_name: "Full Name",
-        label_company: "Target Company",
-        label_position: "Position Applied",
-        label_university: "University",
-        label_major: "Major",
-        label_concentration: "Concentration",
-        label_gradyear: "Graduation Year",
-        label_gpa: "GPA",
-        label_phone: "Contact (Phone/WhatsApp)",
-        
-        ph_company: "Company Name",
-        ph_position: "Example: Administrative Staff",
-        ph_university: "University Name",
-        ph_major: "Example: Computer Engineering",
-        ph_concentration: "Example: Computer Networks",
-        ph_gradyear: "Example: 2024",
-        ph_gpa: "Example: 3.80",
-        ph_phone: "Example: +62 812-3456-7890",
-        
-        lang_id: "Bahasa Indonesia",
-        lang_en: "English",
-        lang_jp: "日本語",
-        btn_copy: "📋 Copy",
-        btn_pdf: "📄 PDF",
-        btn_copy_jp: "📋 Copy Text",
-        pdf_note_jp: "※ PDF for Japanese not available (font limitations)",
-        footer: "Made with ❤️ Komodo Mojokerto",
-        
-        msg_empty_name: "⚠️ Please enter your full name first!",
-        msg_copy_success: "✅ Text copied to clipboard!",
-        msg_copy_error: "❌ Failed to copy: ",
-        msg_pdf_generating: "⏳ Generating PDF...",
-        msg_pdf_success: "✅ PDF downloaded successfully!",
-        msg_pdf_error: "❌ Failed to generate PDF",
-        msg_auto_saved: "💾 Auto-saved",
-        msg_unsaved: "You have unsaved changes. Leave anyway?",
-        
-        // Letter templates use same structure as ID but in English (defined in ID section)
+        welcomeTitle: "Welcome",
+        welcomeDesc: "Enter Your Full Name to start:",
+        btnSubmit: "Submit",
+        headerTitle: "JOB APPLICATION LETTER",
+        labelNama: "Your Name",
+        labelPT: "Company Name",
+        labelUniv: "University Name",
+        labelJurusan: "Major Name",
+        labelPenjurusan: "Concentration",
+        labelTahun: "Graduation Year",
+        labelIPK: "GPA Score",
+        labelPosisi: "Position Name",
+        labelTelp: "Phone Number",
+        titleID: "Indonesian",
+        titleEN: "English",
+        titleJP: "Japanese (日本語)",
+        btnCopy: "Copy Text",
+        btnDl: "Download PDF",
+        btnCopyJP: "Copy Text",
+        btnDl: "Download PDF",
+        titleID: "Indonesian",
+        titleEN: "English",
+        titleJP: "Japanese (日本語)",
+        btnCopy: "Copy Text",
+        btnCopyJP: "Copy Text (Japanese)",
+        jpNote: "*PDF Download is not available for Japanese",
+        alertFillName: "Please enter your name first!",
+        alertCopied: "Text copied successfully!",
+        alertFail: "Failed to copy text: ",
+        greeting: "Welcome"
     },
-    
     jp: {
-        welcome_title: "ようこそ",
-        welcome_desc: "始めるためにフルネームを入力してください:",
-        ph_name: "例：山田 太郎",
-        btn_submit: "始める",
-        form_title: "応募書類ジェネレーター",
-        preview_title: "👁️ プレビュー",
-        preview_empty: "フォームに入力してプレビューを表示...",
-        
-        label_name: "氏名",
-        label_company: "応募先企業",
-        label_position: "応募職種",
-        label_university: "大学・大学院",
-        label_major: "専攻",
-        label_concentration: "専攻分野・コース",
-        label_gradyear: "卒業年度",
-        label_gpa: "GPA（成績）",
-        label_phone: "連絡先（電話/WhatsApp）",
-        
-        ph_company: "企業名",
-        ph_position: "例：事務スタッフ",
-        ph_university: "大学名",
-        ph_major: "例：情報工学",
-        ph_concentration: "例：ネットワークシステム",
-        ph_gradyear: "例：2024年",
-        ph_gpa: "例：3.80",
-        ph_phone: "例：090-1234-5678",
-        
-        lang_id: "Bahasa Indonesia",
-        lang_en: "English",
-        lang_jp: "日本語",
-        btn_copy: "📋 日本語をコピー",
-        btn_pdf: "📄 PDF",
-        btn_copy_jp: "📋 テキストをコピー",
-        pdf_note_jp: "※ 日本語PDFはフォント制限のため利用できません",
-        footer: "Made with ❤️ Komodo Mojokerto",
-        
-        msg_empty_name: "⚠️ 最初に氏名を入力してください！",
-        msg_copy_success: "✅ テキストをコピーしました！",
-        msg_copy_error: "❌ コピー失敗: ",
-        msg_pdf_generating: "⏳ PDF作成中...",
-        msg_pdf_success: "✅ PDFをダウンロードしました！",
-        msg_pdf_error: "❌ PDF作成に失敗しました",
-        msg_auto_saved: "💾 自動保存しました",
-        msg_unsaved: "保存されていない変更があります。本当に終了しますか？",
-        
-        // Japanese letter templates defined in ID section for consistency
+        welcomeTitle: "ようこそ",
+        welcomeDesc: "開始するにはフルネームを入力してください：",
+        btnSubmit: "送信",
+        headerTitle: "職務経歴書",
+        labelNama: "氏名",
+        labelPT: "会社名",
+        labelUniv: "大学名",
+        labelJurusan: "学部",
+        labelPenjurusan: "専攻",
+        labelTahun: "卒業年",
+        labelIPK: "GPA",
+        labelPosisi: "職種",
+        labelTelp: "電話番号",
+        titleID: "インドネシア語",
+        titleEN: "英語",
+        titleJP: "日本語",
+        btnCopy: "テキストをコピー",
+        btnDl: "PDFをダウンロード",
+        btnCopyJP: "テキストをコピー",
+        jpNote: "*PDFダウンロードは日本語には対応していません",
+        alertFillName: "名前を入力してください！",
+        alertCopied: "テキストがコピーされました！",
+        alertFail: "コピー失敗: ",
+        greeting: "ようこそ"
     }
 };
 
-// ==================== STATE MANAGEMENT ====================
-let currentLang = localStorage.getItem('coverLetter_lang') || 'id';
-let formDirty = false;
-let debounceTimer = null;
-
-// ==================== INITIALIZATION ====================
-document.addEventListener('DOMContentLoaded', () => {
-    applyLanguage(currentLang);
-    setupEventListeners();
-    restoreFormData();
-    updatePreview();
-});
-
-// ==================== LANGUAGE SYSTEM ====================
+// Fungsi untuk mengubah bahasa UI
 function changeLanguage(lang) {
-    // Update UI buttons
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.lang === lang);
-    });
-    
-    // Save & apply
-    localStorage.setItem('coverLetter_lang', lang);
     currentLang = lang;
-    applyLanguage(lang);
-    updatePreview(); // Real-time preview update
-    showToast(translations[lang].msg_auto_saved, 'success');
-}
+    
+    // Sinkronkan dropdown (jika ada 2 dropdown di halaman berbeda)
+    if(document.getElementById('langSelectPage1')) document.getElementById('langSelectPage1').value = lang;
+    if(document.getElementById('langSelectPage2')) document.getElementById('langSelectPage2').value = lang;
 
-function applyLanguage(lang) {
     const t = translations[lang];
-    
-    // Translate text content
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.dataset.i18n;
-        if (t[key]) el.textContent = t[key];
-    });
-    
-    // Translate placeholders
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-        const key = el.dataset.i18nPlaceholder;
-        if (t[key]) el.placeholder = t[key];
-    });
-    
-    // Update welcome title
-    const name = document.getElementById('fieldNama')?.value || document.getElementById('initialName')?.value || '';
-    const welcomeEl = document.getElementById('welcomeTitle');
-    if (welcomeEl && name) {
-        const prefix = { id: 'Halo, ', en: 'Welcome, ', jp: 'こんにちは、' }[lang] || '';
-        welcomeEl.textContent = prefix + name;
+
+    // Update Page 1
+    if(document.getElementById('textWelcomeTitle')) document.getElementById('textWelcomeTitle').innerText = t.welcomeTitle;
+    if(document.getElementById('textWelcomeDesc')) document.getElementById('textWelcomeDesc').innerText = t.welcomeDesc;
+    if(document.getElementById('btnSubmit')) document.getElementById('btnSubmit').innerText = t.btnSubmit;
+
+    // Update Page 2 Form Labels
+    if(document.getElementById('textHeaderTitle')) document.getElementById('textHeaderTitle').innerText = t.headerTitle;
+    if(document.getElementById('labelNama')) document.getElementById('labelNama').innerText = t.labelNama;
+    if(document.getElementById('labelPT')) document.getElementById('labelPT').innerText = t.labelPT;
+    if(document.getElementById('labelUniv')) document.getElementById('labelUniv').innerText = t.labelUniv;
+    if(document.getElementById('labelJurusan')) document.getElementById('labelJurusan').innerText = t.labelJurusan;
+    if(document.getElementById('labelPenjurusan')) document.getElementById('labelPenjurusan').innerText = t.labelPenjurusan;
+    if(document.getElementById('labelTahun')) document.getElementById('labelTahun').innerText = t.labelTahun;
+    if(document.getElementById('labelIPK')) document.getElementById('labelIPK').innerText = t.labelIPK;
+    if(document.getElementById('labelPosisi')) document.getElementById('labelPosisi').innerText = t.labelPosisi;
+    if(document.getElementById('labelTelp')) document.getElementById('labelTelp').innerText = t.labelTelp;
+
+    // Update Section Titles
+    if(document.getElementById('titleID')) document.getElementById('titleID').innerText = t.titleID;
+    if(document.getElementById('titleEN')) document.getElementById('titleEN').innerText = t.titleEN;
+    if(document.getElementById('titleJP')) document.getElementById('titleJP').innerText = t.titleJP;
+
+    // Update Buttons
+    if(document.getElementById('btnCopyID')) document.getElementById('btnCopyID').innerText = t.btnCopy;
+    if(document.getElementById('btnDlID')) document.getElementById('btnDlID').innerText = t.btnDl;
+    if(document.getElementById('btnCopyEN')) document.getElementById('btnCopyEN').innerText = t.btnCopy;
+    if(document.getElementById('btnDlEN')) document.getElementById('btnDlEN').innerText = t.btnDl;
+    if(document.getElementById('btnCopyJP')) document.getElementById('btnCopyJP').innerText = t.btnCopyJP;
+    if(document.getElementById('jpNote')) document.getElementById('jpNote').innerText = t.jpNote;
+
+    // Update Welcome Title on Page 2 (Dynamic name)
+    if(!document.getElementById('page2').classList.contains('hidden')) {
+        document.getElementById('welcomeTitle').innerText = t.greeting + " " + currentUserName;
     }
-    
-    // Update HTML lang attribute for accessibility/SEO
-    document.documentElement.lang = { id: 'id', en: 'en', jp: 'ja' }[lang] || 'id';
-    
-    // Update preview after language change
-    updatePreview();
 }
 
-// ==================== NAVIGATION ====================
 function goToPage2() {
-    const name = document.getElementById('initialName').value.trim();
-    const t = translations[currentLang];
-    
-    if (!name) {
-        showToast(t.msg_empty_name, 'error');
-        document.getElementById('initialName').focus();
+    const name = document.getElementById('initialName').value;
+    if (name.trim() === "") {
+        alert(translations[currentLang].alertFillName);
         return;
     }
-    
-    // Transition
+    currentUserName = name;
     document.getElementById('page1').classList.add('hidden');
     document.getElementById('page2').classList.remove('hidden');
     
-    // Set welcome & auto-fill
-    const prefix = { id: 'Halo, ', en: 'Welcome, ', jp: 'こんにちは、' }[currentLang];
-    document.getElementById('welcomeTitle').textContent = prefix + name;
+    // Set Name and Greeting
+    document.getElementById('welcomeTitle').innerText = translations[currentLang].greeting + " " + name;
     document.getElementById('fieldNama').value = name;
     
-    // Initialize preview
-    updatePreview();
-}
-
-// ==================== FORM HANDLING ====================
-function setupEventListeners() {
-    const inputs = document.querySelectorAll('#formFields input');
-    
-    inputs.forEach(input => {
-        // Real-time preview with debounce (prevents lag)
-        input.addEventListener('input', () => {
-            formDirty = true;
-            
-            // Debounce preview update (300ms delay)
-            clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(updatePreview, 300);
-            
-            // Auto-save to sessionStorage
-            saveFormData();
-        });
-        
-        // Prevent form submission on Enter (avoid page reload bug)
-        input.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                input.blur();
-            }
-        });
-        
-        // Validation: Year field
-        if (input.id === 'fieldTahun') {
-            input.addEventListener('input', (e) => {
-                e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 4);
-            });
-        }
-        
-        // Validation: GPA field
-        if (input.id === 'fieldIPK') {
-            input.addEventListener('input', (e) => {
-                let val = e.target.value.replace(/[^0-9.]/g, '');
-                if ((val.match(/\./g) || []).length > 1) {
-                    val = val.replace(/\.(?=.*\.)/g, '');
-                }
-                e.target.value = val;
-            });
-        }
-    });
-    
-    // Warn before leaving with unsaved changes
-    window.addEventListener('beforeunload', (e) => {
-        if (formDirty && !document.getElementById('page2').classList.contains('hidden')) {
-            e.preventDefault();
-            e.returnValue = translations[currentLang].msg_unsaved;
-        }
-    });
+    // Pastikan bahasa page 2 sama dengan page 1
+    changeLanguage(currentLang);
 }
 
 function getFormData() {
     return {
-        name: document.getElementById('fieldNama').value.trim() || '__________',
-        company: document.getElementById('fieldPT').value.trim() || '__________',
-        position: document.getElementById('fieldPosisi').value.trim() || '__________',
-        university: document.getElementById('fieldUniv').value.trim() || '__________',
-        major: document.getElementById('fieldJurusan').value.trim() || '__________',
-        concentration: document.getElementById('fieldPenjurusan').value.trim() || '__________',
-        gradYear: document.getElementById('fieldTahun').value.trim() || '____',
-        gpa: document.getElementById('fieldIPK').value.trim() || '_.__',
-        phone: document.getElementById('fieldTelp').value.trim() || '__________'
+        nama: document.getElementById('fieldNama').value,
+        pt: document.getElementById('fieldPT').value,
+        univ: document.getElementById('fieldUniv').value,
+        jurusan: document.getElementById('fieldJurusan').value,
+        penjurusan: document.getElementById('fieldPenjurusan').value,
+        tahun: document.getElementById('fieldTahun').value,
+        ipk: document.getElementById('fieldIPK').value,
+        posisi: document.getElementById('fieldPosisi').value,
+        telp: document.getElementById('fieldTelp').value
     };
 }
 
-function saveFormData() {
-    const data = {};
-    document.querySelectorAll('#formFields input').forEach(input => {
-        if (input.id) data[input.id] = input.value;
-    });
-    sessionStorage.setItem('coverLetter_form', JSON.stringify(data));
-}
+// Template Surat berdasarkan Bahasa
+function getLetterTemplate(lang, data) {
+    if (lang === 'en') {
+        return `Dear HRD/User ${data.pt},
+At Place
 
-function restoreFormData() {
-    const saved = sessionStorage.getItem('coverLetter_form');
-    if (saved) {
-        try {
-            const data = JSON.parse(saved);
-            Object.entries(data).forEach(([id, value]) => {
-                const el = document.getElementById(id);
-                if (el) el.value = value;
-            });
-            formDirty = false;
-        } catch (e) {
-            console.warn('Restore failed:', e);
-        }
+Dear Sir/Madam,
+
+Let me introduce myself. My name is ${data.nama}. I am a graduate from ${data.univ}, majoring in ${data.jurusan} (${data.penjurusan}). I graduated in ${data.tahun} with a GPA of ${data.ipk}.
+
+I am writing to express my interest in the ${data.posisi} position. Attached is my CV for your consideration.
+
+I hope to have the opportunity to discuss how I can contribute to your company. I can be reached at ${data.telp}.
+
+Thank you for your attention.
+
+Sincerely,
+ ${data.nama}`;
+    } else if (lang === 'jp') {
+        return `拝啓
+
+ ${data.pt} 人事部 御中
+
+平素は格別のご高配を賜り、厚く御礼申し上げます。
+
+私 ${data.nama} と申します。${data.univ} の ${data.jurusan} (${data.penjurusan}) を ${data.tahun} 年に卒業し、GPA は ${data.ipk} です。
+
+この度、${data.posisi} の職種に応募いたしたく、ご連絡いたしました。
+履歴書を添付いたしますので、ご検討のほどよろしくお願い申し上げます。
+
+ご面談の機会をいただけますと幸いです。連絡先は ${data.telp} です。
+
+敬具
+
+ ${data.nama}`;
+    } else { // Default ID
+        return `Yth.
+HRD/User ${data.pt}
+di Tempat
+
+Dengan Hormat,
+
+Perkenalkan saya ${data.nama}. Saya merupakan Lulusan dari ${data.univ} jurusan ${data.jurusan} Bidang ${data.penjurusan}, saya lulus tahun ${data.tahun} dengan nilai IPK ${data.ipk}.
+
+Saya bermaksud untuk melamar pekerjaan pada posisi ${data.posisi}. Bersama email ini, saya lampirkan CV untuk bahan pertimbangan.
+
+Saya berharap dapat berdiskusi lebih lanjut mengenai kontribusi yang dapat saya berikan, serta dapat dihubungi melalui nomor ${data.telp}.
+
+Terima Kasih atas perhatiannya.
+
+Hormat saya,
+ ${data.nama}`;
     }
 }
 
-// ==================== REAL-TIME PREVIEW ====================
-function updatePreview() {
-    const data = getFormData();
-    const t = translations[currentLang];
-    const previewEl = document.getElementById('livePreview');
-    
-    // Show empty state
-    if (!data.name || data.name === '__________') {
-        previewEl.innerHTML = `<em>${t.preview_empty}</em>`;
-        return;
-    }
-    
-    // Build letter based on language
-    let letter = '';
-    if (currentLang === 'en') {
-        letter = t.letter_en_opening + '\n\n' + 
-                 t.letter_en_intro + '\n\n' + 
-                 t.letter_en_body + '\n\n' + 
-                 t.letter_en_closing;
-    } else if (currentLang === 'jp') {
-        letter = t.letter_jp_opening + '\n\n' + 
-                 t.letter_jp_intro + '\n\n' + 
-                 t.letter_jp_body + '\n\n' + 
-                 t.letter_jp_closing;
-    } else {
-        letter = t.letter_id_opening + '\n\n' + 
-                 t.letter_id_intro + '\n\n' + 
-                 t.letter_id_body + '\n\n' + 
-                 t.letter_id_closing;
-    }
-    
-    // Template substitution (safe replacement)
-    letter = letter
-        .replace(/\$\{name\}/g, data.name)
-        .replace(/\$\{company\}/g, data.company)
-        .replace(/\$\{position\}/g, data.position)
-        .replace(/\$\{university\}/g, data.university)
-        .replace(/\$\{major\}/g, data.major)
-        .replace(/\$\{concentration\}/g, data.concentration)
-        .replace(/\$\{gradYear\}/g, data.gradYear)
-        .replace(/\$\{gpa\}/g, data.gpa)
-        .replace(/\$\{phone\}/g, data.phone);
-    
-    previewEl.textContent = letter;
-}
-
-// ==================== COPY & PDF FUNCTIONS ====================
 function copyToClipboard(lang) {
     const data = getFormData();
-    const t = translations[currentLang];
-    
-    // Build letter
-    let letter = '';
-    if (lang === 'en') {
-        letter = t.letter_en_opening + '\n\n' + t.letter_en_intro + '\n\n' + t.letter_en_body + '\n\n' + t.letter_en_closing;
-    } else if (lang === 'jp') {
-        letter = t.letter_jp_opening + '\n\n' + t.letter_jp_intro + '\n\n' + t.letter_jp_body + '\n\n' + t.letter_jp_closing;
-    } else {
-        letter = t.letter_id_opening + '\n\n' + t.letter_id_intro + '\n\n' + t.letter_id_body + '\n\n' + t.letter_id_closing;
-    }
-    
-    // Substitute variables
-    letter = letter
-        .replace(/\$\{name\}/g, data.name)
-        .replace(/\$\{company\}/g, data.company)
-        .replace(/\$\{position\}/g, data.position)
-        .replace(/\$\{university\}/g, data.university)
-        .replace(/\$\{major\}/g, data.major)
-        .replace(/\$\{concentration\}/g, data.concentration)
-        .replace(/\$\{gradYear\}/g, data.gradYear)
-        .replace(/\$\{gpa\}/g, data.gpa)
-        .replace(/\$\{phone\}/g, data.phone);
-    
-    // Copy to clipboard
-    navigator.clipboard.writeText(letter).then(() => {
-        showToast(t.msg_copy_success, 'success');
+    const teksSurat = getLetterTemplate(lang, data);
+    navigator.clipboard.writeText(teksSurat).then(() => {
+        alert(translations[currentLang].alertCopied);
     }).catch(err => {
-        showToast(t.msg_copy_error + err.message, 'error');
+        alert(translations[currentLang].alertFail + err);
     });
 }
 
 function downloadPDF(lang) {
-    const t = translations[currentLang];
-    
-    // Japanese PDF not supported (font limitations in client-side jsPDF)
-    if (lang === 'jp') {
-        showToast(t.pdf_note_jp.replace('※', '').trim(), 'error');
-        return;
-    }
-    
-    showToast(t.msg_pdf_generating, 'success');
-    
-    try {
-        const doc = new jsPDF({
-            orientation: 'portrait',
-            unit: 'mm',
-            format: 'a4'
-        });
-        
-        const data = getFormData();
-        
-        // Build letter content
-        let content = '';
-        if (lang === 'en') {
-            content = t.letter_en_opening + '\n\n' + t.letter_en_intro + '\n\n' + t.letter_en_body + '\n\n' + t.letter_en_closing;
-        } else {
-            content = t.letter_id_opening + '\n\n' + t.letter_id_intro + '\n\n' + t.letter_id_body + '\n\n' + t.letter_id_closing;
-        }
-        
-        // Template substitution
-        content = content
-            .replace(/\$\{name\}/g, data.name)
-            .replace(/\$\{company\}/g, data.company)
-            .replace(/\$\{position\}/g, data.position)
-            .replace(/\$\{university\}/g, data.university)
-            .replace(/\$\{major\}/g, data.major)
-            .replace(/\$\{concentration\}/g, data.concentration)
-            .replace(/\$\{gradYear\}/g, data.gradYear)
-            .replace(/\$\{gpa\}/g, data.gpa)
-            .replace(/\$\{phone\}/g, data.phone);
-        
-        // PDF styling
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(11);
-        
-        // Text wrapping with proper line height
-        const margin = 20;
-        const maxWidth = 170;
-        const lines = doc.splitTextToSize(content, maxWidth);
-        
-        // Add text with line spacing
-        let y = 20;
-        lines.forEach(line => {
-            if (y > 270) { // New page if needed
-                doc.addPage();
-                y = 20;
-            }
-            doc.text(line, margin, y);
-            y += 5; // Line height
-        });
-        
-        // Save file
-        const safeName = (data.name || 'Document').replace(/[^a-z0-9]/gi, '_').substring(0, 30);
-        const filename = lang === 'en' 
-            ? `CoverLetter_${safeName}.pdf` 
-            : `SuratLamaran_${safeName}.pdf`;
-        
-        doc.save(filename);
-        showToast(t.msg_pdf_success, 'success');
-        
-    } catch (error) {
-        console.error('PDF Error:', error);
-        showToast(t.msg_pdf_error, 'error');
-    }
-}
+    const doc = new jsPDF();
+    const data = getFormData();
+    const template = getLetterTemplate(lang, data);
 
-// ==================== TOAST NOTIFICATIONS ====================
-function showToast(message, type = 'success') {
-    const container = document.getElementById('toastContainer');
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    toast.textContent = message;
+    doc.setFontSize(11);
     
-    container.appendChild(toast);
-    
-    // Auto remove after 3 seconds
-    setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateX(100px)';
-        setTimeout(() => toast.remove(), 300);
-    }, 3000);
-}
+    const lines = doc.splitTextToSize(template, 170);
+    doc.text(lines, 20, 20);
 
-// ==================== GOOGLE TRANSLATE API INTEGRATION (OPTIONAL) ====================
-/*
- * Jika Anda ingin menggunakan Google Cloud Translation API yang akurat & real-time:
- * 
- * 1. Buat project di https://console.cloud.google.com/
- * 2. Enable "Cloud Translation API"
- * 3. Buat API Key atau Service Account
- * 4. Implementasikan backend proxy (Node.js/PHP/Python) untuk keamanan
- * 
- * Contoh endpoint backend (Node.js + Express):
- * 
- * app.post('/api/translate', async (req, res) => {
- *   const { text, targetLang } = req.body;
- *   const [translation] = await translate.translate(text, targetLang);
- *   res.json({ translatedText: translation });
- * });
- * 
- * 5. Panggil dari frontend:
- * 
- * async function translateText(text, targetLang) {
- *   const response = await fetch('/api/translate', {
- *     method: 'POST',
- *     headers: { 'Content-Type': 'application/json' },
- *     body: JSON.stringify({ text, targetLang })
- *   });
- *   return await response.json();
- * }
- * 
- * ⚠️ Jangan pernah expose API Key Google di frontend!
- */
+    let fileName = "Surat_Lamaran_" + data.nama + ".pdf";
+    if (lang === 'en') fileName = "Cover_Letter_" + data.nama + ".pdf";
+
+    doc.save(fileName);
+}
 </script>
 </body>
 </html>
