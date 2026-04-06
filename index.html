@@ -14,6 +14,7 @@
             --accent-pink: #ff6b9d;
             --accent-purple: #a855f7;
             --accent-orange: #ff9500;
+            --accent-green: #10b981;
             --text-primary: #f0f6ff;
             --text-secondary: #8ba3c7;
             --card-bg: rgba(15, 40, 71, 0.7);
@@ -250,14 +251,14 @@
         .tab-nav-container {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
         .tab-btn {
             background: rgba(10, 22, 40, 0.6);
             border: 2px solid rgba(0, 212, 255, 0.15);
             color: var(--text-secondary);
-            padding: 16px 20px;
+            padding: 14px 18px;
             border-radius: 14px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -299,13 +300,13 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 28px;
-            height: 28px;
+            width: 26px;
+            height: 26px;
             background: rgba(0, 212, 255, 0.2);
             border-radius: 8px;
             font-weight: 700;
-            font-size: 14px;
-            margin-right: 12px;
+            font-size: 13px;
+            margin-right: 10px;
             color: var(--accent-cyan);
         }
 
@@ -316,7 +317,7 @@
 
         .tab-title {
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         /* Mobile Tab Navigation */
@@ -345,7 +346,7 @@
 
             .tab-btn {
                 flex-shrink: 0;
-                padding: 12px 16px;
+                padding: 10px 14px;
                 text-align: center;
             }
 
@@ -354,14 +355,14 @@
             }
 
             .tab-title {
-                font-size: 12px;
+                font-size: 11px;
             }
 
             .tab-number {
-                width: 24px;
-                height: 24px;
-                font-size: 12px;
-                margin-right: 8px;
+                width: 22px;
+                height: 22px;
+                font-size: 11px;
+                margin-right: 6px;
             }
         }
 
@@ -388,25 +389,53 @@
             box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
         }
 
-        .time-display {
+        /* Time Display Cards */
+        .time-card {
             background: rgba(10, 22, 40, 0.8);
-            border: 1px solid rgba(0, 212, 255, 0.3);
-            border-radius: 12px;
-            padding: 8px 16px;
-            font-family: 'Outfit', monospace;
-            font-weight: 600;
-            font-size: 14px;
+            border: 1px solid rgba(0, 212, 255, 0.25);
+            border-radius: 10px;
+            padding: 6px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 85px;
+            transition: all 0.3s ease;
         }
+
+        .time-card:hover {
+            border-color: rgba(0, 212, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .time-label {
+            font-size: 10px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .time-value {
+            font-family: 'Outfit', monospace;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+        }
+
+        .time-jakarta { color: var(--accent-cyan); }
+        .time-berlin { color: var(--accent-orange); }
+        .time-tokyo { color: var(--accent-pink); }
 
         .lang-btn {
             background: rgba(10, 22, 40, 0.6);
             border: 1px solid rgba(0, 212, 255, 0.2);
             color: var(--text-secondary);
-            padding: 8px 14px;
+            padding: 6px 12px;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 12px;
+            font-size: 11px;
+            font-weight: 600;
         }
 
         .lang-btn.active {
@@ -591,7 +620,7 @@
         }
 
         .header-bar {
-            background: rgba(10, 22, 40, 0.9);
+            background: rgba(10, 22, 40, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(0, 212, 255, 0.2);
             position: sticky;
@@ -611,6 +640,31 @@
         @keyframes contentFade {
             from { opacity: 0; transform: translateX(20px); }
             to { opacity: 1; transform: translateX(0); }
+        }
+
+        .location-badge {
+            background: rgba(168, 85, 247, 0.2);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 11px;
+            color: var(--accent-purple);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .location-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
         }
 
         @media (max-width: 768px) {
@@ -636,6 +690,15 @@
             .mascot-pupil {
                 width: 6px;
                 height: 6px;
+            }
+
+            .time-card {
+                min-width: 75px;
+                padding: 5px 10px;
+            }
+
+            .time-value {
+                font-size: 12px;
             }
         }
 
@@ -727,29 +790,39 @@
         <!-- Header -->
         <header class="header-bar">
             <div class="max-w-7xl mx-auto px-4 py-3">
-                <div class="flex flex-wrap items-center justify-between gap-4">
-                    <div class="flex items-center gap-4">
-                        <h2 class="font-display text-lg font-bold text-cyan-400">Template Generator</h2>
-                        <span class="text-sm text-gray-400">|</span>
-                        <span class="text-sm" data-translate="hello">Halo,</span>
-                        <span id="displayName" class="text-sm font-semibold text-cyan-300"></span>
-                    </div>
-                    
-                    <div class="flex flex-wrap items-center gap-3">
-                        <div class="flex gap-2">
-                            <div class="time-display text-cyan-400">
-                                <span class="text-xs text-gray-400">WIB:</span>
-                                <span id="timeWIB">--:--:--</span>
-                            </div>
-                            <div class="time-display text-pink-400">
-                                <span class="text-xs text-gray-400">JST:</span>
-                                <span id="timeTokyo">--:--:--</span>
-                            </div>
+                <div class="flex flex-col gap-3">
+                    <!-- Row 1: Title & Name -->
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <h2 class="font-display text-lg font-bold text-cyan-400">Template Generator</h2>
+                            <span class="text-gray-500">|</span>
+                            <span class="text-sm" data-translate="hello">Halo,</span>
+                            <span id="displayName" class="text-sm font-semibold text-cyan-300"></span>
                         </div>
                         
-                        <div class="time-display text-purple-400">
-                            <span class="text-xs text-gray-400" data-translate="location">Lokasi:</span>
-                            <span id="userLocation">Mendeteksi...</span>
+                        <div class="flex items-center gap-2">
+                            <div class="location-badge">
+                                <span class="location-dot"></span>
+                                <span id="userLocation">Mendeteksi...</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Row 2: Time & Language -->
+                    <div class="flex flex-wrap items-center justify-between gap-3">
+                        <div class="flex flex-wrap gap-2">
+                            <div class="time-card">
+                                <span class="time-label">Jakarta</span>
+                                <span id="timeJakarta" class="time-value time-jakarta">--:--:--</span>
+                            </div>
+                            <div class="time-card">
+                                <span class="time-label">Berlin</span>
+                                <span id="timeBerlin" class="time-value time-berlin">--:--:--</span>
+                            </div>
+                            <div class="time-card">
+                                <span class="time-label">Tokyo</span>
+                                <span id="timeTokyo" class="time-value time-tokyo">--:--:--</span>
+                            </div>
                         </div>
 
                         <div class="flex gap-1">
@@ -767,9 +840,9 @@
         <main class="max-w-7xl mx-auto px-4 py-6">
             <div class="flex flex-col lg:flex-row gap-6">
                 <!-- Tab Navigation - Separated Sidebar -->
-                <aside class="lg:w-72 flex-shrink-0">
+                <aside class="lg:w-64 flex-shrink-0">
                     <div class="glass-card p-4">
-                        <h3 class="font-display text-sm font-bold text-gray-400 mb-4 px-2" data-translate="selectTemplate">Pilih Template</h3>
+                        <h3 class="font-display text-xs font-bold text-gray-400 mb-3 px-2 uppercase tracking-wider" data-translate="selectTemplate">Pilih Template</h3>
                         <nav class="tab-nav-container" id="tabNav">
                             <button class="tab-btn active" data-tab="1">
                                 <span class="tab-number">1</span>
@@ -1162,7 +1235,6 @@
                 namePlaceholder: 'Masukkan nama lengkap Anda',
                 continueBtn: 'Lanjutkan',
                 hello: 'Halo,',
-                location: 'Lokasi:',
                 selectTemplate: 'Pilih Template',
                 tab1: 'Followup WhatsApp',
                 tab2: 'Followup Email',
@@ -1194,11 +1266,7 @@
                 specialization: 'Penjurusan',
                 yearGraduate: 'Tahun Lulus',
                 preview: 'Preview Template',
-                copied: 'Berhasil disalin ke clipboard!',
-                morningGreeting: 'Pagi',
-                noonGreeting: 'Siang',
-                afternoonGreeting: 'Sore',
-                eveningGreeting: 'Malam'
+                copied: 'Berhasil disalin ke clipboard!'
             },
             en: {
                 welcome: 'Welcome! Enter your name to continue',
@@ -1206,7 +1274,6 @@
                 namePlaceholder: 'Enter your full name',
                 continueBtn: 'Continue',
                 hello: 'Hello,',
-                location: 'Location:',
                 selectTemplate: 'Select Template',
                 tab1: 'WhatsApp Follow-up',
                 tab2: 'Email Follow-up',
@@ -1238,11 +1305,7 @@
                 specialization: 'Specialization',
                 yearGraduate: 'Graduation Year',
                 preview: 'Template Preview',
-                copied: 'Successfully copied to clipboard!',
-                morningGreeting: 'Morning',
-                noonGreeting: 'Afternoon',
-                afternoonGreeting: 'Evening',
-                eveningGreeting: 'Night'
+                copied: 'Successfully copied to clipboard!'
             },
             ja: {
                 welcome: 'ようこそ！続行するにはお名前を入力してください',
@@ -1250,7 +1313,6 @@
                 namePlaceholder: '氏名を入力してください',
                 continueBtn: '続ける',
                 hello: 'こんにちは、',
-                location: '場所：',
                 selectTemplate: 'テンプレートを選択',
                 tab1: 'WhatsAppフォローアップ',
                 tab2: 'メールフォローアップ',
@@ -1282,11 +1344,7 @@
                 specialization: '専門分野',
                 yearGraduate: '卒業年',
                 preview: 'テンプレートプレビュー',
-                copied: 'クリップボードにコピーしました！',
-                morningGreeting: 'おはよう',
-                noonGreeting: 'こんにちは',
-                afternoonGreeting: 'こんばんは',
-                eveningGreeting: 'こんばんは'
+                copied: 'クリップボードにコピーしました！'
             },
             de: {
                 welcome: 'Willkommen! Geben Sie Ihren Namen ein, um fortzufahren',
@@ -1294,7 +1352,6 @@
                 namePlaceholder: 'Geben Sie Ihren vollständigen Namen ein',
                 continueBtn: 'Fortfahren',
                 hello: 'Hallo,',
-                location: 'Standort:',
                 selectTemplate: 'Vorlage auswählen',
                 tab1: 'WhatsApp-Follow-up',
                 tab2: 'E-Mail-Follow-up',
@@ -1326,11 +1383,7 @@
                 specialization: 'Spezialisierung',
                 yearGraduate: 'Abschlussjahr',
                 preview: 'Vorlagenvorschau',
-                copied: 'Erfolgreich in die Zwischenablage kopiert!',
-                morningGreeting: 'Guten Morgen',
-                noonGreeting: 'Guten Tag',
-                afternoonGreeting: 'Guten Nachmittag',
-                eveningGreeting: 'Guten Abend'
+                copied: 'Erfolgreich in die Zwischenablage kopiert!'
             }
         };
 
@@ -1728,17 +1781,24 @@ Mit freundlichen Grüßen,
         // ==================== TIME & LOCATION ====================
         function updateTime() {
             const now = new Date();
-            
-            const wibTime = new Date(now.getTime() + (7 * 60 * 60 * 1000) - (now.getTimezoneOffset() * 60 * 1000));
-            const timeWIB = document.getElementById('timeWIB');
-            if (timeWIB) {
-                timeWIB.textContent = wibTime.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+
+            // Jakarta Time (WIB - UTC+7)
+            const timeJakartaEl = document.getElementById('timeJakarta');
+            if (timeJakartaEl) {
+                timeJakartaEl.textContent = now.toLocaleTimeString('id-ID', { ...options, timeZone: 'Asia/Jakarta' });
             }
-            
-            const tokyoTime = new Date(now.getTime() + (9 * 60 * 60 * 1000) - (now.getTimezoneOffset() * 60 * 1000));
-            const timeTokyo = document.getElementById('timeTokyo');
-            if (timeTokyo) {
-                timeTokyo.textContent = tokyoTime.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+            // Berlin Time (CET/CEST)
+            const timeBerlinEl = document.getElementById('timeBerlin');
+            if (timeBerlinEl) {
+                timeBerlinEl.textContent = now.toLocaleTimeString('de-DE', { ...options, timeZone: 'Europe/Berlin' });
+            }
+
+            // Tokyo Time (JST - UTC+9)
+            const timeTokyoEl = document.getElementById('timeTokyo');
+            if (timeTokyoEl) {
+                timeTokyoEl.textContent = now.toLocaleTimeString('ja-JP', { ...options, timeZone: 'Asia/Tokyo' });
             }
         }
 
