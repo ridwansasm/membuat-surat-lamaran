@@ -1148,7 +1148,7 @@
                             </div>
                         </div>
 
-                        <!-- Tab 6: Surat Lamaran -->
+                        <!-- Tab 6: Surat Lamaran (DIUBAH) -->
                         <div class="tab-content" data-content="6">
                             <div class="glass-card p-6 mb-6">
                                 <h3 class="font-display text-xl font-bold mb-6 text-cyan-400 flex items-center gap-3">
@@ -1162,7 +1162,11 @@
                                         <input type="text" class="input-anime" id="tab6-pt" placeholder="Nama perusahaan">
                                     </div>
                                     <div class="form-group">
-                                        <span class="form-label" data-translate="status">Status</span>
+                                        <span class="form-label" data-translate="nameLabel">NAMA</span>
+                                        <input type="text" class="input-anime" id="tab6-nama" placeholder="Nama lengkap Anda">
+                                    </div>
+                                    <div class="form-group">
+                                        <span class="form-label" data-translate="graduateStatus">Lulusan / Fresh Graduate</span>
                                         <select class="select-anime" id="tab6-status">
                                             <option value="Fresh Graduate">Fresh Graduate</option>
                                             <option value="Lulusan">Lulusan</option>
@@ -1197,7 +1201,11 @@
                                         <input type="text" class="input-anime" id="tab6-dokumen" placeholder="CV, Portofolio, dll">
                                     </div>
                                     <div class="form-group">
-                                        <span class="form-label" data-translate="phone">Telepon</span>
+                                        <span class="form-label" data-translate="emailLabel">Email</span>
+                                        <input type="text" class="input-anime" id="tab6-email" placeholder="email@contoh.com">
+                                    </div>
+                                    <div class="form-group">
+                                        <span class="form-label" data-translate="phone">Nomor Telepon</span>
                                         <input type="text" class="input-anime" id="tab6-telepon" placeholder="08xxxxxxxxxx">
                                     </div>
                                 </div>
@@ -1266,7 +1274,9 @@
                 specialization: 'Penjurusan',
                 yearGraduate: 'Tahun Lulus',
                 preview: 'Preview Template',
-                copied: 'Berhasil disalin ke clipboard!'
+                copied: 'Berhasil disalin ke clipboard!',
+                graduateStatus: 'Lulusan / Fresh Graduate',
+                emailLabel: 'Email'
             },
             en: {
                 welcome: 'Welcome! Enter your name to continue',
@@ -1305,7 +1315,9 @@
                 specialization: 'Specialization',
                 yearGraduate: 'Graduation Year',
                 preview: 'Template Preview',
-                copied: 'Successfully copied to clipboard!'
+                copied: 'Successfully copied to clipboard!',
+                graduateStatus: 'Graduate / Fresh Graduate',
+                emailLabel: 'Email'
             },
             ja: {
                 welcome: 'ようこそ！続行するにはお名前を入力してください',
@@ -1344,7 +1356,9 @@
                 specialization: '専門分野',
                 yearGraduate: '卒業年',
                 preview: 'テンプレートプレビュー',
-                copied: 'クリップボードにコピーしました！'
+                copied: 'クリップボードにコピーしました！',
+                graduateStatus: '卒業生 / フレッシュグラデュエート',
+                emailLabel: 'メールアドレス'
             },
             de: {
                 welcome: 'Willkommen! Geben Sie Ihren Namen ein, um fortzufahren',
@@ -1383,7 +1397,9 @@
                 specialization: 'Spezialisierung',
                 yearGraduate: 'Abschlussjahr',
                 preview: 'Vorlagenvorschau',
-                copied: 'Erfolgreich in die Zwischenablage kopiert!'
+                copied: 'Erfolgreich in die Zwischenablage kopiert!',
+                graduateStatus: 'Absolvent / Fresh Graduate',
+                emailLabel: 'E-Mail'
             }
         };
 
@@ -1630,7 +1646,7 @@ di Tempat
 Dengan Hormat,
 Perkenalkan saya ${data.nama}. Saya merupakan ${data.status} dari ${data.universitas} jurusan ${data.jurusan} Bidang ${data.penjurusan}, saya lulus tahun ${data.tahunlulus} dengan nilai IPK ${data.ipk}. Saya bermaksud untuk melamar pekerjaan pada posisi ${data.posisi}. Bersama email ini, saya lampirkan ${data.dokumen} untuk bahan pertimbangan.
 
-Saya berharap dapat berdiskusi lebih lanjut mengenai kontribusi yang dapat saya berikan, serta dapat dihubungi melalui email ini atau pada nomor ${data.telepon}.
+Saya berharap dapat berdiskusi lebih lanjut mengenai kontribusi yang dapat saya berikan, serta dapat dihubungi melalui email ${data.email} atau pada nomor ${data.telepon}.
 
 Terima Kasih atas perhatiannya.
 
@@ -1638,21 +1654,21 @@ Hormat saya,
  ${data.nama}`,
                 en: (data) => `Dear ${data.pt} Recruitment Team
 
-Dear Hiring Team,
-Allow me to introduce myself, I am ${data.nama}. I am a ${data.status} from ${data.universitas} majoring in ${data.jurusan} specializing in ${data.penjurusan}. I graduated in ${data.tahunlulus} with a GPA of ${data.ipk}. I intend to apply for the ${data.posisi} position. Along with this email, I attach ${data.dokumen} for your consideration.
+With due respect,
+Allow me to introduce myself, I am ${data.nama}. I am a ${data.status} from ${data.universitas} majoring in ${data.jurusan} specializing in ${data.penjurusan}, I graduated in ${data.tahunlulus} with a GPA of ${data.ipk}. I intend to apply for the ${data.posisi} position. Along with this email, I attach ${data.dokumen} for your consideration.
 
-I hope to discuss further about the contribution I can make, and can be contacted via this email or at ${data.telepon}.
+I hope to discuss further about the contribution I can make, and can be contacted via email ${data.email} or at ${data.telepon}.
 
 Thank you for your attention.
 
 Best regards,
  ${data.nama}`,
-                ja: (data) => `${data.pt}採用チームの皆様へ
+                ja: (data) => `${data.pt}採用チームの皆様
 
 お世話になっております。
  ${data.nama}と申します。${data.universitas}${data.jurusan}専攻${data.penjurusan}の${data.status}で、${data.tahunlulus}年にGPA ${data.ipk}で卒業いたしました。${data.posisi}のポジションに応募したく存じます。本メールに${data.dokumen}を添付いたしましたので、ご検討のほどよろしくお願いいたします。
 
-私がどのように貢献できるかについて詳しくお話しできることを楽しみにしております。本メールまたは${data.telepon}までご連絡ください。
+私がどのように貢献できるかについて詳しくお話しできることを楽しみにしております。メール${data.email}または電話番号${data.telepon}までご連絡ください。
 
 ご多忙の折、よろしくお願い申し上げます。
 
@@ -1660,10 +1676,10 @@ Best regards,
  ${data.nama}`,
                 de: (data) => `An das Recruitment-Team von ${data.pt}
 
-Sehr geehrtes Einstellungsteam,
-gestatten Sie mir, mich vorzustellen: Ich bin ${data.nama}. Ich bin ein ${data.status} der ${data.universitas} im Studiengang ${data.jurusan} mit Spezialisierung auf ${data.penjurusan}. Ich habe ${data.tahunlulus} mit einem GPA von ${data.ipk} abgeschlossen. Ich beabsichtige, mich für die Position als ${data.posisi} zu bewerben. Anbei füge ich ${data.dokumen} zur Prüfung bei.
+Sehr geehrte Damen und Herren,
+gestatten Sie mir, mich vorzustellen: Ich bin ${data.nama}. Ich bin ein ${data.status} der ${data.universitas} im Studiengang ${data.jurusan} mit Spezialisierung auf ${data.penjurusan}, ich habe im Jahr ${data.tahunlulus} mit einem GPA von ${data.ipk} abgeschlossen. Ich beabsichtige, mich für die Position als ${data.posisi} zu bewerben. Anbei füge ich ${data.dokumen} zur Prüfung bei.
 
-Ich hoffe, weiter über meinen Beitrag sprechen zu können. Sie können mich über diese E-Mail oder unter ${data.telepon} erreichen.
+Ich hoffe, weiter über meinen Beitrag sprechen zu können, und kann per E-Mail unter ${data.email} oder telefonisch unter ${data.telepon} erreicht werden.
 
 Vielen Dank für Ihre Aufmerksamkeit.
 
@@ -1783,19 +1799,16 @@ Mit freundlichen Grüßen,
             const now = new Date();
             const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
 
-            // Jakarta Time (WIB - UTC+7)
             const timeJakartaEl = document.getElementById('timeJakarta');
             if (timeJakartaEl) {
                 timeJakartaEl.textContent = now.toLocaleTimeString('id-ID', { ...options, timeZone: 'Asia/Jakarta' });
             }
 
-            // Berlin Time (CET/CEST)
             const timeBerlinEl = document.getElementById('timeBerlin');
             if (timeBerlinEl) {
                 timeBerlinEl.textContent = now.toLocaleTimeString('de-DE', { ...options, timeZone: 'Europe/Berlin' });
             }
 
-            // Tokyo Time (JST - UTC+9)
             const timeTokyoEl = document.getElementById('timeTokyo');
             if (timeTokyoEl) {
                 timeTokyoEl.textContent = now.toLocaleTimeString('ja-JP', { ...options, timeZone: 'Asia/Tokyo' });
@@ -1866,13 +1879,13 @@ Mit freundlichen Grüßen,
         }
 
         function getTemplateData(tabNum) {
-            const nama = userName || userNameInput.value || '[NAMA]';
+            const defaultNama = userName || userNameInput.value || '[NAMA]';
             
             switch(tabNum) {
                 case 1:
                     return {
                         pt: document.getElementById('tab1-pt')?.value || '[PT]',
-                        nama: nama,
+                        nama: defaultNama,
                         posisi: document.getElementById('tab1-posisi')?.value || '[POSISI]',
                         tanggal: document.getElementById('tab1-tanggal')?.value || '[TANGGAL]',
                         waktu: getGreeting(document.getElementById('tab1-waktu')?.value || 'pagi', currentLang)
@@ -1880,7 +1893,7 @@ Mit freundlichen Grüßen,
                 case 2:
                     return {
                         pt: document.getElementById('tab2-pt')?.value || '[PT]',
-                        nama: nama,
+                        nama: defaultNama,
                         posisi: document.getElementById('tab2-posisi')?.value || '[POSISI]',
                         tanggal: document.getElementById('tab2-tanggal')?.value || '[TANGGAL]',
                         telepon: document.getElementById('tab2-telepon')?.value || '[TELEPON]'
@@ -1888,7 +1901,7 @@ Mit freundlichen Grüßen,
                 case 3:
                     return {
                         pt: document.getElementById('tab3-pt')?.value || '[PT]',
-                        nama: nama,
+                        nama: defaultNama,
                         jurusan: document.getElementById('tab3-jurusan')?.value || '[JURUSAN]',
                         universitas: document.getElementById('tab3-universitas')?.value || '[UNIVERSITAS]',
                         ipk: document.getElementById('tab3-ipk')?.value || '[IPK]',
@@ -1901,7 +1914,7 @@ Mit freundlichen Grüßen,
                 case 4:
                     return {
                         pt: document.getElementById('tab4-pt')?.value || '[PT]',
-                        nama: nama,
+                        nama: defaultNama,
                         universitas: document.getElementById('tab4-universitas')?.value || '[UNIVERSITAS]',
                         jurusan: document.getElementById('tab4-jurusan')?.value || '[JURUSAN]',
                         semester: document.getElementById('tab4-semester')?.value || '[SEMESTER]',
@@ -1912,7 +1925,7 @@ Mit freundlichen Grüßen,
                 case 5:
                     return {
                         pt: document.getElementById('tab5-pt')?.value || '[PT]',
-                        nama: nama,
+                        nama: defaultNama,
                         status: document.getElementById('tab5-status')?.value || 'Fresh Graduate',
                         universitas: document.getElementById('tab5-universitas')?.value || '[UNIVERSITAS]',
                         jurusan: document.getElementById('tab5-jurusan')?.value || '[JURUSAN]',
@@ -1925,7 +1938,7 @@ Mit freundlichen Grüßen,
                 case 6:
                     return {
                         pt: document.getElementById('tab6-pt')?.value || '[PT]',
-                        nama: nama,
+                        nama: document.getElementById('tab6-nama')?.value || defaultNama,
                         status: document.getElementById('tab6-status')?.value || 'Fresh Graduate',
                         universitas: document.getElementById('tab6-universitas')?.value || '[UNIVERSITAS]',
                         jurusan: document.getElementById('tab6-jurusan')?.value || '[JURUSAN]',
@@ -1934,7 +1947,8 @@ Mit freundlichen Grüßen,
                         ipk: document.getElementById('tab6-ipk')?.value || '[IPK]',
                         posisi: document.getElementById('tab6-posisi')?.value || '[POSISI]',
                         dokumen: document.getElementById('tab6-dokumen')?.value || '[DOKUMEN]',
-                        telepon: document.getElementById('tab6-telepon')?.value || '[TELEPON]'
+                        email: document.getElementById('tab6-email')?.value || '[EMAIL]',
+                        telepon: document.getElementById('tab6-telepon')?.value || '[NOMOR TELEPON]'
                     };
                 default:
                     return {};
