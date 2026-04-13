@@ -3,22 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Template Generator Pro</title>
+    <title>Template Lamaran Kerja</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-primary: #0a1628;
             --bg-secondary: #0f2847;
-            --accent-cyan: #00d4ff;
-            --accent-pink: #ff6b9d;
-            --accent-purple: #a855f7;
-            --accent-orange: #ff9500;
-            --accent-green: #10b981;
-            --text-primary: #f0f6ff;
-            --text-secondary: #8ba3c7;
-            --card-bg: rgba(15, 40, 71, 0.7);
-            --border-color: rgba(0, 212, 255, 0.2);
+            --bg-card: rgba(15, 40, 71, 0.85);
+            --accent: #00d4ff;
+            --accent-glow: rgba(0, 212, 255, 0.3);
+            --text-primary: #e8f4fc;
+            --text-secondary: #8eb8d4;
+            --border: rgba(0, 212, 255, 0.2);
+            --success: #00ff88;
+            --warning: #ffaa00;
         }
 
         * {
@@ -28,570 +27,36 @@
         }
 
         body {
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Inter', sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
         }
 
-        .font-display {
-            font-family: 'Zen Kaku Gothic New', sans-serif;
+        h1, h2, h3, .heading {
+            font-family: 'Space Grotesk', sans-serif;
         }
 
-        /* Animated Background */
-        .bg-anime {
+        #bg-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .bg-gradient {
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: 
-                radial-gradient(ellipse at 20% 20%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(255, 107, 157, 0.12) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(168, 85, 247, 0.1) 0%, transparent 60%),
-                linear-gradient(180deg, #0a1628 0%, #0f2847 50%, #1a365d 100%);
-            animation: bgShift 20s ease-in-out infinite;
-        }
-
-        @keyframes bgShift {
-            0%, 100% { transform: translate(0, 0); }
-            25% { transform: translate(-5%, -5%); }
-            50% { transform: translate(-10%, 0); }
-            75% { transform: translate(-5%, 5%); }
-        }
-
-        .particle {
-            position: absolute;
-            border-radius: 50%;
+            z-index: 0;
             pointer-events: none;
-            animation: float 15s infinite ease-in-out;
         }
 
-        .particle::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: inherit;
-            filter: blur(2px);
-            opacity: 0.5;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.6; }
-            25% { transform: translateY(-30px) translateX(15px) rotate(90deg); opacity: 0.8; }
-            50% { transform: translateY(-15px) translateX(-10px) rotate(180deg); opacity: 0.5; }
-            75% { transform: translateY(-40px) translateX(20px) rotate(270deg); opacity: 0.7; }
-        }
-
-        .speed-lines {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            opacity: 0.03;
-        }
-
-        .speed-line {
-            position: absolute;
-            width: 2px;
-            height: 100px;
-            background: linear-gradient(180deg, transparent, var(--accent-cyan), transparent);
-            animation: speedLine 3s infinite linear;
-        }
-
-        @keyframes speedLine {
-            0% { transform: translateY(-100px); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translateY(100vh); opacity: 0; }
-        }
-
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(60px);
-            animation: orbFloat 25s infinite ease-in-out;
-        }
-
-        @keyframes orbFloat {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -50px) scale(1.1); }
-            66% { transform: translate(-20px, 30px) scale(0.9); }
-        }
-
-        .shooting-star {
-            position: absolute;
-            width: 100px;
-            height: 2px;
-            background: linear-gradient(90deg, var(--accent-cyan), transparent);
-            animation: shoot 4s infinite ease-out;
-            opacity: 0;
-        }
-
-        @keyframes shoot {
-            0% { transform: translateX(-100px) translateY(0); opacity: 0; }
-            10% { opacity: 1; }
-            100% { transform: translateX(calc(100vw + 100px)) translateY(200px); opacity: 0; }
-        }
-
-        .sakura {
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            background: linear-gradient(135deg, rgba(255, 182, 193, 0.8), rgba(255, 107, 157, 0.6));
-            border-radius: 50% 0 50% 50%;
-            animation: sakuraFall 10s infinite linear;
-            opacity: 0.7;
-        }
-
-        @keyframes sakuraFall {
-            0% { transform: translateY(-20px) translateX(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.7; }
-            100% { transform: translateY(100vh) translateX(100px) rotate(720deg); opacity: 0; }
-        }
-
-        .glass-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-
-        .input-anime {
-            background: rgba(10, 22, 40, 0.8);
-            border: 2px solid rgba(0, 212, 255, 0.3);
-            border-radius: 12px;
-            padding: 12px 16px;
-            color: var(--text-primary);
-            font-size: 16px;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-
-        .input-anime:focus {
-            outline: none;
-            border-color: var(--accent-cyan);
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .input-anime::placeholder {
-            color: var(--text-secondary);
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent-cyan), #0099cc);
-            color: #000;
-            font-weight: 700;
-            padding: 14px 32px;
-            border-radius: 12px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .main-container {
             position: relative;
-            overflow: hidden;
-        }
-
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
-        }
-
-        .btn-primary:hover::before {
-            left: 100%;
-        }
-
-        .btn-copy {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(168, 85, 247, 0.2));
-            border: 1px solid rgba(0, 212, 255, 0.4);
-            color: var(--text-primary);
-            padding: 10px 20px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .btn-copy:hover {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.4), rgba(168, 85, 247, 0.4));
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.3);
-        }
-
-        /* Tab Navigation - Vertically Separated */
-        .tab-nav-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .tab-btn {
-            background: rgba(10, 22, 40, 0.6);
-            border: 2px solid rgba(0, 212, 255, 0.15);
-            color: var(--text-secondary);
-            padding: 14px 18px;
-            border-radius: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: left;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tab-btn::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 4px;
-            background: var(--accent-cyan);
-            transform: scaleY(0);
-            transition: transform 0.3s ease;
-        }
-
-        .tab-btn.active {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(168, 85, 247, 0.1));
-            border-color: var(--accent-cyan);
-            color: var(--text-primary);
-            box-shadow: 0 0 25px rgba(0, 212, 255, 0.2);
-        }
-
-        .tab-btn.active::before {
-            transform: scaleY(1);
-        }
-
-        .tab-btn:hover:not(.active) {
-            background: rgba(0, 212, 255, 0.1);
-            border-color: rgba(0, 212, 255, 0.3);
-            transform: translateX(5px);
-        }
-
-        .tab-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 26px;
-            height: 26px;
-            background: rgba(0, 212, 255, 0.2);
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 13px;
-            margin-right: 10px;
-            color: var(--accent-cyan);
-        }
-
-        .tab-btn.active .tab-number {
-            background: var(--accent-cyan);
-            color: #000;
-        }
-
-        .tab-title {
-            font-weight: 600;
-            font-size: 13px;
-        }
-
-        /* Mobile Tab Navigation */
-        @media (max-width: 1024px) {
-            .tab-nav-container {
-                flex-direction: row;
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                gap: 8px;
-                padding-bottom: 8px;
-            }
-
-            .tab-nav-container::-webkit-scrollbar {
-                height: 4px;
-            }
-
-            .tab-nav-container::-webkit-scrollbar-track {
-                background: rgba(0, 0, 0, 0.2);
-                border-radius: 2px;
-            }
-
-            .tab-nav-container::-webkit-scrollbar-thumb {
-                background: var(--accent-cyan);
-                border-radius: 2px;
-            }
-
-            .tab-btn {
-                flex-shrink: 0;
-                padding: 10px 14px;
-                text-align: center;
-            }
-
-            .tab-btn::before {
-                display: none;
-            }
-
-            .tab-title {
-                font-size: 11px;
-            }
-
-            .tab-number {
-                width: 22px;
-                height: 22px;
-                font-size: 11px;
-                margin-right: 6px;
-            }
-        }
-
-        .select-anime {
-            background: rgba(10, 22, 40, 0.8);
-            border: 2px solid rgba(0, 212, 255, 0.3);
-            border-radius: 12px;
-            padding: 12px 16px;
-            color: var(--text-primary);
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2300d4ff'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            background-size: 20px;
-        }
-
-        .select-anime:focus {
-            outline: none;
-            border-color: var(--accent-cyan);
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
-        }
-
-        /* Time Display Cards */
-        .time-card {
-            background: rgba(10, 22, 40, 0.8);
-            border: 1px solid rgba(0, 212, 255, 0.25);
-            border-radius: 10px;
-            padding: 6px 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-width: 85px;
-            transition: all 0.3s ease;
-        }
-
-        .time-card:hover {
-            border-color: rgba(0, 212, 255, 0.5);
-            transform: translateY(-2px);
-        }
-
-        .time-label {
-            font-size: 10px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 2px;
-        }
-
-        .time-value {
-            font-family: 'Outfit', monospace;
-            font-weight: 700;
-            font-size: 13px;
-            letter-spacing: 0.5px;
-        }
-
-        .time-jakarta { color: var(--accent-cyan); }
-        .time-berlin { color: var(--accent-orange); }
-        .time-tokyo { color: var(--accent-pink); }
-
-        .lang-btn {
-            background: rgba(10, 22, 40, 0.6);
-            border: 1px solid rgba(0, 212, 255, 0.2);
-            color: var(--text-secondary);
-            padding: 6px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        .lang-btn.active {
-            background: var(--accent-cyan);
-            color: #000;
-            border-color: var(--accent-cyan);
-        }
-
-        .lang-btn:hover:not(.active) {
-            border-color: var(--accent-cyan);
-            color: var(--text-primary);
-        }
-
-        .template-preview {
-            background: rgba(10, 22, 40, 0.9);
-            border: 1px solid rgba(0, 212, 255, 0.2);
-            border-radius: 12px;
-            padding: 20px;
-            font-size: 14px;
-            line-height: 1.8;
-            white-space: pre-wrap;
-            max-height: 350px;
-            overflow-y: auto;
-        }
-
-        .template-preview::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .template-preview::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 3px;
-        }
-
-        .template-preview::-webkit-scrollbar-thumb {
-            background: var(--accent-cyan);
-            border-radius: 3px;
-        }
-
-        .mascot {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 80px;
-            height: 80px;
-            z-index: 1000;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.5));
-        }
-
-        .mascot:hover {
-            transform: scale(1.1);
-        }
-
-        .mascot-body {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-
-        .mascot-head {
-            position: absolute;
-            width: 60px;
-            height: 50px;
-            background: linear-gradient(135deg, #1a365d, #2d4a7c);
-            border-radius: 50% 50% 45% 45%;
-            top: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            border: 2px solid var(--accent-cyan);
-            box-shadow: inset 0 -10px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .mascot-eye {
-            position: absolute;
-            width: 14px;
-            height: 16px;
-            background: #fff;
-            border-radius: 50%;
-            top: 15px;
-        }
-
-        .mascot-eye.left { left: 12px; }
-        .mascot-eye.right { right: 12px; }
-
-        .mascot-pupil {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: #0a1628;
-            border-radius: 50%;
-            top: 4px;
-            left: 3px;
-            transition: all 0.1s ease;
-        }
-
-        .mascot-blush {
-            position: absolute;
-            width: 10px;
-            height: 6px;
-            background: rgba(255, 107, 157, 0.5);
-            border-radius: 50%;
-            top: 28px;
-        }
-
-        .mascot-blush.left { left: 5px; }
-        .mascot-blush.right { right: 5px; }
-
-        .mascot-mouth {
-            position: absolute;
-            width: 12px;
-            height: 6px;
-            border: 2px solid var(--accent-cyan);
-            border-top: none;
-            border-radius: 0 0 50% 50%;
-            bottom: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .mascot-ear {
-            position: absolute;
-            width: 20px;
-            height: 25px;
-            background: linear-gradient(135deg, #1a365d, #2d4a7c);
-            border: 2px solid var(--accent-cyan);
-            top: -10px;
-            border-radius: 50% 50% 0 0;
-        }
-
-        .mascot-ear.left { left: 5px; transform: rotate(-15deg); }
-        .mascot-ear.right { right: 5px; transform: rotate(15deg); }
-
-        .toast {
-            position: fixed;
-            bottom: 100px;
-            right: 20px;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.9), rgba(0, 153, 204, 0.9));
-            color: #000;
-            padding: 14px 24px;
-            border-radius: 12px;
-            font-weight: 600;
-            transform: translateX(150%);
-            transition: transform 0.4s ease;
-            z-index: 1001;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .toast.show {
-            transform: translateX(0);
+            z-index: 10;
+            min-height: 100vh;
         }
 
         .page {
             display: none;
-            animation: fadeIn 0.5s ease;
+            animation: fadeIn 0.5s ease-out;
         }
 
         .page.active {
@@ -603,103 +68,295 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .form-group {
-            position: relative;
-            margin-bottom: 16px;
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
-        .form-label {
-            position: absolute;
-            top: -10px;
-            left: 12px;
-            background: var(--bg-primary);
-            padding: 0 8px;
-            font-size: 12px;
-            color: var(--accent-cyan);
+        .custom-input {
+            background: rgba(10, 22, 40, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: var(--text-primary);
+            font-size: 15px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .custom-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .custom-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .custom-select {
+            background: rgba(10, 22, 40, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: var(--text-primary);
+            font-size: 15px;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .custom-select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), #0088cc);
+            color: var(--bg-primary);
             font-weight: 600;
+            padding: 14px 28px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 15px;
         }
 
-        .header-bar {
-            background: rgba(10, 22, 40, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0, 212, 255, 0.2);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--accent-glow);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-copy {
+            background: rgba(10, 22, 40, 0.9);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .btn-copy:hover {
+            border-color: var(--accent);
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .btn-copy.copied {
+            border-color: var(--success);
+            background: rgba(0, 255, 136, 0.15);
+            color: var(--success);
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-secondary);
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        .tab-btn.active {
+            background: rgba(0, 212, 255, 0.15);
+            border-color: var(--accent);
+            color: var(--accent);
         }
 
         .tab-content {
             display: none;
-            animation: contentFade 0.4s ease;
+            animation: slideIn 0.4s ease-out;
         }
 
         .tab-content.active {
             display: block;
         }
 
-        @keyframes contentFade {
-            from { opacity: 0; transform: translateX(20px); }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-10px); }
             to { opacity: 1; transform: translateX(0); }
         }
 
-        .location-badge {
-            background: rgba(168, 85, 247, 0.2);
-            border: 1px solid rgba(168, 85, 247, 0.3);
-            border-radius: 8px;
-            padding: 6px 12px;
+        .clock-widget {
+            background: rgba(10, 22, 40, 0.9);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 18px;
+            backdrop-filter: blur(10px);
+        }
+
+        .clock-time {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .clock-label {
             font-size: 11px;
-            color: var(--accent-purple);
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .location-widget {
+            background: rgba(10, 22, 40, 0.9);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 18px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Floating Phone Button */
+        .floating-phone-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 65px;
+            height: 65px;
+            background: linear-gradient(135deg, #0066ff, #0044cc);
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            gap: 6px;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 8px 30px rgba(0, 102, 255, 0.4);
+            transition: all 0.3s ease;
+            animation: float 3s ease-in-out infinite;
+            border: 3px solid rgba(255, 255, 255, 0.2);
         }
 
-        .location-dot {
-            width: 6px;
-            height: 6px;
-            background: var(--accent-green);
+        .floating-phone-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 40px rgba(0, 102, 255, 0.6);
+        }
+
+        .floating-phone-btn:active {
+            transform: scale(0.95);
+        }
+
+        .floating-phone-btn.copied {
+            background: linear-gradient(135deg, #00cc66, #009944);
+            box-shadow: 0 8px 30px rgba(0, 204, 102, 0.4);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+
+        .floating-phone-btn::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
-            animation: pulse 2s infinite;
+            border: 2px solid rgba(0, 102, 255, 0.5);
+            animation: pulse-ring 2s ease-out infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.2); }
+        .phone-number-tooltip {
+            position: absolute;
+            bottom: 75px;
+            right: 0;
+            background: rgba(10, 22, 40, 0.95);
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            padding: 10px 16px;
+            white-space: nowrap;
+            font-size: 14px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
         }
 
-        @media (max-width: 768px) {
-            .mascot {
-                width: 60px;
-                height: 60px;
-            }
+        .floating-phone-btn:hover .phone-number-tooltip {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-            .mascot-head {
-                width: 45px;
-                height: 38px;
-            }
+        .lang-selector {
+            background: rgba(10, 22, 40, 0.9);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 16px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
-            .mascot-eye {
-                width: 10px;
-                height: 12px;
-                top: 12px;
-            }
+        .lang-selector:hover {
+            border-color: var(--accent);
+        }
 
-            .mascot-eye.left { left: 8px; }
-            .mascot-eye.right { right: 8px; }
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            background: var(--bg-card);
+            border: 1px solid var(--success);
+            border-radius: 12px;
+            padding: 16px 24px;
+            z-index: 2000;
+            transform: translateX(150%);
+            transition: transform 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
 
-            .mascot-pupil {
-                width: 6px;
-                height: 6px;
-            }
+        .toast.show {
+            transform: translateX(0);
+        }
 
-            .time-card {
-                min-width: 75px;
-                padding: 5px 10px;
-            }
+        .form-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            display: block;
+            font-weight: 500;
+        }
 
-            .time-value {
-                font-size: 12px;
-            }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -710,203 +367,192 @@
             }
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+        @media (max-width: 768px) {
+            .tab-btn {
+                padding: 8px 12px;
+                font-size: 11px;
+            }
+            
+            .clock-widget, .location-widget {
+                padding: 8px 12px;
+            }
+            
+            .clock-time {
+                font-size: 16px;
+            }
+
+            .floating-phone-btn {
+                width: 55px;
+                height: 55px;
+                bottom: 20px;
+                right: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Animated Background -->
-    <div class="bg-anime">
-        <div class="bg-gradient"></div>
-        <div class="speed-lines"></div>
-        <div id="particles"></div>
-        <div id="orbs"></div>
-        <div id="sakuras"></div>
-        <div id="shooting-stars"></div>
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Floating Phone Button -->
+    <div class="floating-phone-btn" id="phoneBtn" title="Salin Nomor Telepon">
+        <div class="phone-number-tooltip">
+            <div style="color: var(--accent); font-weight: 600;">081226834082</div>
+            <div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">Klik untuk salin</div>
+        </div>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
     </div>
 
-    <!-- Toast Notification -->
-    <div id="toast" class="toast">Disalin ke clipboard!</div>
-
-    <!-- Mascot Character -->
-    <div class="mascot" id="mascot" title="Klik saya!">
-        <div class="mascot-body">
-            <div class="mascot-ear left"></div>
-            <div class="mascot-ear right"></div>
-            <div class="mascot-head">
-                <div class="mascot-eye left">
-                    <div class="mascot-pupil" id="pupil-left"></div>
-                </div>
-                <div class="mascot-eye right">
-                    <div class="mascot-pupil" id="pupil-right"></div>
-                </div>
-                <div class="mascot-blush left"></div>
-                <div class="mascot-blush right"></div>
-                <div class="mascot-mouth"></div>
-            </div>
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <div class="flex items-center gap-3">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2">
+                <path d="M20 6L9 17l-5-5"/>
+            </svg>
+            <span id="toastMsg">Berhasil disalin!</span>
         </div>
     </div>
 
-    <!-- Page 1: Name Input -->
-    <div id="page1" class="page active">
-        <div class="min-h-screen flex items-center justify-center p-4">
-            <div class="glass-card p-8 md:p-12 max-w-lg w-full text-center">
-                <div class="mb-8">
-                    <h1 class="font-display text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-                        Template Generator
-                    </h1>
-                    <p class="text-gray-400" data-translate="welcome">Selamat datang! Masukkan nama Anda untuk melanjutkan</p>
-                </div>
-
-                <div class="form-group mb-6">
-                    <span class="form-label" data-translate="nameLabel">Nama Lengkap</span>
-                    <input 
-                        type="text" 
-                        id="userName" 
-                        class="input-anime text-lg"
-                        placeholder="Masukkan nama lengkap Anda"
-                        data-translate-placeholder="namePlaceholder"
-                    >
-                </div>
-
-                <button id="submitName" class="btn-primary w-full text-lg" data-translate="continueBtn">
-                    Lanjutkan
-                </button>
-
-                <div class="mt-8 flex justify-center gap-2">
-                    <button class="lang-btn active" data-lang="id">Indonesia</button>
-                    <button class="lang-btn" data-lang="en">English</button>
-                    <button class="lang-btn" data-lang="ja">日本語</button>
-                    <button class="lang-btn" data-lang="de">Deutsch</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Page 2: Template Generator -->
-    <div id="page2" class="page">
+    <div class="main-container">
         <!-- Header -->
-        <header class="header-bar">
-            <div class="max-w-7xl mx-auto px-4 py-3">
-                <div class="flex flex-col gap-3">
-                    <!-- Row 1: Title & Name -->
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <h2 class="font-display text-lg font-bold text-cyan-400">Template Generator</h2>
-                            <span class="text-gray-500">|</span>
-                            <span class="text-sm" data-translate="hello">Halo,</span>
-                            <span id="displayName" class="text-sm font-semibold text-cyan-300"></span>
-                        </div>
-                        
-                        <div class="flex items-center gap-2">
-                            <div class="location-badge">
-                                <span class="location-dot"></span>
-                                <span id="userLocation">Mendeteksi...</span>
-                            </div>
-                        </div>
+        <header class="fixed top-0 left-0 right-0 z-50 p-4">
+            <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
+                        </svg>
                     </div>
-                    
-                    <!-- Row 2: Time & Language -->
-                    <div class="flex flex-wrap items-center justify-between gap-3">
-                        <div class="flex flex-wrap gap-2">
-                            <div class="time-card">
-                                <span class="time-label">Jakarta</span>
-                                <span id="timeJakarta" class="time-value time-jakarta">--:--:--</span>
-                            </div>
-                            <div class="time-card">
-                                <span class="time-label">Berlin</span>
-                                <span id="timeBerlin" class="time-value time-berlin">--:--:--</span>
-                            </div>
-                            <div class="time-card">
-                                <span class="time-label">Tokyo</span>
-                                <span id="timeTokyo" class="time-value time-tokyo">--:--:--</span>
-                            </div>
-                        </div>
+                    <span class="heading text-xl font-semibold hidden sm:block">JobTemplate</span>
+                </div>
 
-                        <div class="flex gap-1">
-                            <button class="lang-btn active" data-lang="id">ID</button>
-                            <button class="lang-btn" data-lang="en">EN</button>
-                            <button class="lang-btn" data-lang="ja">JP</button>
-                            <button class="lang-btn" data-lang="de">DE</button>
-                        </div>
+                <div class="flex flex-wrap items-center gap-3">
+                    <div class="clock-widget">
+                        <div class="clock-label">Tokyo (JST)</div>
+                        <div class="clock-time" id="tokyoTime">--:--:--</div>
                     </div>
+                    <div class="clock-widget">
+                        <div class="clock-label">WIB</div>
+                        <div class="clock-time" id="wibTime">--:--:--</div>
+                    </div>
+                    <div class="location-widget">
+                        <div class="clock-label">Lokasi</div>
+                        <div class="text-sm font-medium" id="userLocation">Mendeteksi...</div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <label class="text-sm text-gray-400" data-translate="language">Bahasa:</label>
+                    <select class="lang-selector" id="langSelector">
+                        <option value="id">Indonesia</option>
+                        <option value="en">English</option>
+                        <option value="ja">日本語</option>
+                        <option value="de">Deutsch</option>
+                    </select>
                 </div>
             </div>
         </header>
 
-        <!-- Main Content with Separated Tabs -->
-        <main class="max-w-7xl mx-auto px-4 py-6">
-            <div class="flex flex-col lg:flex-row gap-6">
-                <!-- Tab Navigation - Separated Sidebar -->
-                <aside class="lg:w-64 flex-shrink-0">
-                    <div class="glass-card p-4">
-                        <h3 class="font-display text-xs font-bold text-gray-400 mb-3 px-2 uppercase tracking-wider" data-translate="selectTemplate">Pilih Template</h3>
-                        <nav class="tab-nav-container" id="tabNav">
-                            <button class="tab-btn active" data-tab="1">
-                                <span class="tab-number">1</span>
-                                <span class="tab-title" data-translate="tab1">Followup WhatsApp</span>
-                            </button>
-                            <button class="tab-btn" data-tab="2">
-                                <span class="tab-number">2</span>
-                                <span class="tab-title" data-translate="tab2">Followup Email</span>
-                            </button>
-                            <button class="tab-btn" data-tab="3">
-                                <span class="tab-number">3</span>
-                                <span class="tab-title" data-translate="tab3">Lamaran WhatsApp</span>
-                            </button>
-                            <button class="tab-btn" data-tab="4">
-                                <span class="tab-number">4</span>
-                                <span class="tab-title" data-translate="tab4">Magang Mahasiswa</span>
-                            </button>
-                            <button class="tab-btn" data-tab="5">
-                                <span class="tab-number">5</span>
-                                <span class="tab-title" data-translate="tab5">Template Magang</span>
-                            </button>
-                            <button class="tab-btn" data-tab="6">
-                                <span class="tab-number">6</span>
-                                <span class="tab-title" data-translate="tab6">Surat Lamaran</span>
-                            </button>
-                        </nav>
+        <!-- Page 1 -->
+        <div class="page active" id="page1">
+            <div class="min-h-screen flex items-center justify-center p-4 pt-32">
+                <div class="glass-card p-8 sm:p-12 max-w-lg w-full text-center">
+                    <div class="mb-8">
+                        <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                        </div>
+                        <h1 class="heading text-3xl sm:text-4xl font-bold mb-3" data-translate="welcome">Selamat Datang</h1>
+                        <p class="text-gray-400" data-translate="enterName">Masukkan nama Anda untuk melanjutkan</p>
                     </div>
-                </aside>
 
-                <!-- Tab Content Area -->
-                <div class="flex-1 min-w-0">
+                    <div class="mb-6">
+                        <label class="form-label text-left" data-translate="yourName">Nama Anda</label>
+                        <input type="text" class="custom-input text-center text-lg" id="nameInput" placeholder="Ketik nama lengkap Anda..." data-translate-placeholder="namePlaceholder">
+                    </div>
+
+                    <button class="btn-primary w-full" id="submitName" data-translate="continue">
+                        Lanjutkan ke Template
+                    </button>
+
+                    <p class="mt-6 text-sm text-gray-500" data-translate="nameInfo">Nama akan otomatis terisi di semua template</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 2 -->
+        <div class="page" id="page2">
+            <div class="p-4 pt-28 pb-8">
+                <div class="max-w-7xl mx-auto">
+                    <div class="glass-card p-4 mb-6 flex flex-wrap items-center justify-between gap-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center">
+                                <span class="heading text-lg font-bold" id="avatarInitial">-</span>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-400" data-translate="hello">Halo,</p>
+                                <p class="heading text-xl font-semibold" id="displayName">-</p>
+                            </div>
+                        </div>
+                        <button class="btn-copy" id="changeName" data-translate="changeName">Ganti Nama</button>
+                    </div>
+
+                    <div class="glass-card p-2 mb-6 overflow-x-auto">
+                        <div class="flex gap-2 min-w-max" id="tabsContainer">
+                            <button class="tab-btn active" data-tab="1">Followup WhatsApp</button>
+                            <button class="tab-btn" data-tab="2">Followup Email</button>
+                            <button class="tab-btn" data-tab="3">Lamaran WhatsApp</button>
+                            <button class="tab-btn" data-tab="4">Magang Mahasiswa</button>
+                            <button class="tab-btn" data-tab="5">Template Magang</button>
+                            <button class="tab-btn" data-tab="6">Surat Lamaran</button>
+                            <button class="tab-btn" data-tab="7">Lamaran WA Mahasiswa</button>
+                        </div>
+                    </div>
+
                     <div id="tabContents">
-                        <!-- Tab 1: Followup WhatsApp -->
+                        <!-- Tab 1 -->
                         <div class="tab-content active" data-content="1">
-                            <div class="glass-card p-6 mb-6">
-                                <h3 class="font-display text-xl font-bold mb-6 text-cyan-400 flex items-center gap-3">
-                                    <span class="w-8 h-8 bg-cyan-500/20 rounded-lg flex items-center justify-center text-sm">1</span>
-                                    <span data-translate="tab1Title">Template Followup WhatsApp</span>
-                                </h3>
-                                
-                                <div class="grid md:grid-cols-2 gap-4 mb-6">
-                                    <div class="form-group">
-                                        <span class="form-label">PT / Perusahaan</span>
-                                        <input type="text" class="input-anime" id="tab1-pt" placeholder="Nama perusahaan">
+                            <div class="glass-card p-6">
+                                <h2 class="heading text-xl font-semibold mb-6" data-translate="tab1Title">Template Followup WhatsApp</h2>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                                    <div>
+                                        <label class="form-label">PT / Perusahaan</label>
+                                        <input type="text" class="custom-input" id="t1_pt" placeholder="Nama perusahaan">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="position">Posisi</span>
-                                        <input type="text" class="input-anime" id="tab1-posisi" placeholder="Posisi yang dilamar">
+                                    <div>
+                                        <label class="form-label" data-translate="name">Nama</label>
+                                        <input type="text" class="custom-input template-name" placeholder="Nama Anda">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="interviewDate">Tanggal Wawancara</span>
-                                        <input type="text" class="input-anime" id="tab1-tanggal" placeholder="DD/MM/YYYY">
+                                    <div>
+                                        <label class="form-label" data-translate="position">Posisi</label>
+                                        <input type="text" class="custom-input" id="t1_posisi" placeholder="Posisi yang dilamar">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="time">Waktu</span>
-                                        <select class="select-anime" id="tab1-waktu">
-                                            <option value="pagi" data-translate="morning">Pagi</option>
-                                            <option value="siang" data-translate="noon">Siang</option>
-                                            <option value="sore" data-translate="afternoon">Sore</option>
-                                            <option value="malam" data-translate="evening">Malam</option>
+                                    <div>
+                                        <label class="form-label" data-translate="date">Tanggal</label>
+                                        <input type="text" class="custom-input" id="t1_tanggal" placeholder="Tanggal wawancara">
+                                    </div>
+                                    <div>
+                                        <label class="form-label" data-translate="phone">Nomor Telepon</label>
+                                        <input type="text" class="custom-input" id="t1_telepon" placeholder="08xxxxxxxxxx">
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="custom-input" id="t1_email" placeholder="email@example.com">
+                                    </div>
+                                    <div>
+                                        <label class="form-label" data-translate="time">Waktu</label>
+                                        <select class="custom-select" id="t1_waktu">
+                                            <option value="pagi">Pagi</option>
+                                            <option value="siang">Siang</option>
+                                            <option value="sore">Sore</option>
+                                            <option value="malam">Malam</option>
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="flex flex-wrap gap-3">
                                     <button class="btn-copy" onclick="copyTemplate(1, 'id')">Salin Indonesia</button>
                                     <button class="btn-copy" onclick="copyTemplate(1, 'en')">Salin English</button>
@@ -914,40 +560,38 @@
                                     <button class="btn-copy" onclick="copyTemplate(1, 'de')">Salin Jerman</button>
                                 </div>
                             </div>
-
-                            <div class="glass-card p-6">
-                                <h4 class="font-display text-lg font-bold mb-4 text-cyan-400" data-translate="preview">Preview Template</h4>
-                                <div class="template-preview" id="preview1"></div>
-                            </div>
                         </div>
 
-                        <!-- Tab 2: Followup Email -->
+                        <!-- Tab 2 -->
                         <div class="tab-content" data-content="2">
-                            <div class="glass-card p-6 mb-6">
-                                <h3 class="font-display text-xl font-bold mb-6 text-cyan-400 flex items-center gap-3">
-                                    <span class="w-8 h-8 bg-cyan-500/20 rounded-lg flex items-center justify-center text-sm">2</span>
-                                    <span data-translate="tab2Title">Template Followup Email</span>
-                                </h3>
-                                
-                                <div class="grid md:grid-cols-2 gap-4 mb-6">
-                                    <div class="form-group">
-                                        <span class="form-label">PT / Perusahaan</span>
-                                        <input type="text" class="input-anime" id="tab2-pt" placeholder="Nama perusahaan">
+                            <div class="glass-card p-6">
+                                <h2 class="heading text-xl font-semibold mb-6" data-translate="tab2Title">Template Followup Email</h2>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                                    <div>
+                                        <label class="form-label">PT / Perusahaan</label>
+                                        <input type="text" class="custom-input" id="t2_pt" placeholder="Nama perusahaan">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="position">Posisi</span>
-                                        <input type="text" class="input-anime" id="tab2-posisi" placeholder="Posisi yang dilamar">
+                                    <div>
+                                        <label class="form-label" data-translate="name">Nama</label>
+                                        <input type="text" class="custom-input template-name" placeholder="Nama Anda">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="interviewDate">Tanggal Wawancara</span>
-                                        <input type="text" class="input-anime" id="tab2-tanggal" placeholder="DD/MM/YYYY">
+                                    <div>
+                                        <label class="form-label" data-translate="position">Posisi</label>
+                                        <input type="text" class="custom-input" id="t2_posisi" placeholder="Posisi yang dilamar">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="phone">Nomor Telepon</span>
-                                        <input type="text" class="input-anime" id="tab2-telepon" placeholder="08xxxxxxxxxx">
+                                    <div>
+                                        <label class="form-label" data-translate="date">Tanggal</label>
+                                        <input type="text" class="custom-input" id="t2_tanggal" placeholder="Tanggal wawancara">
+                                    </div>
+                                    <div>
+                                        <label class="form-label" data-translate="phone">Nomor Telepon</label>
+                                        <input type="text" class="custom-input" id="t2_telepon" placeholder="08xxxxxxxxxx">
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="custom-input" id="t2_email" placeholder="email@example.com">
                                     </div>
                                 </div>
-
                                 <div class="flex flex-wrap gap-3">
                                     <button class="btn-copy" onclick="copyTemplate(2, 'id')">Salin Indonesia</button>
                                     <button class="btn-copy" onclick="copyTemplate(2, 'en')">Salin English</button>
@@ -955,65 +599,81 @@
                                     <button class="btn-copy" onclick="copyTemplate(2, 'de')">Salin Jerman</button>
                                 </div>
                             </div>
-
-                            <div class="glass-card p-6">
-                                <h4 class="font-display text-lg font-bold mb-4 text-cyan-400" data-translate="preview">Preview Template</h4>
-                                <div class="template-preview" id="preview2"></div>
-                            </div>
                         </div>
 
-                        <!-- Tab 3: Lamaran WhatsApp -->
+                        <!-- Tab 3 -->
                         <div class="tab-content" data-content="3">
-                            <div class="glass-card p-6 mb-6">
-                                <h3 class="font-display text-xl font-bold mb-6 text-cyan-400 flex items-center gap-3">
-                                    <span class="w-8 h-8 bg-cyan-500/20 rounded-lg flex items-center justify-center text-sm">3</span>
-                                    <span data-translate="tab3Title">Template Lamaran WhatsApp</span>
-                                </h3>
-                                
-                                <div class="grid md:grid-cols-2 gap-4 mb-6">
-                                    <div class="form-group">
-                                        <span class="form-label">PT / Perusahaan</span>
-                                        <input type="text" class="input-anime" id="tab3-pt" placeholder="Nama perusahaan">
+                            <div class="glass-card p-6">
+                                <h2 class="heading text-xl font-semibold mb-6" data-translate="tab3Title">Template Lamaran WhatsApp</h2>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                                    <div>
+                                        <label class="form-label">PT / Perusahaan</label>
+                                        <input type="text" class="custom-input" id="t3_pt" placeholder="Nama perusahaan">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="major">Jurusan</span>
-                                        <input type="text" class="input-anime" id="tab3-jurusan" placeholder="Jurusan">
+                                    <div>
+                                        <label class="form-label" data-translate="name">Nama</label>
+                                        <input type="text" class="custom-input template-name" placeholder="Nama Anda">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="university">Universitas</span>
-                                        <input type="text" class="input-anime" id="tab3-universitas" placeholder="Nama universitas">
+                                    <div>
+                                        <label class="form-label" data-translate="status">Status</label>
+                                        <select class="custom-select" id="t3_status">
+                                            <option value="Fresh Graduate">Fresh Graduate</option>
+                                            <option value="Lulusan">Lulusan</option>
+                                        </select>
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label">IPK</span>
-                                        <input type="text" class="input-anime" id="tab3-ipk" placeholder="3.xx">
+                                    <div>
+                                        <label class="form-label" data-translate="university">Universitas</label>
+                                        <input type="text" class="custom-input" id="t3_univ" placeholder="Nama universitas">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="position">Posisi</span>
-                                        <input type="text" class="input-anime" id="tab3-posisi" placeholder="Posisi yang dilamar">
+                                    <div>
+                                        <label class="form-label" data-translate="major">Jurusan</label>
+                                        <input type="text" class="custom-input" id="t3_jurusan" placeholder="Jurusan">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="source">Sumber</span>
-                                        <input type="text" class="input-anime" id="tab3-sumber" placeholder="LinkedIn/Google/dll">
+                                    <div>
+                                        <label class="form-label" data-translate="specialization">Bidang/Penjurusan</label>
+                                        <input type="text" class="custom-input" id="t3_penjurusan" placeholder="Bidang keahlian">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="document">Dokumen</span>
-                                        <input type="text" class="input-anime" id="tab3-dokumen" placeholder="CV, Portofolio, dll">
+                                    <div>
+                                        <label class="form-label">IPK</label>
+                                        <input type="text" class="custom-input" id="t3_ipk" placeholder="3.xx">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="phone">Telepon</span>
-                                        <input type="text" class="input-anime" id="tab3-telepon" placeholder="08xxxxxxxxxx">
+                                    <div>
+                                        <label class="form-label" data-translate="position">Posisi</label>
+                                        <input type="text" class="custom-input" id="t3_posisi" placeholder="Posisi yang dilamar">
                                     </div>
-                                    <div class="form-group md:col-span-2">
-                                        <span class="form-label" data-translate="time">Waktu</span>
-                                        <select class="select-anime" id="tab3-waktu">
-                                            <option value="pagi" data-translate="morning">Pagi</option>
-                                            <option value="siang" data-translate="noon">Siang</option>
-                                            <option value="sore" data-translate="afternoon">Sore</option>
-                                            <option value="malam" data-translate="evening">Malam</option>
+                                    <div>
+                                        <label class="form-label" data-translate="source">Sumber</label>
+                                        <input type="text" class="custom-input" id="t3_sumber" placeholder="Instagram/LinkedIn/dll">
+                                    </div>
+                                    <div>
+                                        <label class="form-label" data-translate="document">Dokumen</label>
+                                        <input type="text" class="custom-input" id="t3_dokumen" placeholder="CV, Portofolio, dll">
+                                    </div>
+                                    <div>
+                                        <label class="form-label" data-translate="phone">Nomor Telepon</label>
+                                        <input type="text" class="custom-input" id="t3_telepon" placeholder="08xxxxxxxxxx">
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="custom-input" id="t3_email" placeholder="email@example.com">
+                                    </div>
+                                    <div>
+                                        <label class="form-label" data-translate="time">Waktu</label>
+                                        <select class="custom-select" id="t3_waktu">
+                                            <option value="pagi">Pagi</option>
+                                            <option value="siang">Siang</option>
+                                            <option value="sore">Sore</option>
+                                            <option value="malam">Malam</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="form-label" data-translate="jobType">Jenis Lamaran</label>
+                                        <select class="custom-select" id="t3_jenis">
+                                            <option value="Magang (Internship)">Magang (Internship)</option>
+                                            <option value="Pekerjaan">Pekerjaan</option>
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="flex flex-wrap gap-3">
                                     <button class="btn-copy" onclick="copyTemplate(3, 'id')">Salin Indonesia</button>
                                     <button class="btn-copy" onclick="copyTemplate(3, 'en')">Salin English</button>
@@ -1021,52 +681,54 @@
                                     <button class="btn-copy" onclick="copyTemplate(3, 'de')">Salin Jerman</button>
                                 </div>
                             </div>
-
-                            <div class="glass-card p-6">
-                                <h4 class="font-display text-lg font-bold mb-4 text-cyan-400" data-translate="preview">Preview Template</h4>
-                                <div class="template-preview" id="preview3"></div>
-                            </div>
                         </div>
 
-                        <!-- Tab 4: Magang Mahasiswa -->
+                        <!-- Tab 4 -->
                         <div class="tab-content" data-content="4">
-                            <div class="glass-card p-6 mb-6">
-                                <h3 class="font-display text-xl font-bold mb-6 text-cyan-400 flex items-center gap-3">
-                                    <span class="w-8 h-8 bg-cyan-500/20 rounded-lg flex items-center justify-center text-sm">4</span>
-                                    <span data-translate="tab4Title">Template Magang Mahasiswa</span>
-                                </h3>
-                                
-                                <div class="grid md:grid-cols-2 gap-4 mb-6">
-                                    <div class="form-group">
-                                        <span class="form-label">PT / Perusahaan</span>
-                                        <input type="text" class="input-anime" id="tab4-pt" placeholder="Nama perusahaan">
+                            <div class="glass-card p-6">
+                                <h2 class="heading text-xl font-semibold mb-6" data-translate="tab4Title">Template Magang Mahasiswa</h2>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                                    <div>
+                                        <label class="form-label" data-translate="name">Nama</label>
+                                        <input type="text" class="custom-input template-name" placeholder="Nama Anda">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="university">Universitas</span>
-                                        <input type="text" class="input-anime" id="tab4-universitas" placeholder="Nama universitas">
+                                    <div>
+                                        <label class="form-label" data-translate="university">Universitas</label>
+                                        <input type="text" class="custom-input" id="t4_univ" placeholder="Nama universitas">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="major">Jurusan</span>
-                                        <input type="text" class="input-anime" id="tab4-jurusan" placeholder="Jurusan">
+                                    <div>
+                                        <label class="form-label" data-translate="major">Jurusan</label>
+                                        <input type="text" class="custom-input" id="t4_jurusan" placeholder="Jurusan">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="semester">Semester</span>
-                                        <input type="text" class="input-anime" id="tab4-semester" placeholder="Contoh: 6">
+                                    <div>
+                                        <label class="form-label" data-translate="specialization">Bidang/Penjurusan</label>
+                                        <input type="text" class="custom-input" id="t4_penjurusan" placeholder="Bidang keahlian">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="position">Posisi</span>
-                                        <input type="text" class="input-anime" id="tab4-posisi" placeholder="Posisi magang">
+                                    <div>
+                                        <label class="form-label">Semester</label>
+                                        <input type="text" class="custom-input" id="t4_semester" placeholder="Semester">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="source">Sumber</span>
-                                        <input type="text" class="input-anime" id="tab4-sumber" placeholder="LinkedIn/Google/dll">
+                                    <div>
+                                        <label class="form-label" data-translate="position">Posisi</label>
+                                        <input type="text" class="custom-input" id="t4_posisi" placeholder="Posisi yang dilamar">
                                     </div>
-                                    <div class="form-group md:col-span-2">
-                                        <span class="form-label" data-translate="document">Dokumen</span>
-                                        <input type="text" class="input-anime" id="tab4-dokumen" placeholder="CV, Surat Pengantar, dll">
+                                    <div>
+                                        <label class="form-label" data-translate="source">Sumber</label>
+                                        <input type="text" class="custom-input" id="t4_sumber" placeholder="Instagram/LinkedIn/dll">
+                                    </div>
+                                    <div>
+                                        <label class="form-label" data-translate="document">Dokumen</label>
+                                        <input type="text" class="custom-input" id="t4_dokumen" placeholder="CV, Portofolio, dll">
+                                    </div>
+                                    <div>
+                                        <label class="form-label" data-translate="phone">Nomor Telepon</label>
+                                        <input type="text" class="custom-input" id="t4_telepon" placeholder="08xxxxxxxxxx">
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="custom-input" id="t4_email" placeholder="email@example.com">
                                     </div>
                                 </div>
-
                                 <div class="flex flex-wrap gap-3">
                                     <button class="btn-copy" onclick="copyTemplate(4, 'id')">Salin Indonesia</button>
                                     <button class="btn-copy" onclick="copyTemplate(4, 'en')">Salin English</button>
@@ -1074,66 +736,68 @@
                                     <button class="btn-copy" onclick="copyTemplate(4, 'de')">Salin Jerman</button>
                                 </div>
                             </div>
-
-                            <div class="glass-card p-6">
-                                <h4 class="font-display text-lg font-bold mb-4 text-cyan-400" data-translate="preview">Preview Template</h4>
-                                <div class="template-preview" id="preview4"></div>
-                            </div>
                         </div>
 
-                        <!-- Tab 5: Magang -->
+                        <!-- Tab 5 -->
                         <div class="tab-content" data-content="5">
-                            <div class="glass-card p-6 mb-6">
-                                <h3 class="font-display text-xl font-bold mb-6 text-cyan-400 flex items-center gap-3">
-                                    <span class="w-8 h-8 bg-cyan-500/20 rounded-lg flex items-center justify-center text-sm">5</span>
-                                    <span data-translate="tab5Title">Template Magang</span>
-                                </h3>
-                                
-                                <div class="grid md:grid-cols-2 gap-4 mb-6">
-                                    <div class="form-group">
-                                        <span class="form-label">PT / Perusahaan</span>
-                                        <input type="text" class="input-anime" id="tab5-pt" placeholder="Nama perusahaan">
+                            <div class="glass-card p-6">
+                                <h2 class="heading text-xl font-semibold mb-6" data-translate="tab5Title">Template Magang</h2>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                                    <div>
+                                        <label class="form-label">PT / Perusahaan</label>
+                                        <input type="text" class="custom-input" id="t5_pt" placeholder="Nama perusahaan">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="status">Status</span>
-                                        <select class="select-anime" id="tab5-status">
+                                    <div>
+                                        <label class="form-label" data-translate="name">Nama</label>
+                                        <input type="text" class="custom-input template-name" placeholder="Nama Anda">
+                                    </div>
+                                    <div>
+                                        <label class="form-label" data-translate="status">Status</label>
+                                        <select class="custom-select" id="t5_status">
                                             <option value="Fresh Graduate">Fresh Graduate</option>
                                             <option value="Lulusan">Lulusan</option>
                                         </select>
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="university">Universitas</span>
-                                        <input type="text" class="input-anime" id="tab5-universitas" placeholder="Nama universitas">
+                                    <div>
+                                        <label class="form-label" data-translate="university">Universitas</label>
+                                        <input type="text" class="custom-input" id="t5_univ" placeholder="Nama universitas">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="major">Jurusan</span>
-                                        <input type="text" class="input-anime" id="tab5-jurusan" placeholder="Jurusan">
+                                    <div>
+                                        <label class="form-label" data-translate="major">Jurusan</label>
+                                        <input type="text" class="custom-input" id="t5_jurusan" placeholder="Jurusan">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label">IPK</span>
-                                        <input type="text" class="input-anime" id="tab5-ipk" placeholder="3.xx">
+                                    <div>
+                                        <label class="form-label">IPK</label>
+                                        <input type="text" class="custom-input" id="t5_ipk" placeholder="3.xx">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="position">Posisi</span>
-                                        <input type="text" class="input-anime" id="tab5-posisi" placeholder="Posisi yang dilamar">
+                                    <div>
+                                        <label class="form-label" data-translate="position">Posisi</label>
+                                        <input type="text" class="custom-input" id="t5_posisi" placeholder="Posisi yang dilamar">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="type">Tipe</span>
-                                        <select class="select-anime" id="tab5-tipe">
+                                    <div>
+                                        <label class="form-label" data-translate="source">Sumber</label>
+                                        <input type="text" class="custom-input" id="t5_sumber" placeholder="Instagram/LinkedIn/dll">
+                                    </div>
+                                    <div>
+                                        <label class="form-label" data-translate="document">Dokumen</label>
+                                        <input type="text" class="custom-input" id="t5_dokumen" placeholder="CV, Portofolio, dll">
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="custom-input" id="t5_email" placeholder="email@example.com">
+                                    </div>
+                                    <div>
+                                        <label class="form-label" data-translate="phone">Nomor Telepon</label>
+                                        <input type="text" class="custom-input" id="t5_telepon" placeholder="08xxxxxxxxxx">
+                                    </div>
+                                    <div>
+                                        <label class="form-label" data-translate="workType">Tipe Pekerjaan</label>
+                                        <select class="custom-select" id="t5_tipe">
                                             <option value="Magang">Magang</option>
                                             <option value="Freelance">Freelance</option>
                                         </select>
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="source">Sumber</span>
-                                        <input type="text" class="input-anime" id="tab5-sumber" placeholder="LinkedIn/Google/dll">
-                                    </div>
-                                    <div class="form-group md:col-span-2">
-                                        <span class="form-label" data-translate="document">Dokumen</span>
-                                        <input type="text" class="input-anime" id="tab5-dokumen" placeholder="CV, Portofolio, dll">
-                                    </div>
                                 </div>
-
                                 <div class="flex flex-wrap gap-3">
                                     <button class="btn-copy" onclick="copyTemplate(5, 'id')">Salin Indonesia</button>
                                     <button class="btn-copy" onclick="copyTemplate(5, 'en')">Salin English</button>
@@ -1141,75 +805,65 @@
                                     <button class="btn-copy" onclick="copyTemplate(5, 'de')">Salin Jerman</button>
                                 </div>
                             </div>
-
-                            <div class="glass-card p-6">
-                                <h4 class="font-display text-lg font-bold mb-4 text-cyan-400" data-translate="preview">Preview Template</h4>
-                                <div class="template-preview" id="preview5"></div>
-                            </div>
                         </div>
 
-                        <!-- Tab 6: Surat Lamaran (DIUBAH) -->
+                        <!-- Tab 6 -->
                         <div class="tab-content" data-content="6">
-                            <div class="glass-card p-6 mb-6">
-                                <h3 class="font-display text-xl font-bold mb-6 text-cyan-400 flex items-center gap-3">
-                                    <span class="w-8 h-8 bg-cyan-500/20 rounded-lg flex items-center justify-center text-sm">6</span>
-                                    <span data-translate="tab6Title">Template Surat Lamaran Kerja</span>
-                                </h3>
-                                
-                                <div class="grid md:grid-cols-2 gap-4 mb-6">
-                                    <div class="form-group">
-                                        <span class="form-label">PT / Perusahaan</span>
-                                        <input type="text" class="input-anime" id="tab6-pt" placeholder="Nama perusahaan">
+                            <div class="glass-card p-6">
+                                <h2 class="heading text-xl font-semibold mb-6" data-translate="tab6Title">Template Surat Lamaran Kerja</h2>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                                    <div>
+                                        <label class="form-label">PT / Perusahaan</label>
+                                        <input type="text" class="custom-input" id="t6_pt" placeholder="Nama perusahaan">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="nameLabel">NAMA</span>
-                                        <input type="text" class="input-anime" id="tab6-nama" placeholder="Nama lengkap Anda">
+                                    <div>
+                                        <label class="form-label" data-translate="name">Nama</label>
+                                        <input type="text" class="custom-input template-name" placeholder="Nama Anda">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="graduateStatus">Lulusan / Fresh Graduate</span>
-                                        <select class="select-anime" id="tab6-status">
+                                    <div>
+                                        <label class="form-label" data-translate="status">Status</label>
+                                        <select class="custom-select" id="t6_status">
                                             <option value="Fresh Graduate">Fresh Graduate</option>
                                             <option value="Lulusan">Lulusan</option>
                                         </select>
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="university">Universitas</span>
-                                        <input type="text" class="input-anime" id="tab6-universitas" placeholder="Nama universitas">
+                                    <div>
+                                        <label class="form-label" data-translate="university">Universitas</label>
+                                        <input type="text" class="custom-input" id="t6_univ" placeholder="Nama universitas">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="major">Jurusan</span>
-                                        <input type="text" class="input-anime" id="tab6-jurusan" placeholder="Jurusan">
+                                    <div>
+                                        <label class="form-label" data-translate="major">Jurusan</label>
+                                        <input type="text" class="custom-input" id="t6_jurusan" placeholder="Jurusan">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="specialization">Penjurusan</span>
-                                        <input type="text" class="input-anime" id="tab6-penjurusan" placeholder="Bidang spesialisasi">
+                                    <div>
+                                        <label class="form-label" data-translate="specialization">Bidang/Penjurusan</label>
+                                        <input type="text" class="custom-input" id="t6_penjurusan" placeholder="Bidang keahlian">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="yearGraduate">Tahun Lulus</span>
-                                        <input type="text" class="input-anime" id="tab6-tahunlulus" placeholder="2024">
+                                    <div>
+                                        <label class="form-label" data-translate="gradYear">Tahun Lulus</label>
+                                        <input type="text" class="custom-input" id="t6_tahun" placeholder="2024">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label">IPK</span>
-                                        <input type="text" class="input-anime" id="tab6-ipk" placeholder="3.xx">
+                                    <div>
+                                        <label class="form-label">IPK</label>
+                                        <input type="text" class="custom-input" id="t6_ipk" placeholder="3.xx">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="position">Posisi</span>
-                                        <input type="text" class="input-anime" id="tab6-posisi" placeholder="Posisi yang dilamar">
+                                    <div>
+                                        <label class="form-label" data-translate="position">Posisi</label>
+                                        <input type="text" class="custom-input" id="t6_posisi" placeholder="Posisi yang dilamar">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="document">Dokumen</span>
-                                        <input type="text" class="input-anime" id="tab6-dokumen" placeholder="CV, Portofolio, dll">
+                                    <div>
+                                        <label class="form-label" data-translate="document">Dokumen</label>
+                                        <input type="text" class="custom-input" id="t6_dokumen" placeholder="CV, Portofolio, dll">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="emailLabel">Email</span>
-                                        <input type="text" class="input-anime" id="tab6-email" placeholder="email@contoh.com">
+                                    <div>
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="custom-input" id="t6_email" placeholder="email@example.com">
                                     </div>
-                                    <div class="form-group">
-                                        <span class="form-label" data-translate="phone">Nomor Telepon</span>
-                                        <input type="text" class="input-anime" id="tab6-telepon" placeholder="08xxxxxxxxxx">
+                                    <div>
+                                        <label class="form-label" data-translate="phone">Nomor Telepon</label>
+                                        <input type="text" class="custom-input" id="t6_telepon" placeholder="08xxxxxxxxxx">
                                     </div>
                                 </div>
-
                                 <div class="flex flex-wrap gap-3">
                                     <button class="btn-copy" onclick="copyTemplate(6, 'id')">Salin Indonesia</button>
                                     <button class="btn-copy" onclick="copyTemplate(6, 'en')">Salin English</button>
@@ -1217,873 +871,756 @@
                                     <button class="btn-copy" onclick="copyTemplate(6, 'de')">Salin Jerman</button>
                                 </div>
                             </div>
+                        </div>
 
+                        <!-- Tab 7 -->
+                        <div class="tab-content" data-content="7">
                             <div class="glass-card p-6">
-                                <h4 class="font-display text-lg font-bold mb-4 text-cyan-400" data-translate="preview">Preview Template</h4>
-                                <div class="template-preview" id="preview6"></div>
+                                <h2 class="heading text-xl font-semibold mb-6" data-translate="tab7Title">Template Lamaran WA Mahasiswa</h2>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                                    <div>
+                                        <label class="form-label">PT / Perusahaan</label>
+                                        <input type="text" class="custom-input" id="t7_pt" placeholder="Nama perusahaan">
+                                    </div>
+                                    <div>
+                                        <label class="form-label" data-translate="name">Nama</label>
+                                        <input type="text" class="custom-input template-name" placeholder="Nama Anda">
+                                    </div>
+                                    <div>
+                                        <label class="form-label" data-translate="university">Universitas</label>
+                                        <input type="text" class="custom-input" id="t7_univ" placeholder="Nama universitas">
+                                    </div>
+                                    <div>
+                                        <label class="form-label" data-translate="major">Jurusan</label>
+                                        <input type="text" class="custom-input" id="t7_jurusan" placeholder="Jurusan">
+                                    </div>
+                                    <div>
+                                        <label class="form-label" data-translate="specialization">Bidang/Penjurusan</label>
+                                        <input type="text" class="custom-input" id="t7_penjurusan" placeholder="Bidang keahlian">
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Semester</label>
+                                        <input type="text" class="custom-input" id="t7_semester" placeholder="Semester">
+                                    </div>
+                                    <div>
+                                        <label class="form-label" data-translate="position">Posisi</label>
+                                        <input type="text" class="custom-input" id="t7_posisi" placeholder="Posisi yang dilamar">
+                                    </div>
+                                    <div>
+                                        <label class="form-label" data-translate="source">Sumber</label>
+                                        <input type="text" class="custom-input" id="t7_sumber" placeholder="Instagram/LinkedIn/dll">
+                                    </div>
+                                    <div>
+                                        <label class="form-label" data-translate="document">Dokumen</label>
+                                        <input type="text" class="custom-input" id="t7_dokumen" placeholder="CV, Portofolio, dll">
+                                    </div>
+                                    <div>
+                                        <label class="form-label" data-translate="phone">Nomor Telepon</label>
+                                        <input type="text" class="custom-input" id="t7_telepon" placeholder="08xxxxxxxxxx">
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="custom-input" id="t7_email" placeholder="email@example.com">
+                                    </div>
+                                    <div>
+                                        <label class="form-label" data-translate="time">Waktu</label>
+                                        <select class="custom-select" id="t7_waktu">
+                                            <option value="pagi">Pagi</option>
+                                            <option value="siang">Siang</option>
+                                            <option value="sore">Sore</option>
+                                            <option value="malam">Malam</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap gap-3">
+                                    <button class="btn-copy" onclick="copyTemplate(7, 'id')">Salin Indonesia</button>
+                                    <button class="btn-copy" onclick="copyTemplate(7, 'en')">Salin English</button>
+                                    <button class="btn-copy" onclick="copyTemplate(7, 'ja')">Salin Jepang</button>
+                                    <button class="btn-copy" onclick="copyTemplate(7, 'de')">Salin Jerman</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </main>
+        </div>
     </div>
 
     <script>
-        // ==================== INITIALIZATION ====================
-        let currentLang = 'id';
-        let userName = '';
-        let activeTab = 1;
-
-        // Translation Dictionary
+        // ==================== TRANSLATIONS ====================
         const translations = {
             id: {
-                welcome: 'Selamat datang! Masukkan nama Anda untuk melanjutkan',
-                nameLabel: 'Nama Lengkap',
-                namePlaceholder: 'Masukkan nama lengkap Anda',
-                continueBtn: 'Lanjutkan',
-                hello: 'Halo,',
-                selectTemplate: 'Pilih Template',
-                tab1: 'Followup WhatsApp',
-                tab2: 'Followup Email',
-                tab3: 'Lamaran WhatsApp',
-                tab4: 'Magang Mahasiswa',
-                tab5: 'Template Magang',
-                tab6: 'Surat Lamaran',
-                tab1Title: 'Template Followup WhatsApp',
-                tab2Title: 'Template Followup Email',
-                tab3Title: 'Template Lamaran WhatsApp',
-                tab4Title: 'Template Magang Mahasiswa',
-                tab5Title: 'Template Magang',
-                tab6Title: 'Template Surat Lamaran Kerja',
-                position: 'Posisi',
-                interviewDate: 'Tanggal Wawancara',
-                time: 'Waktu',
-                morning: 'Pagi',
-                noon: 'Siang',
-                afternoon: 'Sore',
-                evening: 'Malam',
-                phone: 'Nomor Telepon',
-                major: 'Jurusan',
-                university: 'Universitas',
-                source: 'Sumber',
-                document: 'Dokumen',
-                semester: 'Semester',
-                status: 'Status',
-                type: 'Tipe',
-                specialization: 'Penjurusan',
-                yearGraduate: 'Tahun Lulus',
-                preview: 'Preview Template',
-                copied: 'Berhasil disalin ke clipboard!',
-                graduateStatus: 'Lulusan / Fresh Graduate',
-                emailLabel: 'Email'
+                language: "Bahasa:",
+                welcome: "Selamat Datang",
+                enterName: "Masukkan nama Anda untuk melanjutkan",
+                yourName: "Nama Anda",
+                namePlaceholder: "Ketik nama lengkap Anda...",
+                continue: "Lanjutkan ke Template",
+                nameInfo: "Nama akan otomatis terisi di semua template",
+                hello: "Halo,",
+                changeName: "Ganti Nama",
+                name: "Nama",
+                position: "Posisi",
+                date: "Tanggal",
+                phone: "Nomor Telepon",
+                time: "Waktu",
+                status: "Status",
+                university: "Universitas",
+                major: "Jurusan",
+                specialization: "Bidang/Penjurusan",
+                source: "Sumber",
+                document: "Dokumen",
+                jobType: "Jenis Lamaran",
+                workType: "Tipe Pekerjaan",
+                gradYear: "Tahun Lulus",
+                tab1Title: "Template Followup WhatsApp",
+                tab2Title: "Template Followup Email",
+                tab3Title: "Template Lamaran WhatsApp",
+                tab4Title: "Template Magang Mahasiswa",
+                tab5Title: "Template Magang",
+                tab6Title: "Template Surat Lamaran Kerja",
+                tab7Title: "Template Lamaran WA Mahasiswa",
+                copied: "Berhasil disalin!",
+                phoneCopied: "Nomor telepon berhasil disalin!",
+                morning: "Pagi",
+                afternoon: "Siang",
+                evening: "Sore",
+                night: "Malam"
             },
             en: {
-                welcome: 'Welcome! Enter your name to continue',
-                nameLabel: 'Full Name',
-                namePlaceholder: 'Enter your full name',
-                continueBtn: 'Continue',
-                hello: 'Hello,',
-                selectTemplate: 'Select Template',
-                tab1: 'WhatsApp Follow-up',
-                tab2: 'Email Follow-up',
-                tab3: 'WhatsApp Application',
-                tab4: 'Student Internship',
-                tab5: 'Internship Template',
-                tab6: 'Job Application',
-                tab1Title: 'WhatsApp Follow-up Template',
-                tab2Title: 'Email Follow-up Template',
-                tab3Title: 'WhatsApp Application Template',
-                tab4Title: 'Student Internship Template',
-                tab5Title: 'Internship Template',
-                tab6Title: 'Job Application Letter Template',
-                position: 'Position',
-                interviewDate: 'Interview Date',
-                time: 'Time',
-                morning: 'Morning',
-                noon: 'Afternoon',
-                afternoon: 'Evening',
-                evening: 'Night',
-                phone: 'Phone Number',
-                major: 'Major',
-                university: 'University',
-                source: 'Source',
-                document: 'Document',
-                semester: 'Semester',
-                status: 'Status',
-                type: 'Type',
-                specialization: 'Specialization',
-                yearGraduate: 'Graduation Year',
-                preview: 'Template Preview',
-                copied: 'Successfully copied to clipboard!',
-                graduateStatus: 'Graduate / Fresh Graduate',
-                emailLabel: 'Email'
+                language: "Language:",
+                welcome: "Welcome",
+                enterName: "Enter your name to continue",
+                yourName: "Your Name",
+                namePlaceholder: "Type your full name...",
+                continue: "Continue to Templates",
+                nameInfo: "Name will be automatically filled in all templates",
+                hello: "Hello,",
+                changeName: "Change Name",
+                name: "Name",
+                position: "Position",
+                date: "Date",
+                phone: "Phone Number",
+                time: "Time",
+                status: "Status",
+                university: "University",
+                major: "Major",
+                specialization: "Specialization",
+                source: "Source",
+                document: "Document",
+                jobType: "Application Type",
+                workType: "Work Type",
+                gradYear: "Graduation Year",
+                tab1Title: "WhatsApp Follow-up Template",
+                tab2Title: "Email Follow-up Template",
+                tab3Title: "WhatsApp Application Template",
+                tab4Title: "Student Internship Template",
+                tab5Title: "Internship Template",
+                tab6Title: "Job Application Letter Template",
+                tab7Title: "Student WhatsApp Application Template",
+                copied: "Successfully copied!",
+                phoneCopied: "Phone number copied successfully!",
+                morning: "Morning",
+                afternoon: "Afternoon",
+                evening: "Evening",
+                night: "Night"
             },
             ja: {
-                welcome: 'ようこそ！続行するにはお名前を入力してください',
-                nameLabel: '氏名',
-                namePlaceholder: '氏名を入力してください',
-                continueBtn: '続ける',
-                hello: 'こんにちは、',
-                selectTemplate: 'テンプレートを選択',
-                tab1: 'WhatsAppフォローアップ',
-                tab2: 'メールフォローアップ',
-                tab3: 'WhatsApp応募',
-                tab4: '学生インターン',
-                tab5: 'インターンテンプレート',
-                tab6: '求職応募',
-                tab1Title: 'WhatsAppフォローアップテンプレート',
-                tab2Title: 'メールフォローアップテンプレート',
-                tab3Title: 'WhatsApp応募テンプレート',
-                tab4Title: '学生インターンテンプレート',
-                tab5Title: 'インターンテンプレート',
-                tab6Title: '求職応募レター',
-                position: '職位',
-                interviewDate: '面接日',
-                time: '時間',
-                morning: '朝',
-                noon: '昼',
-                afternoon: '夕方',
-                evening: '夜',
-                phone: '電話番号',
-                major: '専攻',
-                university: '大学',
-                source: '情報源',
-                document: '書類',
-                semester: '学期',
-                status: 'ステータス',
-                type: 'タイプ',
-                specialization: '専門分野',
-                yearGraduate: '卒業年',
-                preview: 'テンプレートプレビュー',
-                copied: 'クリップボードにコピーしました！',
-                graduateStatus: '卒業生 / フレッシュグラデュエート',
-                emailLabel: 'メールアドレス'
+                language: "言語：",
+                welcome: "ようこそ",
+                enterName: "続行するには名前を入力してください",
+                yourName: "お名前",
+                namePlaceholder: "フルネームを入力...",
+                continue: "テンプレートへ進む",
+                nameInfo: "名前はすべてのテンプレートに自動入力されます",
+                hello: "こんにちは、",
+                changeName: "名前を変更",
+                name: "名前",
+                position: "職位",
+                date: "日付",
+                phone: "電話番号",
+                time: "時間",
+                status: "ステータス",
+                university: "大学",
+                major: "専攻",
+                specialization: "専門分野",
+                source: "情報源",
+                document: "書類",
+                jobType: "応募種別",
+                workType: "勤務形態",
+                gradYear: "卒業年",
+                tab1Title: "WhatsAppフォローアップテンプレート",
+                tab2Title: "メールフォローアップテンプレート",
+                tab3Title: "WhatsApp応募テンプレート",
+                tab4Title: "学生インターンテンプレート",
+                tab5Title: "インターンテンプレート",
+                tab6Title: "求職応募書類テンプレート",
+                tab7Title: "学生WhatsApp応募テンプレート",
+                copied: "コピーに成功しました！",
+                phoneCopied: "電話番号がコピーされました！",
+                morning: "朝",
+                afternoon: "昼",
+                evening: "夕方",
+                night: "夜"
             },
             de: {
-                welcome: 'Willkommen! Geben Sie Ihren Namen ein, um fortzufahren',
-                nameLabel: 'Vollständiger Name',
-                namePlaceholder: 'Geben Sie Ihren vollständigen Namen ein',
-                continueBtn: 'Fortfahren',
-                hello: 'Hallo,',
-                selectTemplate: 'Vorlage auswählen',
-                tab1: 'WhatsApp-Follow-up',
-                tab2: 'E-Mail-Follow-up',
-                tab3: 'WhatsApp-Bewerbung',
-                tab4: 'Studentisches Praktikum',
-                tab5: 'Praktikumsvorlage',
-                tab6: 'Stellenbewerbung',
-                tab1Title: 'WhatsApp-Follow-up-Vorlage',
-                tab2Title: 'E-Mail-Follow-up-Vorlage',
-                tab3Title: 'WhatsApp-Bewerbungsvorlage',
-                tab4Title: 'Studentisches Praktikum Vorlage',
-                tab5Title: 'Praktikumsvorlage',
-                tab6Title: 'Bewerbungsschreiben',
-                position: 'Position',
-                interviewDate: 'Interviewdatum',
-                time: 'Zeit',
-                morning: 'Morgen',
-                noon: 'Mittag',
-                afternoon: 'Nachmittag',
-                evening: 'Abend',
-                phone: 'Telefonnummer',
-                major: 'Studiengang',
-                university: 'Universität',
-                source: 'Quelle',
-                document: 'Dokument',
-                semester: 'Semester',
-                status: 'Status',
-                type: 'Typ',
-                specialization: 'Spezialisierung',
-                yearGraduate: 'Abschlussjahr',
-                preview: 'Vorlagenvorschau',
-                copied: 'Erfolgreich in die Zwischenablage kopiert!',
-                graduateStatus: 'Absolvent / Fresh Graduate',
-                emailLabel: 'E-Mail'
+                language: "Sprache:",
+                welcome: "Willkommen",
+                enterName: "Geben Sie Ihren Namen ein, um fortzufahren",
+                yourName: "Ihr Name",
+                namePlaceholder: "Geben Sie Ihren vollständigen Namen ein...",
+                continue: "Weiter zu Vorlagen",
+                nameInfo: "Der Name wird automatisch in alle Vorlagen eingetragen",
+                hello: "Hallo,",
+                changeName: "Namen ändern",
+                name: "Name",
+                position: "Position",
+                date: "Datum",
+                phone: "Telefonnummer",
+                time: "Zeit",
+                status: "Status",
+                university: "Universität",
+                major: "Studiengang",
+                specialization: "Spezialisierung",
+                source: "Quelle",
+                document: "Dokument",
+                jobType: "Bewerbungsart",
+                workType: "Arbeitsart",
+                gradYear: "Abschlussjahr",
+                tab1Title: "WhatsApp-Follow-up-Vorlage",
+                tab2Title: "E-Mail-Follow-up-Vorlage",
+                tab3Title: "WhatsApp-Bewerbungsvorlage",
+                tab4Title: "Studentische Praktikumsvorlage",
+                tab5Title: "Praktikumsvorlage",
+                tab6Title: "Bewerbungsschreiben-Vorlage",
+                tab7Title: "Studentische WhatsApp-Bewerbungsvorlage",
+                copied: "Erfolgreich kopiert!",
+                phoneCopied: "Telefonnummer erfolgreich kopiert!",
+                morning: "Morgen",
+                afternoon: "Nachmittag",
+                evening: "Abend",
+                night: "Nacht"
             }
         };
 
-        // Template Translations
         const templateTranslations = {
-            1: {
-                id: (data) => `Selamat ${data.waktu}, Tim Recruitment ${data.pt}.
-
-Saya ${data.nama}, kandidat untuk posisi ${data.posisi} yang melakukan wawancara pada ${data.tanggal} di ${data.pt}.
-
-Mohon maaf jika mengganggu. Saya ingin menanyakan perkembangan terbaru mengenai hasil wawancara saya. Saya sangat berharap dapat menerima kabar dan kesempatan untuk bergabung dengan ${data.pt}. Jika ada informasi tambahan yang diperlukan, saya siap membantu.
-
-Terima kasih banyak atas perhatian Bapak/Ibu.
-
-Salam,
- ${data.nama}`,
-                en: (data) => `Good ${data.waktu}, ${data.pt} Recruitment Team.
-
-I am ${data.nama}, a candidate for the ${data.posisi} position who interviewed on ${data.tanggal} at ${data.pt}.
-
-I apologize for any inconvenience. I would like to inquire about the latest developments regarding my interview results. I really hope to receive news and the opportunity to join ${data.pt}. If there is any additional information needed, I am ready to help.
-
-Thank you very much for your attention.
-
-Best regards,
- ${data.nama}`,
-                ja: (data) => `${data.pt}採用チームの皆様、${data.waktu}。
-
- ${data.tanggal}に${data.pt}で面接を受けた${data.posisi}の候補者、${data.nama}と申します。
-
-お忙しいところ申し訳ございません。面接の結果について最新の状況をお伺いしたくご連絡いたしました。${data.pt}からのお知らせと入社の機会をいただけますことを心よりお待ちしております。追加で必要な情報がございましたら、ご協力いたします。
-
-ご多忙の折、よろしくお願い申し上げます。
-
-敬具
- ${data.nama}`,
-                de: (data) => `Guten ${data.waktu}, ${data.pt} Recruitment Team.
-
-Ich bin ${data.nama}, ein Kandidat für die Position als ${data.posisi}, der am ${data.tanggal} bei ${data.pt} interviewt wurde.
-
-Bitte entschuldigen Sie die Störung. Ich möchte nach dem aktuellen Stand meiner Interviewergebnisse fragen. Ich hoffe sehr, Nachrichten zu erhalten und die Gelegenheit, bei ${data.pt} mitzuarbeiten. Wenn zusätzliche Informationen benötigt werden, bin ich gerne bereit zu helfen.
-
-Vielen Dank für Ihre Aufmerksamkeit.
-
-Mit freundlichen Grüßen,
- ${data.nama}`
+            id: {
+                t1_greeting: "Selamat [WAKTU], Tim Recruitment [PT].\n\nSaya [NAMA], kandidat untuk posisi [POSISI] yang melakukan wawancara pada [TANGGAL] di [PT].\n\nMohon maaf jika mengganggu. Saya ingin menanyakan perkembangan terbaru mengenai hasil wawancara saya. Saya sangat berharap dapat menerima kabar dan kesempatan untuk bergabung dengan [PT]. Jika ada informasi tambahan yang diperlukan saya siap membantu, serta dapat menghubungi saya pada nomor [TELEPON] atau melalui email [EMAIL].\n\nTerima kasih banyak atas perhatian Bapak/Ibu.\n\nSalam,\n[NAMA]",
+                t2_greeting: "Yth. Tim Recruitment [PT].\n\nSaya [NAMA], kandidat untuk posisi [POSISI] yang telah melakukan wawancara pada [TANGGAL] di [PT].\n\nTerima kasih banyak atas kesempatan yang diberikan untuk berdiskusi mengenai posisi ini. Diskusi tersebut membuat saya tertarik untuk berkontribusi di [PT].\n\nMelalui email ini, saya ingin menanyakan perkembangan terbaru mengenai hasil wawancara saya. Saya sangat berharap dapat bergabung dan berkontribusi di [PT]. Jika ada Informasi tambahan atau ingin berdiskusi lebih lanjut saya siap membantu, serta dapat menghubungi saya pada nomor [TELEPON] atau melalui email [EMAIL].\n\nTerima kasih atas perhatian Bapak/Ibu. Saya menantikan kabar dari Bapak/Ibu.\n\nHormat saya,\n[NAMA]\n[TELEPON]",
+                t3_greeting: "Selamat [WAKTU], Tim Recruitment [PT].\n\nPerkenalkan saya [NAMA], merupakan [STATUS] dari [UNIVERSITAS], Jurusan [JURUSAN], bidang [PENJURUSAN], dengan IPK [IPK]. Saya tertarik melamar pada jalur [JENIS] untuk posisi [POSISI] di perusahaan [PT] yang saya temukan melalui [SUMBER]. Saya telah melampirkan [DOKUMEN] sebagai pertimbangan untuk melamar perusahaan Bapak/Ibu.\n\nSaya berharap dapat diberikan kesempatan untuk mengikuti proses wawancara dan mendiskusikan bagaimana saya bisa memberikan kontribusi bagi perusahaan [PT]. Jika ada informasi tambahan saya siap membantu, serta dapat menghubungi pada nomor [TELEPON] atau melalui email [EMAIL]. Terima kasih atas perhatian dan kesempatan yang diberikan.\n\nHormat saya,\n[NAMA]\n[TELEPON]",
+                t4_greeting: "Kepada Yth. Tim Recruitment [PT].\n\nPerkenalkan Saya [NAMA], mahasiswa Universitas [UNIVERSITAS] jurusan [JURUSAN], bidang [PENJURUSAN], semester [SEMESTER]. Saya tertarik untuk melamar pada jalur Magang (Internship) pada posisi [POSISI] di perusahaan Bapak/Ibu yang saya lihat melalui [SUMBER].\n\nSaya yakin dengan pengalaman dan keterampilan yang saya miliki, saya bisa memberikan kontribusi yang baik bagi perusahaan. Saya sangat antusias untuk belajar dan berkembang bersama tim di perusahaan Bapak/Ibu.\n\nTerlampir, saya sertakan [DOKUMEN] untuk pertimbangan lebih lanjut. Saya sangat berharap dapat berdiskusi lebih lanjut mengenai kesempatan ini. Jika ada Informasi tambahan atau ingin berdiskusi lebih lanjut saya siap membantu, serta dapat menghubungi saya melalui nomor [TELEPON] atau melalui email [EMAIL].\n\nTerima kasih atas perhatian dan waktu yang diberikan.\n\nHormat saya,\n[NAMA]",
+                t5_greeting: "Kepada Yth. Tim Recruitment [PT].\n\nPerkenalkan, nama saya [NAMA], merupakan [STATUS] dari Universitas [UNIVERSITAS] jurusan [JURUSAN], dengan IPK [IPK]. Saya bermaksud melamar posisi [POSISI] melalui jalur [TIPE] sebagaimana diinformasikan melalui [SUMBER].\n\nSaya yakin dengan pengalaman dan keterampilan yang saya miliki, saya dapat memberikan kontribusi yang baik bagi perusahaan. Saya sangat antusias untuk belajar dan berkembang bersama tim di perusahaan Bapak/Ibu.\n\nTerlampir, saya sertakan [DOKUMEN] sebagai bahan pertimbangan lebih lanjut. Saya sangat berharap dapat berdiskusi lebih mendalam mengenai kesempatan ini. Serta dapat menghubungi saya melalui Email [EMAIL] atau pada Nomor [TELEPON].\n\nTerima kasih atas perhatian dan waktu yang diberikan.\n\nHormat saya,\n[NAMA]",
+                t6_greeting: "Yth. Tim Recruitment [PT],\ndi Tempat\n\nDengan Hormat,\nPerkenalkan saya [NAMA]. Saya merupakan [STATUS] dari [UNIVERSITAS] jurusan [JURUSAN] Bidang [PENJURUSAN], saya lulus tahun [TAHUN] dengan nilai IPK [IPK]. Saya bermaksud untuk melamar pekerjaan pada posisi [POSISI]. Bersama email ini, saya lampirkan [DOKUMEN] untuk bahan pertimbangan.\n\nSaya berharap dapat berdiskusi lebih lanjut mengenai kontribusi yang dapat saya berikan, serta dapat menghubungi melalui email [EMAIL] atau pada nomor [TELEPON].\n\nTerima Kasih atas perhatian Bapak/Ibu.\n\nHormat saya,\n[NAMA]",
+                t7_greeting: "Selamat [WAKTU], Tim Recruitment [PT].\n\nPerkenalkan Saya [NAMA], mahasiswa Universitas [UNIVERSITAS] jurusan [JURUSAN], bidang [PENJURUSAN], semester [SEMESTER]. Saya tertarik untuk melamar pada jalur Magang (Internship) pada posisi [POSISI] di perusahaan Bapak/Ibu yang saya lihat melalui [SUMBER].\n\nSaya yakin dengan pengalaman dan keterampilan yang saya miliki, saya bisa memberikan kontribusi yang baik bagi perusahaan. Saya sangat antusias untuk belajar dan berkembang bersama tim di perusahaan Bapak/Ibu.\n\nTerlampir, saya sertakan [DOKUMEN] untuk pertimbangan lebih lanjut. Saya sangat berharap dapat berdiskusi lebih lanjut mengenai kesempatan ini. Jika ada Informasi tambahan atau ingin berdiskusi lebih lanjut saya siap membantu, serta dapat menghubungi saya melalui nomor [TELEPON] atau melalui email [EMAIL].\n\nTerima kasih atas perhatian dan waktu yang diberikan.\n\nHormat saya,\n[NAMA]"
             },
-            2: {
-                id: (data) => `Yth. Tim Recruitment ${data.pt}.
-
-Saya ${data.nama}, kandidat untuk posisi ${data.posisi} yang telah melakukan wawancara pada ${data.tanggal} di ${data.pt}.
-
-Terima kasih banyak atas kesempatan yang diberikan untuk berdiskusi mengenai posisi ini. Diskusi tersebut membuat saya tertarik untuk berkontribusi di ${data.pt}.
-
-Melalui email ini, saya ingin menanyakan perkembangan terbaru mengenai hasil wawancara saya. Saya sangat berharap dapat bergabung dan berkontribusi di ${data.pt}.
-
-Terima kasih atas perhatian Anda. Saya menantikan kabar dari Anda.
-
-Hormat saya,
- ${data.nama}
- ${data.telepon}`,
-                en: (data) => `Dear ${data.pt} Recruitment Team.
-
-I am ${data.nama}, a candidate for the ${data.posisi} position who interviewed on ${data.tanggal} at ${data.pt}.
-
-Thank you very much for the opportunity to discuss this position. The discussion made me interested in contributing to ${data.pt}.
-
-Through this email, I would like to inquire about the latest developments regarding my interview results. I really hope to join and contribute at ${data.pt}.
-
-Thank you for your attention. I look forward to hearing from you.
-
-Best regards,
- ${data.nama}
- ${data.telepon}`,
-                ja: (data) => `${data.pt}採用チームの皆様へ
-
- ${data.tanggal}に${data.pt}で面接を受けた${data.posisi}の候補者、${data.nama}と申します。
-
-この度は面接の機会をいただき、誠にありがとうございました。面接を通じて、${data.pt}で貢献したいという思いを強くいたしました。
-
-本メールにて、面接結果について最新の状況をお伺いしたく存じます。ぜひ${data.pt}の一員として貢献できることを楽しみにしております。
-
-ご多忙の折、よろしくお願い申し上げます。ご連絡をお待ちしております。
-
-敬具
- ${data.nama}
- ${data.telepon}`,
-                de: (data) => `An das Recruitment-Team von ${data.pt}.
-
-Ich bin ${data.nama}, ein Kandidat für die Position als ${data.posisi}, der am ${data.tanggal} bei ${data.pt} interviewt wurde.
-
-Vielen Dank für die Gelegenheit, diese Position zu besprechen. Das Gespräch hat mein Interesse geweckt, bei ${data.pt} mitzuwirken.
-
-Mit dieser E-Mail möchte ich nach dem aktuellen Stand meiner Interviewergebnisse fragen. Ich hoffe sehr, bei ${data.pt} mitwirken zu können.
-
-Vielen Dank für Ihre Aufmerksamkeit. Ich freue mich auf Ihre Nachricht.
-
-Mit freundlichen Grüßen,
- ${data.nama}
- ${data.telepon}`
+            en: {
+                t1_greeting: "Good [WAKTU], Recruitment Team at [PT].\n\nI am [NAMA], a candidate for the [POSISI] position who interviewed on [TANGGAL] at [PT].\n\nI apologize for any inconvenience. I would like to inquire about the latest updates regarding my interview results. I am very hopeful to receive news and the opportunity to join [PT]. If any additional information is needed, I am ready to assist, and you can contact me at [TELEPON] or via email at [EMAIL].\n\nThank you very much for your attention.\n\nBest regards,\n[NAMA]",
+                t2_greeting: "Dear Recruitment Team at [PT].\n\nI am [NAMA], a candidate for the [POSISI] position who interviewed on [TANGGAL] at [PT].\n\nThank you very much for the opportunity to discuss this position. The discussion made me interested in contributing to [PT].\n\nThrough this email, I would like to inquire about the latest updates regarding my interview results. I am very hopeful to join and contribute at [PT]. If any additional information is needed or if you would like to discuss further, I am ready to assist, and you can contact me at [TELEPON] or via email at [EMAIL].\n\nThank you for your attention. I look forward to hearing from you.\n\nSincerely,\n[NAMA]\n[TELEPON]",
+                t3_greeting: "Good [WAKTU], Recruitment Team at [PT].\n\nAllow me to introduce myself, I am [NAMA], a [STATUS] from [UNIVERSITAS], Major in [JURUSAN], specializing in [PENJURUSAN], with a GPA of [IPK]. I am interested in applying through the [JENIS] track for the [POSISI] position at [PT] which I found through [SUMBER]. I have attached [DOKUMEN] for your consideration.\n\nI hope to be given the opportunity to participate in the interview process and discuss how I can contribute to [PT]. If any additional information is needed, I am ready to assist, and you can contact me at [TELEPON] or via email at [EMAIL]. Thank you for your attention and the opportunity provided.\n\nSincerely,\n[NAMA]\n[TELEPON]",
+                t4_greeting: "To the Recruitment Team at [PT].\n\nAllow me to introduce myself, I am [NAMA], a student at [UNIVERSITAS] University, majoring in [JURUSAN], specializing in [PENJURUSAN], currently in semester [SEMESTER]. I am interested in applying for an Internship position as [POSISI] at your company which I saw through [SUMBER].\n\nI am confident that with my experience and skills, I can make a good contribution to the company. I am very enthusiastic to learn and grow with the team at your company.\n\nAttached, I include [DOKUMEN] for further consideration. I very much hope to discuss this opportunity further. If any additional information is needed or if you would like to discuss further, I am ready to assist, and you can contact me at [TELEPON] or via email at [EMAIL].\n\nThank you for your attention and time.\n\nSincerely,\n[NAMA]",
+                t5_greeting: "To the Recruitment Team at [PT].\n\nAllow me to introduce myself, my name is [NAMA], a [STATUS] from [UNIVERSITAS] University, majoring in [JURUSAN], with a GPA of [IPK]. I intend to apply for the [POSISI] position through the [TIPE] program as advertised through [SUMBER].\n\nI am confident that with my experience and skills, I can make a good contribution to the company. I am very enthusiastic to learn and grow with the team at your company.\n\nAttached, I include [DOKUMEN] for further consideration. I very much hope to discuss this opportunity in more depth. You can contact me via Email at [EMAIL] or at Phone Number [TELEPON].\n\nThank you for your attention and time.\n\nSincerely,\n[NAMA]",
+                t6_greeting: "Dear Recruitment Team at [PT],\n\nWith due respect,\nAllow me to introduce myself, I am [NAMA]. I am a [STATUS] from [UNIVERSITAS] majoring in [JURUSAN] with a specialization in [PENJURUSAN], I graduated in [TAHUN] with a GPA of [IPK]. I intend to apply for the [POSISI] position. Along with this email, I attach [DOKUMEN] for your consideration.\n\nI hope to discuss further about the contribution I can make, and you can contact me via email at [EMAIL] or at phone number [TELEPON].\n\nThank you for your attention.\n\nSincerely,\n[NAMA]",
+                t7_greeting: "Good [WAKTU], Recruitment Team at [PT].\n\nAllow me to introduce myself, I am [NAMA], a student at [UNIVERSITAS] University, majoring in [JURUSAN], specializing in [PENJURUSAN], currently in semester [SEMESTER]. I am interested in applying for an Internship position as [POSISI] at your company which I saw through [SUMBER].\n\nI am confident that with my experience and skills, I can make a good contribution to the company. I am very enthusiastic to learn and grow with the team at your company.\n\nAttached, I include [DOKUMEN] for further consideration. I very much hope to discuss this opportunity further. If any additional information is needed or if you would like to discuss further, I am ready to assist, and you can contact me at [TELEPON] or via email at [EMAIL].\n\nThank you for your attention and time.\n\nSincerely,\n[NAMA]"
             },
-            3: {
-                id: (data) => `Selamat ${data.waktu}, Tim Recruitment ${data.pt}.
-
-Nama saya ${data.nama}, lulusan ${data.jurusan}, dari ${data.universitas} dengan IPK ${data.ipk}. Saya tertarik melamar untuk posisi ${data.posisi} di perusahaan Bapak/Ibu yang saya temukan melalui ${data.sumber}. Saya telah melampirkan ${data.dokumen} sebagai pertimbangan untuk melamar perusahaan Bapak/Ibu.
-
-Saya berharap dapat diberikan kesempatan untuk mengikuti proses wawancara dan mendiskusikan bagaimana saya bisa memberikan kontribusi bagi perusahaan Bapak/Ibu. Terima kasih atas perhatian dan kesempatan yang diberikan.
-
-Hormat saya,
- ${data.nama}
- ${data.telepon}`,
-                en: (data) => `Good ${data.waktu}, ${data.pt} Recruitment Team.
-
-My name is ${data.nama}, a graduate of ${data.jurusan} from ${data.universitas} with a GPA of ${data.ipk}. I am interested in applying for the ${data.posisi} position at your company which I found through ${data.sumber}. I have attached ${data.dokumen} for your consideration.
-
-I hope to be given the opportunity to participate in the interview process and discuss how I can contribute to your company. Thank you for your attention and the opportunity given.
-
-Best regards,
- ${data.nama}
- ${data.telepon}`,
-                ja: (data) => `${data.pt}採用チームの皆様、${data.waktu}。
-
- ${data.nama}と申します。${data.universitas}の${data.jurusan}を卒業し、GPAは${data.ipk}です。${data.sumber}で貴社の${data.posisi}の求人を拝見し、応募いたしました。${data.dokumen}を添付いたしましたので、ご検討のほどよろしくお願いいたします。
-
-面接の機会をいただき、貴社への貢献についてお話しできることを楽しみにしております。ご多忙の折、よろしくお願い申し上げます。
-
-敬具
- ${data.nama}
- ${data.telepon}`,
-                de: (data) => `Guten ${data.waktu}, ${data.pt} Recruitment Team.
-
-Mein Name ist ${data.nama}, Absolvent des Studiengangs ${data.jurusan} von der ${data.universitas} mit einem GPA von ${data.ipk}. Ich bin interessiert daran, mich für die Position als ${data.posisi} bei Ihrem Unternehmen zu bewerben, die ich über ${data.sumber} gefunden habe. Ich habe ${data.dokumen} für Ihre Prüfung beigefügt.
-
-Ich hoffe, die Gelegenheit zu erhalten, am Vorstellungsgespräch teilzunehmen und zu besprechen, wie ich zu Ihrem Unternehmen beitragen kann. Vielen Dank für Ihre Aufmerksamkeit.
-
-Mit freundlichen Grüßen,
- ${data.nama}
- ${data.telepon}`
+            ja: {
+                t1_greeting: "[WAKTU]、[PT]採用チームの皆様へ。\n\n私は[POSISI]の職位に応募し、[TANGGAL]に[PT]で面接を受けました[NAMA]と申します。\n\nお忙しいところ恐れ入ります。面接の結果について最新の状況をお伺いしたくご連絡いたしました。[PT]からのお知らせと入社の機会をいただけることを心よりお待ちしております。追加の情報が必要な場合は、[TELEPON]またはメール[EMAIL]までご連絡ください。\n\nご多忙の中、ご対応いただき誠にありがとうございます。\n\n敬具\n[NAMA]",
+                t2_greeting: "[PT]採用チームの皆様へ。\n\n私は[POSISI]の職位に応募し、[TANGGAL]に[PT]で面接を受けました[NAMA]と申します。\n\nこの度は、面接の機会をいただき誠にありがとうございました。お話を伺い、[PT]で貢献したいという思いを強くいたしました。\n\n本メールにて、面接の結果について最新の状況をお伺いしたく存じます。[PT]に入社し貢献できることを心より願っております。追加の情報が必要な場合や詳細についてご相談されたい場合は、[TELEPON]またはメール[EMAIL]までご連絡ください。\n\nご多忙の中、ご対応いただき誠にありがとうございます。ご連絡をお待ちしております。\n\n敬具\n[NAMA]\n[TELEPON]",
+                t3_greeting: "[WAKTU]、[PT]採用チームの皆様へ。\n\n初めまして、[UNIVERSITAS]大学[JURUSAN]専攻、[PENJURUSAN]専修の[STATUS]、[NAMA]と申します。IPKは[IPK]です。[SUMBER]で[PT]の[POSISI]の職位を拝見し、[JENIS]として応募させていただきたいと考えております。検討資料として[DOKUMEN]を添付いたしました。\n\n面接の機会をいただき、[PT]にどのように貢献できるかをご説明できることを楽しみにしております。追加の情報が必要な場合は、[TELEPON]またはメール[EMAIL]までご連絡ください。ご検討のほど、よろしくお願い申し上げます。\n\n敬具\n[NAMA]\n[TELEPON]",
+                t4_greeting: "[PT]採用チームの皆様へ。\n\n初めまして、[UNIVERSITAS]大学[JURUSAN]学科[PENJURUSAN]専攻、[SEMESTER]回生の[NAMA]と申します。[SUMBER]で貴社のインターンシップ職位[POSISI]を拝見し、応募させていただきたいと考えております。\n\n私の経験とスキルを活かし、貴社に貢献できると確信しております。貴社のチームの一員として学び、成長できることを非常に楽しみにしております。\n\n検討資料として[DOKUMEN]を添付いたしました。この機会について詳しくお話しできることを楽しみにしております。追加の情報が必要な場合は、[TELEPON]またはメール[EMAIL]までご連絡ください。\n\nお忙しい中、お時間をいただきありがとうございます。\n\n敬具\n[NAMA]",
+                t5_greeting: "[PT]採用チームの皆様へ。\n\n初めまして、[UNIVERSITAS]大学[JURUSAN]学科卒業生、[STATUS]の[NAMA]と申します。IPKは[IPK]です。[SUMBER]で[POSISI]の職位を拝見し、[TIPE]として応募させていただきたいと考えております。\n\n私の経験とスキルを活かし、貴社に貢献できると確信しております。貴社のチームの一員として学び、成長できることを非常に楽しみにしております。\n\n検討資料として[DOKUMEN]を添付いたしました。この機会について詳しくお話しできることを楽しみにしております。メール[EMAIL]または電話[TELEPON]までご連絡ください。\n\nお忙しい中、お時間をいただきありがとうございます。\n\n敬具\n[NAMA]",
+                t6_greeting: "[PT]採用チームの皆様へ\n\n拝啓\n\n初めまして、[NAMA]と申します。[UNIVERSITAS]大学[JURUSAN]学科[PENJURUSAN]専攻の[STATUS]で、[TAHUN]年に卒業いたしました。IPKは[IPK]です。[POSISI]の職位に応募させていただきたいと考えております。本メールには検討資料として[DOKUMEN]を添付いたしました。\n\n私がどのように貢献できるかについて詳しくお話しできることを楽しみにしております。メール[EMAIL]または電話[TELEPON]までご連絡ください。\n\nご多忙の中、ご検討のほどよろしくお願い申し上げます。\n\n敬具\n[NAMA]",
+                t7_greeting: "[WAKTU]、[PT]採用チームの皆様へ。\n\n初めまして、[UNIVERSITAS]大学[JURUSAN]学科[PENJURUSAN]専攻、[SEMESTER]回生の[NAMA]と申します。[SUMBER]で貴社のインターンシップ職位[POSISI]を拝見し、応募させていただきたいと考えております。\n\n私の経験とスキルを活かし、貴社に貢献できると確信しております。貴社のチームの一員として学び、成長できることを非常に楽しみにしております。\n\n検討資料として[DOKUMEN]を添付いたしました。この機会について詳しくお話しできることを楽しみにしております。追加の情報が必要な場合は、[TELEPON]またはメール[EMAIL]までご連絡ください。\n\nお忙しい中、お時間をいただきありがとうございます。\n\n敬具\n[NAMA]"
             },
-            4: {
-                id: (data) => `Kepada Yth. Tim Recruitment ${data.pt}.
-
-Saya ${data.nama}, mahasiswa Universitas ${data.universitas} jurusan ${data.jurusan} semester ${data.semester}. Saya tertarik untuk melamar posisi magang ${data.posisi} di perusahaan Bapak/Ibu yang saya lihat melalui ${data.sumber}.
-
-Saya yakin dengan pengalaman dan keterampilan yang saya miliki, saya bisa memberikan kontribusi yang baik bagi perusahaan. Saya sangat antusias untuk belajar dan berkembang bersama tim di perusahaan Bapak/Ibu.
-
-Terlampir, saya sertakan ${data.dokumen} untuk pertimbangan lebih lanjut. Saya sangat berharap dapat berdiskusi lebih lanjut mengenai kesempatan ini.
-
-Terima kasih atas perhatian dan waktu yang diberikan.
-
-Hormat saya,
- ${data.nama}`,
-                en: (data) => `To the Recruitment Team of ${data.pt}.
-
-I am ${data.nama}, a student at ${data.universitas} University majoring in ${data.jurusan}, currently in semester ${data.semester}. I am interested in applying for the ${data.posisi} internship position at your company which I saw through ${data.sumber}.
-
-I am confident that with my experience and skills, I can make a good contribution to the company. I am very enthusiastic about learning and growing with the team at your company.
-
-Attached, I include ${data.dokumen} for further consideration. I really hope to discuss this opportunity further.
-
-Thank you for your attention and time.
-
-Best regards,
- ${data.nama}`,
-                ja: (data) => `${data.pt}採用チームの皆様へ
-
- ${data.universitas}大学${data.jurusan}学期${data.semester}の学生、${data.nama}と申します。${data.sumber}で貴社の${data.posisi}インターンシップの求人を拝見し、応募いたしました。
-
-私の経験とスキルを活かし、貴社に貢献できると確信しております。貴社のチームと共に学び、成長できることを楽しみにしております。
-
-添付資料として${data.dokumen}を同封いたしました。この機会について詳しくお話しできることを楽しみにしております。
-
-ご多忙の折、よろしくお願い申し上げます。
-
-敬具
- ${data.nama}`,
-                de: (data) => `An das Recruitment-Team von ${data.pt}.
-
-Ich bin ${data.nama}, Student an der Universität ${data.universitas} im Studiengang ${data.jurusan}, derzeit im ${data.semester}. Semester. Ich interessiere mich für die Praktikumsposition als ${data.posisi} in Ihrem Unternehmen, die ich über ${data.sumber} gesehen habe.
-
-Ich bin überzeugt, dass ich mit meiner Erfahrung und meinen Fähigkeiten einen guten Beitrag zum Unternehmen leisten kann. Ich bin sehr begeistert davon, mit dem Team in Ihrem Unternehmen zu lernen und zu wachsen.
-
-Anbei füge ich ${data.dokumen} zur weiteren Prüfung bei. Ich hoffe sehr, diese Gelegenheit weiter besprechen zu können.
-
-Vielen Dank für Ihre Aufmerksamkeit und Zeit.
-
-Mit freundlichen Grüßen,
- ${data.nama}`
-            },
-            5: {
-                id: (data) => `Kepada Yth. Tim Recruitment ${data.pt}.
-
-Perkenalkan, nama saya ${data.nama}, merupakan ${data.status} dari Universitas ${data.universitas} jurusan ${data.jurusan}, dengan IPK ${data.ipk}. Saya bermaksud melamar posisi ${data.posisi} melalui jalur ${data.tipe} sebagaimana diinformasikan melalui ${data.sumber}.
-
-Saya yakin dengan pengalaman dan keterampilan yang saya miliki, saya dapat memberikan kontribusi yang baik bagi perusahaan. Saya sangat antusias untuk belajar dan berkembang bersama tim di perusahaan Bapak/Ibu.
-
-Terlampir, saya sertakan ${data.dokumen} sebagai bahan pertimbangan lebih lanjut. Saya sangat berharap dapat berdiskusi lebih mendalam mengenai kesempatan ini.
-
-Terima kasih atas perhatian dan waktu yang diberikan.
-
-Hormat saya,
- ${data.nama}`,
-                en: (data) => `To the Recruitment Team of ${data.pt}.
-
-Allow me to introduce myself, my name is ${data.nama}, a ${data.status} from ${data.universitas} University majoring in ${data.jurusan}, with a GPA of ${data.ipk}. I intend to apply for the ${data.posisi} position through the ${data.tipe} route as informed through ${data.sumber}.
-
-I am confident that with my experience and skills, I can make a good contribution to the company. I am very enthusiastic about learning and growing with the team at your company.
-
-Attached, I include ${data.dokumen} as material for further consideration. I really hope to discuss this opportunity in more depth.
-
-Thank you for your attention and time.
-
-Best regards,
- ${data.nama}`,
-                ja: (data) => `${data.pt}採用チームの皆様へ
-
-初めまして、${data.nama}と申します。${data.universitas}大学${data.jurusan}の${data.status}で、GPAは${data.ipk}です。${data.sumber}で掲載されていた${data.tipe}として${data.posisi}のポジションに応募したく存じます。
-
-私の経験とスキルを活かし、貴社に貢献できると確信しております。貴社のチームと共に学び、成長できることを楽しみにしております。
-
-添付資料として${data.dokumen}を同封いたしました。この機会について詳しくお話しできることを楽しみにしております。
-
-ご多忙の折、よろしくお願い申し上げます。
-
-敬具
- ${data.nama}`,
-                de: (data) => `An das Recruitment-Team von ${data.pt}.
-
-Gestatten Sie mir, mich vorzustellen: Mein Name ist ${data.nama}, ein ${data.status} der Universität ${data.universitas} im Studiengang ${data.jurusan} mit einem GPA von ${data.ipk}. Ich beabsichtige, mich über den ${data.tipe}-Weg für die Position als ${data.posisi} zu bewerben, wie über ${data.sumber} informiert.
-
-Ich bin überzeugt, dass ich mit meiner Erfahrung und meinen Fähigkeiten einen guten Beitrag zum Unternehmen leisten kann. Ich bin sehr begeistert davon, mit dem Team in Ihrem Unternehmen zu lernen und zu wachsen.
-
-Anbei füge ich ${data.dokumen} als Material für weitere Überlegungen bei. Ich hoffe sehr, diese Gelegenheit eingehender besprechen zu können.
-
-Vielen Dank für Ihre Aufmerksamkeit und Zeit.
-
-Mit freundlichen Grüßen,
- ${data.nama}`
-            },
-            6: {
-                id: (data) => `Yth. Tim Recruitment ${data.pt}
-di Tempat
-
-Dengan Hormat,
-Perkenalkan saya ${data.nama}. Saya merupakan ${data.status} dari ${data.universitas} jurusan ${data.jurusan} Bidang ${data.penjurusan}, saya lulus tahun ${data.tahunlulus} dengan nilai IPK ${data.ipk}. Saya bermaksud untuk melamar pekerjaan pada posisi ${data.posisi}. Bersama email ini, saya lampirkan ${data.dokumen} untuk bahan pertimbangan.
-
-Saya berharap dapat berdiskusi lebih lanjut mengenai kontribusi yang dapat saya berikan, serta dapat dihubungi melalui email ${data.email} atau pada nomor ${data.telepon}.
-
-Terima Kasih atas perhatiannya.
-
-Hormat saya,
- ${data.nama}`,
-                en: (data) => `Dear ${data.pt} Recruitment Team
-
-With due respect,
-Allow me to introduce myself, I am ${data.nama}. I am a ${data.status} from ${data.universitas} majoring in ${data.jurusan} specializing in ${data.penjurusan}, I graduated in ${data.tahunlulus} with a GPA of ${data.ipk}. I intend to apply for the ${data.posisi} position. Along with this email, I attach ${data.dokumen} for your consideration.
-
-I hope to discuss further about the contribution I can make, and can be contacted via email ${data.email} or at ${data.telepon}.
-
-Thank you for your attention.
-
-Best regards,
- ${data.nama}`,
-                ja: (data) => `${data.pt}採用チームの皆様
-
-お世話になっております。
- ${data.nama}と申します。${data.universitas}${data.jurusan}専攻${data.penjurusan}の${data.status}で、${data.tahunlulus}年にGPA ${data.ipk}で卒業いたしました。${data.posisi}のポジションに応募したく存じます。本メールに${data.dokumen}を添付いたしましたので、ご検討のほどよろしくお願いいたします。
-
-私がどのように貢献できるかについて詳しくお話しできることを楽しみにしております。メール${data.email}または電話番号${data.telepon}までご連絡ください。
-
-ご多忙の折、よろしくお願い申し上げます。
-
-敬具
- ${data.nama}`,
-                de: (data) => `An das Recruitment-Team von ${data.pt}
-
-Sehr geehrte Damen und Herren,
-gestatten Sie mir, mich vorzustellen: Ich bin ${data.nama}. Ich bin ein ${data.status} der ${data.universitas} im Studiengang ${data.jurusan} mit Spezialisierung auf ${data.penjurusan}, ich habe im Jahr ${data.tahunlulus} mit einem GPA von ${data.ipk} abgeschlossen. Ich beabsichtige, mich für die Position als ${data.posisi} zu bewerben. Anbei füge ich ${data.dokumen} zur Prüfung bei.
-
-Ich hoffe, weiter über meinen Beitrag sprechen zu können, und kann per E-Mail unter ${data.email} oder telefonisch unter ${data.telepon} erreicht werden.
-
-Vielen Dank für Ihre Aufmerksamkeit.
-
-Mit freundlichen Grüßen,
- ${data.nama}`
+            de: {
+                t1_greeting: "Guten [WAKTU], Recruiting-Team von [PT].\n\nIch bin [NAMA], ein Kandidat für die Position als [POSISI], der am [TANGGAL] bei [PT] interviewt wurde.\n\nIch entschuldige mich für die Störung. Ich möchte mich nach dem aktuellen Stand meiner Interviewergebnisse erkundigen. Ich hoffe sehr darauf, Nachrichten und die Möglichkeit zu erhalten, bei [PT] mitzuarbeiten. Falls zusätzliche Informationen erforderlich sind, stehe ich gerne zur Verfügung unter [TELEPON] oder per E-Mail unter [EMAIL].\n\nVielen Dank für Ihre Aufmerksamkeit.\n\nMit freundlichen Grüßen\n[NAMA]",
+                t2_greeting: "Sehr geehrtes Recruiting-Team von [PT].\n\nIch bin [NAMA], ein Kandidat für die Position als [POSISI], der am [TANGGAL] bei [PT] interviewt wurde.\n\nVielen Dank für die Gelegenheit, diese Position zu besprechen. Das Gespräch hat mein Interesse geweckt, bei [PT] mitzuwirken.\n\nMit dieser E-Mail möchte ich mich nach dem aktuellen Stand meiner Interviewergebnisse erkundigen. Ich hoffe sehr darauf, bei [PT] mitzuwirken und einen Beitrag zu leisten. Falls zusätzliche Informationen erforderlich sind oder Sie weiter diskutieren möchten, stehe ich gerne zur Verfügung unter [TELEPON] oder per E-Mail unter [EMAIL].\n\nVielen Dank für Ihre Aufmerksamkeit. Ich freue mich auf Ihre Rückmeldung.\n\nMit freundlichen Grüßen\n[NAMA]\n[TELEPON]",
+                t3_greeting: "Guten [WAKTU], Recruiting-Team von [PT].\n\nErlauben Sie mir, mich vorzustellen: Ich bin [NAMA], ein [STATUS] von [UNIVERSITAS], Studiengang [JURUSAN], Spezialisierung [PENJURUSAN], mit einem Notendurchschnitt von [IPK]. Ich interessiere mich für eine Bewerbung über den [JENIS]-Weg für die Position als [POSISI] bei [PT], die ich über [SUMBER] gefunden habe. Ich habe [DOKUMEN] als Unterlage beigefügt.\n\nIch hoffe, die Möglichkeit zu erhalten, am Interviewprozess teilzunehmen und zu besprechen, wie ich bei [PT] einen Beitrag leisten kann. Falls zusätzliche Informationen erforderlich sind, stehe ich gerne zur Verfügung unter [TELEPON] oder per E-Mail unter [EMAIL]. Vielen Dank für Ihre Aufmerksamkeit.\n\nMit freundlichen Grüßen\n[NAMA]\n[TELEPON]",
+                t4_greeting: "An das Recruiting-Team von [PT].\n\nErlauben Sie mir, mich vorzustellen: Ich bin [NAMA], Student an der Universität [UNIVERSITAS], Studiengang [JURUSAN], Spezialisierung [PENJURUSAN], im [SEMESTER]. Semester. Ich interessiere mich für eine Praktikumsstelle als [POSISI] in Ihrem Unternehmen, die ich über [SUMBER] gesehen habe.\n\nIch bin zuversichtlich, dass ich mit meiner Erfahrung und meinen Fähigkeiten einen guten Beitrag zum Unternehmen leisten kann. Ich freue mich sehr darauf, mit dem Team in Ihrem Unternehmen zu lernen und zu wachsen.\n\nAnbei füge ich [DOKUMEN] zur weiteren Prüfung bei. Ich hoffe sehr, diese Gelegenheit weiter besprechen zu können. Falls zusätzliche Informationen erforderlich sind, stehe ich gerne zur Verfügung unter [TELEPON] oder per E-Mail unter [EMAIL].\n\nVielen Dank für Ihre Aufmerksamkeit und Zeit.\n\nMit freundlichen Grüßen\n[NAMA]",
+                t5_greeting: "An das Recruiting-Team von [PT].\n\nErlauben Sie mir, mich vorzustellen: Mein Name ist [NAMA], ein [STATUS] von der Universität [UNIVERSITAS], Studiengang [JURUSAN], mit einem Notendurchschnitt von [IPK]. Ich beabsichtige, mich für die Position als [POSISI] über das [TIPE]-Programm zu bewerben, wie über [SUMBER] bekannt gegeben.\n\nIch bin zuversichtlich, dass ich mit meiner Erfahrung und meinen Fähigkeiten einen guten Beitrag zum Unternehmen leisten kann. Ich freue mich sehr darauf, mit dem Team in Ihrem Unternehmen zu lernen und zu wachsen.\n\nAnbei füge ich [DOKUMEN] zur weiteren Prüfung bei. Ich hoffe sehr, diese Gelegenheit eingehender zu besprechen. Sie können mich per E-Mail unter [EMAIL] oder telefonisch unter [TELEPON] erreichen.\n\nVielen Dank für Ihre Aufmerksamkeit und Zeit.\n\nMit freundlichen Grüßen\n[NAMA]",
+                t6_greeting: "Sehr geehrtes Recruiting-Team von [PT],\n\nMit freundlichen Grüßen,\nErlauben Sie mir, mich vorzustellen: Ich bin [NAMA]. Ich bin ein [STATUS] von [UNIVERSITAS], Studiengang [JURUSAN], Spezialisierung [PENJURUSAN], und habe [TAHUN] mit einem Notendurchschnitt von [IPK] abgeschlossen. Ich beabsichtige, mich für die Position als [POSISI] zu bewerben. In dieser E-Mail füge ich [DOKUMEN] als Unterlage bei.\n\nIch hoffe, meinen möglichen Beitrag weiter besprechen zu können. Sie können mich per E-Mail unter [EMAIL] oder telefonisch unter [TELEPON] erreichen.\n\nVielen Dank für Ihre Aufmerksamkeit.\n\nMit freundlichen Grüßen\n[NAMA]",
+                t7_greeting: "Guten [WAKTU], Recruiting-Team von [PT].\n\nErlauben Sie mir, mich vorzustellen: Ich bin [NAMA], Student an der Universität [UNIVERSITAS], Studiengang [JURUSAN], Spezialisierung [PENJURUSAN], im [SEMESTER]. Semester. Ich interessiere mich für eine Praktikumsstelle als [POSISI] in Ihrem Unternehmen, die ich über [SUMBER] gesehen habe.\n\nIch bin zuversichtlich, dass ich mit meiner Erfahrung und meinen Fähigkeiten einen guten Beitrag zum Unternehmen leisten kann. Ich freue mich sehr darauf, mit dem Team in Ihrem Unternehmen zu lernen und zu wachsen.\n\nAnbei füge ich [DOKUMEN] zur weiteren Prüfung bei. Ich hoffe sehr, diese Gelegenheit weiter besprechen zu können. Falls zusätzliche Informationen erforderlich sind, stehe ich gerne zur Verfügung unter [TELEPON] oder per E-Mail unter [EMAIL].\n\nVielen Dank für Ihre Aufmerksamkeit und Zeit.\n\nMit freundlichen Grüßen\n[NAMA]"
             }
         };
 
-        // ==================== DOM ELEMENTS ====================
-        const page1 = document.getElementById('page1');
-        const page2 = document.getElementById('page2');
-        const userNameInput = document.getElementById('userName');
-        const submitNameBtn = document.getElementById('submitName');
-        const displayName = document.getElementById('displayName');
-        const toast = document.getElementById('toast');
-        const mascot = document.getElementById('mascot');
-        const pupilLeft = document.getElementById('pupil-left');
-        const pupilRight = document.getElementById('pupil-right');
+        const timeTranslations = {
+            id: { pagi: "Pagi", siang: "Siang", sore: "Sore", malam: "Malam" },
+            en: { pagi: "Morning", siang: "Afternoon", sore: "Evening", malam: "Night" },
+            ja: { pagi: "朝", siang: "昼", sore: "夕方", malam: "夜" },
+            de: { pagi: "Morgen", siang: "Nachmittag", sore: "Abend", malam: "Nacht" }
+        };
 
-        // ==================== BACKGROUND EFFECTS ====================
-        function createParticles() {
-            const container = document.getElementById('particles');
-            const colors = ['#00d4ff', '#ff6b9d', '#a855f7', '#ff9500'];
-            
-            for (let i = 0; i < 30; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                particle.style.width = Math.max(3, Math.random() * 8) + 'px';
-                particle.style.height = particle.style.width;
-                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
-                container.appendChild(particle);
+        // State
+        let currentLang = 'id';
+        let userName = '';
+        const PHONE_NUMBER = '081226834082';
+
+        // Background Animation
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouseX = 0;
+        let mouseY = 0;
+        let animationId = null;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.opacity = Math.random() * 0.5 + 0.2;
+                this.hue = 190 + Math.random() * 30;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                const dx = mouseX - this.x;
+                const dy = mouseY - this.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 150) {
+                    const force = (150 - dist) / 150;
+                    this.x -= dx * force * 0.02;
+                    this.y -= dy * force * 0.02;
+                }
+
+                if (this.x < 0) this.x = canvas.width;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.y < 0) this.y = canvas.height;
+                if (this.y > canvas.height) this.y = 0;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, Math.max(0.5, this.size), 0, Math.PI * 2);
+                ctx.fillStyle = `hsla(${this.hue}, 80%, 60%, ${this.opacity})`;
+                ctx.fill();
             }
         }
 
-        function createOrbs() {
-            const container = document.getElementById('orbs');
-            const orbColors = [
-                'rgba(0, 212, 255, 0.3)',
-                'rgba(255, 107, 157, 0.25)',
-                'rgba(168, 85, 247, 0.2)'
-            ];
-
-            for (let i = 0; i < 5; i++) {
-                const orb = document.createElement('div');
-                orb.className = 'orb';
-                orb.style.left = Math.random() * 80 + '%';
-                orb.style.top = Math.random() * 80 + '%';
-                orb.style.width = (150 + Math.random() * 200) + 'px';
-                orb.style.height = orb.style.width;
-                orb.style.background = orbColors[i % orbColors.length];
-                orb.style.animationDelay = Math.random() * 5 + 's';
-                container.appendChild(orb);
+        function initParticles() {
+            particles = [];
+            const count = Math.min(100, Math.floor((canvas.width * canvas.height) / 15000));
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
             }
         }
 
-        function createSpeedLines() {
-            const container = document.querySelector('.speed-lines');
-            for (let i = 0; i < 20; i++) {
-                const line = document.createElement('div');
-                line.className = 'speed-line';
-                line.style.left = Math.random() * 100 + '%';
-                line.style.animationDelay = Math.random() * 3 + 's';
-                container.appendChild(line);
+        function drawConnections() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 120) {
+                        const opacity = (120 - dist) / 120 * 0.15;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(0, 212, 255, ${opacity})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
             }
         }
 
-        function createSakuras() {
-            const container = document.getElementById('sakuras');
-            for (let i = 0; i < 15; i++) {
-                const sakura = document.createElement('div');
-                sakura.className = 'sakura';
-                sakura.style.left = Math.random() * 100 + '%';
-                sakura.style.animationDelay = Math.random() * 10 + 's';
-                sakura.style.animationDuration = (8 + Math.random() * 8) + 's';
-                container.appendChild(sakura);
-            }
-        }
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        function createShootingStars() {
-            const container = document.getElementById('shooting-stars');
+            const gradient = ctx.createRadialGradient(
+                canvas.width / 2, canvas.height / 2, 0,
+                canvas.width / 2, canvas.height / 2, canvas.width * 0.7
+            );
+            gradient.addColorStop(0, '#0f2847');
+            gradient.addColorStop(1, '#0a1628');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const time = Date.now() * 0.001;
             for (let i = 0; i < 3; i++) {
-                const star = document.createElement('div');
-                star.className = 'shooting-star';
-                star.style.top = Math.random() * 50 + '%';
-                star.style.animationDelay = (i * 4 + Math.random() * 2) + 's';
-                container.appendChild(star);
+                const x = canvas.width * (0.3 + i * 0.2) + Math.sin(time + i) * 50;
+                const y = canvas.height * (0.3 + i * 0.2) + Math.cos(time + i * 1.5) * 50;
+                const orbGradient = ctx.createRadialGradient(x, y, 0, x, y, 150 + i * 50);
+                orbGradient.addColorStop(0, 'rgba(0, 212, 255, 0.1)');
+                orbGradient.addColorStop(1, 'rgba(0, 212, 255, 0)');
+                ctx.fillStyle = orbGradient;
+                ctx.beginPath();
+                ctx.arc(x, y, 150 + i * 50, 0, Math.PI * 2);
+                ctx.fill();
             }
+
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            drawConnections();
+
+            animationId = requestAnimationFrame(animate);
         }
 
-        // ==================== MASCOT EYE TRACKING ====================
-        function updateMascotEyes(e) {
-            const mouseX = e.clientX;
-            const mouseY = e.clientY;
-            
-            const mascotRect = mascot.getBoundingClientRect();
-            const mascotX = mascotRect.left + mascotRect.width / 2;
-            const mascotY = mascotRect.top + mascotRect.height / 2;
-            
-            const angle = Math.atan2(mouseY - mascotY, mouseX - mascotX);
-            const distance = Math.min(3, Math.hypot(mouseX - mascotX, mouseY - mascotY) / 50);
-            
-            const pupilX = Math.cos(angle) * distance;
-            const pupilY = Math.sin(angle) * distance;
-            
-            if (pupilLeft && pupilRight) {
-                pupilLeft.style.transform = `translate(${pupilX}px, ${pupilY}px)`;
-                pupilRight.style.transform = `translate(${pupilX}px, ${pupilY}px)`;
-            }
-        }
-
-        // ==================== TIME & LOCATION ====================
-        function updateTime() {
+        // Clocks
+        function updateClocks() {
             const now = new Date();
-            const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-
-            const timeJakartaEl = document.getElementById('timeJakarta');
-            if (timeJakartaEl) {
-                timeJakartaEl.textContent = now.toLocaleTimeString('id-ID', { ...options, timeZone: 'Asia/Jakarta' });
-            }
-
-            const timeBerlinEl = document.getElementById('timeBerlin');
-            if (timeBerlinEl) {
-                timeBerlinEl.textContent = now.toLocaleTimeString('de-DE', { ...options, timeZone: 'Europe/Berlin' });
-            }
-
-            const timeTokyoEl = document.getElementById('timeTokyo');
-            if (timeTokyoEl) {
-                timeTokyoEl.textContent = now.toLocaleTimeString('ja-JP', { ...options, timeZone: 'Asia/Tokyo' });
-            }
+            const tokyoTime = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }));
+            document.getElementById('tokyoTime').textContent = tokyoTime.toLocaleTimeString('id-ID', { hour12: false });
+            const wibTime = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Jakarta' }));
+            document.getElementById('wibTime').textContent = wibTime.toLocaleTimeString('id-ID', { hour12: false });
         }
 
+        // Location
         function getLocation() {
-            const locationEl = document.getElementById('userLocation');
-            if (!locationEl) return;
-
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     async (position) => {
                         try {
                             const response = await fetch(
-                                `https://nominatim.openstreetmap.org/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&format=json`
+                                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}`
                             );
                             const data = await response.json();
-                            const city = data.address.city || data.address.town || data.address.village || data.address.county || 'Unknown';
-                            locationEl.textContent = city;
+                            const city = data.address.city || data.address.town || data.address.village || 'Unknown';
+                            const country = data.address.country || '';
+                            document.getElementById('userLocation').textContent = `${city}, ${country}`;
                         } catch (error) {
-                            locationEl.textContent = 'Unknown';
+                            document.getElementById('userLocation').textContent = 'Lokasi tidak diketahui';
                         }
                     },
                     () => {
-                        locationEl.textContent = 'Unknown';
+                        document.getElementById('userLocation').textContent = 'Akses ditolak';
                     }
                 );
             } else {
-                locationEl.textContent = 'Unknown';
+                document.getElementById('userLocation').textContent = 'Tidak didukung';
             }
         }
 
-        // ==================== LANGUAGE SYSTEM ====================
-        function setLanguage(lang) {
+        // Language
+        function updateLanguage(lang) {
             currentLang = lang;
-            
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.lang === lang);
-            });
-
             document.querySelectorAll('[data-translate]').forEach(el => {
-                const key = el.dataset.translate;
+                const key = el.getAttribute('data-translate');
                 if (translations[lang] && translations[lang][key]) {
                     el.textContent = translations[lang][key];
                 }
             });
 
             document.querySelectorAll('[data-translate-placeholder]').forEach(el => {
-                const key = el.dataset.placeholder;
+                const key = el.getAttribute('data-translate-placeholder');
                 if (translations[lang] && translations[lang][key]) {
                     el.placeholder = translations[lang][key];
                 }
             });
-
-            updateAllPreviews();
         }
 
-        // ==================== TEMPLATE FUNCTIONS ====================
-        function getGreeting(waktu, lang) {
-            const greetings = {
-                id: { pagi: 'Pagi', siang: 'Siang', sore: 'Sore', malam: 'Malam' },
-                en: { pagi: 'Morning', siang: 'Afternoon', sore: 'Evening', malam: 'Night' },
-                ja: { pagi: 'おはよう', siang: 'こんにちは', sore: 'こんばんは', malam: 'こんばんは' },
-                de: { pagi: 'Morgen', siang: 'Tag', sore: 'Nachmittag', malam: 'Abend' }
-            };
-            return greetings[lang][waktu] || greetings['id'][waktu];
+        // Pages
+        function showPage(pageNum) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(`page${pageNum}`).classList.add('active');
         }
 
-        function getTemplateData(tabNum) {
-            const defaultNama = userName || userNameInput.value || '[NAMA]';
-            
-            switch(tabNum) {
-                case 1:
-                    return {
-                        pt: document.getElementById('tab1-pt')?.value || '[PT]',
-                        nama: defaultNama,
-                        posisi: document.getElementById('tab1-posisi')?.value || '[POSISI]',
-                        tanggal: document.getElementById('tab1-tanggal')?.value || '[TANGGAL]',
-                        waktu: getGreeting(document.getElementById('tab1-waktu')?.value || 'pagi', currentLang)
-                    };
-                case 2:
-                    return {
-                        pt: document.getElementById('tab2-pt')?.value || '[PT]',
-                        nama: defaultNama,
-                        posisi: document.getElementById('tab2-posisi')?.value || '[POSISI]',
-                        tanggal: document.getElementById('tab2-tanggal')?.value || '[TANGGAL]',
-                        telepon: document.getElementById('tab2-telepon')?.value || '[TELEPON]'
-                    };
-                case 3:
-                    return {
-                        pt: document.getElementById('tab3-pt')?.value || '[PT]',
-                        nama: defaultNama,
-                        jurusan: document.getElementById('tab3-jurusan')?.value || '[JURUSAN]',
-                        universitas: document.getElementById('tab3-universitas')?.value || '[UNIVERSITAS]',
-                        ipk: document.getElementById('tab3-ipk')?.value || '[IPK]',
-                        posisi: document.getElementById('tab3-posisi')?.value || '[POSISI]',
-                        sumber: document.getElementById('tab3-sumber')?.value || '[SUMBER]',
-                        dokumen: document.getElementById('tab3-dokumen')?.value || '[DOKUMEN]',
-                        telepon: document.getElementById('tab3-telepon')?.value || '[TELEPON]',
-                        waktu: getGreeting(document.getElementById('tab3-waktu')?.value || 'pagi', currentLang)
-                    };
-                case 4:
-                    return {
-                        pt: document.getElementById('tab4-pt')?.value || '[PT]',
-                        nama: defaultNama,
-                        universitas: document.getElementById('tab4-universitas')?.value || '[UNIVERSITAS]',
-                        jurusan: document.getElementById('tab4-jurusan')?.value || '[JURUSAN]',
-                        semester: document.getElementById('tab4-semester')?.value || '[SEMESTER]',
-                        posisi: document.getElementById('tab4-posisi')?.value || '[POSISI]',
-                        sumber: document.getElementById('tab4-sumber')?.value || '[SUMBER]',
-                        dokumen: document.getElementById('tab4-dokumen')?.value || '[DOKUMEN]'
-                    };
-                case 5:
-                    return {
-                        pt: document.getElementById('tab5-pt')?.value || '[PT]',
-                        nama: defaultNama,
-                        status: document.getElementById('tab5-status')?.value || 'Fresh Graduate',
-                        universitas: document.getElementById('tab5-universitas')?.value || '[UNIVERSITAS]',
-                        jurusan: document.getElementById('tab5-jurusan')?.value || '[JURUSAN]',
-                        ipk: document.getElementById('tab5-ipk')?.value || '[IPK]',
-                        posisi: document.getElementById('tab5-posisi')?.value || '[POSISI]',
-                        tipe: document.getElementById('tab5-tipe')?.value || 'Magang',
-                        sumber: document.getElementById('tab5-sumber')?.value || '[SUMBER]',
-                        dokumen: document.getElementById('tab5-dokumen')?.value || '[DOKUMEN]'
-                    };
-                case 6:
-                    return {
-                        pt: document.getElementById('tab6-pt')?.value || '[PT]',
-                        nama: document.getElementById('tab6-nama')?.value || defaultNama,
-                        status: document.getElementById('tab6-status')?.value || 'Fresh Graduate',
-                        universitas: document.getElementById('tab6-universitas')?.value || '[UNIVERSITAS]',
-                        jurusan: document.getElementById('tab6-jurusan')?.value || '[JURUSAN]',
-                        penjurusan: document.getElementById('tab6-penjurusan')?.value || '[PENJURUSAN]',
-                        tahunlulus: document.getElementById('tab6-tahunlulus')?.value || '[TAHUN LULUS]',
-                        ipk: document.getElementById('tab6-ipk')?.value || '[IPK]',
-                        posisi: document.getElementById('tab6-posisi')?.value || '[POSISI]',
-                        dokumen: document.getElementById('tab6-dokumen')?.value || '[DOKUMEN]',
-                        email: document.getElementById('tab6-email')?.value || '[EMAIL]',
-                        telepon: document.getElementById('tab6-telepon')?.value || '[NOMOR TELEPON]'
-                    };
-                default:
-                    return {};
-            }
-        }
-
-        function generateTemplate(tabNum, lang) {
-            const data = getTemplateData(tabNum);
-            if (templateTranslations[tabNum] && templateTranslations[tabNum][lang]) {
-                return templateTranslations[tabNum][lang](data);
-            }
-            return '';
-        }
-
-        function updatePreview(tabNum) {
-            const previewEl = document.getElementById(`preview${tabNum}`);
-            if (previewEl) {
-                previewEl.textContent = generateTemplate(tabNum, currentLang);
-            }
-        }
-
-        function updateAllPreviews() {
-            for (let i = 1; i <= 6; i++) {
-                updatePreview(i);
-            }
-        }
-
-        function copyTemplate(tabNum, lang) {
-            const template = generateTemplate(tabNum, lang);
-            
-            navigator.clipboard.writeText(template).then(() => {
-                showToast(translations[currentLang].copied);
-            }).catch(() => {
-                const textarea = document.createElement('textarea');
-                textarea.value = template;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-                showToast(translations[currentLang].copied);
+        // Tabs
+        function initTabs() {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tabNum = btn.getAttribute('data-tab');
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    document.querySelector(`[data-content="${tabNum}"]`).classList.add('active');
+                });
             });
         }
 
+        // Template Data
+        function getTemplateData(tabNum) {
+            const data = {};
+
+            switch (tabNum) {
+                case 1:
+                    data.PT = document.getElementById('t1_pt').value || '[PT]';
+                    data.NAMA = document.querySelector('[data-content="1"] .template-name').value || userName || '[NAMA]';
+                    data.POSISI = document.getElementById('t1_posisi').value || '[POSISI]';
+                    data.TANGGAL = document.getElementById('t1_tanggal').value || '[TANGGAL]';
+                    data.TELEPON = document.getElementById('t1_telepon').value || '[TELEPON]';
+                    data.EMAIL = document.getElementById('t1_email').value || '[EMAIL]';
+                    data.WAKTU = timeTranslations[currentLang][document.getElementById('t1_waktu').value] || '[WAKTU]';
+                    break;
+                case 2:
+                    data.PT = document.getElementById('t2_pt').value || '[PT]';
+                    data.NAMA = document.querySelector('[data-content="2"] .template-name').value || userName || '[NAMA]';
+                    data.POSISI = document.getElementById('t2_posisi').value || '[POSISI]';
+                    data.TANGGAL = document.getElementById('t2_tanggal').value || '[TANGGAL]';
+                    data.TELEPON = document.getElementById('t2_telepon').value || '[TELEPON]';
+                    data.EMAIL = document.getElementById('t2_email').value || '[EMAIL]';
+                    break;
+                case 3:
+                    data.PT = document.getElementById('t3_pt').value || '[PT]';
+                    data.NAMA = document.querySelector('[data-content="3"] .template-name').value || userName || '[NAMA]';
+                    data.STATUS = document.getElementById('t3_status').value || '[STATUS]';
+                    data.UNIVERSITAS = document.getElementById('t3_univ').value || '[UNIVERSITAS]';
+                    data.JURUSAN = document.getElementById('t3_jurusan').value || '[JURUSAN]';
+                    data.PENJURUSAN = document.getElementById('t3_penjurusan').value || '[PENJURUSAN]';
+                    data.IPK = document.getElementById('t3_ipk').value || '[IPK]';
+                    data.POSISI = document.getElementById('t3_posisi').value || '[POSISI]';
+                    data.SUMBER = document.getElementById('t3_sumber').value || '[SUMBER]';
+                    data.DOKUMEN = document.getElementById('t3_dokumen').value || '[DOKUMEN]';
+                    data.TELEPON = document.getElementById('t3_telepon').value || '[TELEPON]';
+                    data.EMAIL = document.getElementById('t3_email').value || '[EMAIL]';
+                    data.WAKTU = timeTranslations[currentLang][document.getElementById('t3_waktu').value] || '[WAKTU]';
+                    data.JENIS = document.getElementById('t3_jenis').value || '[JENIS]';
+                    break;
+                case 4:
+                    data.NAMA = document.querySelector('[data-content="4"] .template-name').value || userName || '[NAMA]';
+                    data.UNIVERSITAS = document.getElementById('t4_univ').value || '[UNIVERSITAS]';
+                    data.JURUSAN = document.getElementById('t4_jurusan').value || '[JURUSAN]';
+                    data.PENJURUSAN = document.getElementById('t4_penjurusan').value || '[PENJURUSAN]';
+                    data.SEMESTER = document.getElementById('t4_semester').value || '[SEMESTER]';
+                    data.POSISI = document.getElementById('t4_posisi').value || '[POSISI]';
+                    data.SUMBER = document.getElementById('t4_sumber').value || '[SUMBER]';
+                    data.DOKUMEN = document.getElementById('t4_dokumen').value || '[DOKUMEN]';
+                    data.TELEPON = document.getElementById('t4_telepon').value || '[TELEPON]';
+                    data.EMAIL = document.getElementById('t4_email').value || '[EMAIL]';
+                    data.PT = '[PT]';
+                    break;
+                case 5:
+                    data.PT = document.getElementById('t5_pt').value || '[PT]';
+                    data.NAMA = document.querySelector('[data-content="5"] .template-name').value || userName || '[NAMA]';
+                    data.STATUS = document.getElementById('t5_status').value || '[STATUS]';
+                    data.UNIVERSITAS = document.getElementById('t5_univ').value || '[UNIVERSITAS]';
+                    data.JURUSAN = document.getElementById('t5_jurusan').value || '[JURUSAN]';
+                    data.IPK = document.getElementById('t5_ipk').value || '[IPK]';
+                    data.POSISI = document.getElementById('t5_posisi').value || '[POSISI]';
+                    data.SUMBER = document.getElementById('t5_sumber').value || '[SUMBER]';
+                    data.DOKUMEN = document.getElementById('t5_dokumen').value || '[DOKUMEN]';
+                    data.EMAIL = document.getElementById('t5_email').value || '[EMAIL]';
+                    data.TELEPON = document.getElementById('t5_telepon').value || '[TELEPON]';
+                    data.TIPE = document.getElementById('t5_tipe').value || '[TIPE]';
+                    break;
+                case 6:
+                    data.PT = document.getElementById('t6_pt').value || '[PT]';
+                    data.NAMA = document.querySelector('[data-content="6"] .template-name').value || userName || '[NAMA]';
+                    data.STATUS = document.getElementById('t6_status').value || '[STATUS]';
+                    data.UNIVERSITAS = document.getElementById('t6_univ').value || '[UNIVERSITAS]';
+                    data.JURUSAN = document.getElementById('t6_jurusan').value || '[JURUSAN]';
+                    data.PENJURUSAN = document.getElementById('t6_penjurusan').value || '[PENJURUSAN]';
+                    data.TAHUN = document.getElementById('t6_tahun').value || '[TAHUN]';
+                    data.IPK = document.getElementById('t6_ipk').value || '[IPK]';
+                    data.POSISI = document.getElementById('t6_posisi').value || '[POSISI]';
+                    data.DOKUMEN = document.getElementById('t6_dokumen').value || '[DOKUMEN]';
+                    data.EMAIL = document.getElementById('t6_email').value || '[EMAIL]';
+                    data.TELEPON = document.getElementById('t6_telepon').value || '[TELEPON]';
+                    break;
+                case 7:
+                    data.PT = document.getElementById('t7_pt').value || '[PT]';
+                    data.NAMA = document.querySelector('[data-content="7"] .template-name').value || userName || '[NAMA]';
+                    data.UNIVERSITAS = document.getElementById('t7_univ').value || '[UNIVERSITAS]';
+                    data.JURUSAN = document.getElementById('t7_jurusan').value || '[JURUSAN]';
+                    data.PENJURUSAN = document.getElementById('t7_penjurusan').value || '[PENJURUSAN]';
+                    data.SEMESTER = document.getElementById('t7_semester').value || '[SEMESTER]';
+                    data.POSISI = document.getElementById('t7_posisi').value || '[POSISI]';
+                    data.SUMBER = document.getElementById('t7_sumber').value || '[SUMBER]';
+                    data.DOKUMEN = document.getElementById('t7_dokumen').value || '[DOKUMEN]';
+                    data.TELEPON = document.getElementById('t7_telepon').value || '[TELEPON]';
+                    data.EMAIL = document.getElementById('t7_email').value || '[EMAIL]';
+                    data.WAKTU = timeTranslations[currentLang][document.getElementById('t7_waktu').value] || '[WAKTU]';
+                    break;
+            }
+
+            return data;
+        }
+
+        function copyTemplate(tabNum, lang) {
+            const data = getTemplateData(tabNum);
+            let template = templateTranslations[lang][`t${tabNum}_greeting`];
+
+            Object.keys(data).forEach(key => {
+                template = template.replace(new RegExp(`\\[${key}\\]`, 'g'), data[key]);
+            });
+
+            navigator.clipboard.writeText(template).then(() => {
+                showToast(translations[lang].copied || 'Berhasil disalin!');
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+            });
+        }
+
+        // Toast
         function showToast(message) {
-            toast.textContent = message;
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = message;
             toast.classList.add('show');
             setTimeout(() => {
                 toast.classList.remove('show');
             }, 3000);
         }
 
-        // ==================== PAGE NAVIGATION ====================
-        function showPage(pageNum) {
-            if (pageNum === 1) {
-                page1.classList.add('active');
-                page2.classList.remove('active');
-            } else {
-                page1.classList.remove('active');
-                page2.classList.add('active');
-                displayName.textContent = userName;
-                updateAllPreviews();
-            }
-        }
+        // Floating Phone Button - Copy Phone Number
+        function initPhoneButton() {
+            const btn = document.getElementById('phoneBtn');
 
-        function switchTab(tabNum) {
-            activeTab = tabNum;
-            
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.toggle('active', parseInt(btn.dataset.tab) === tabNum);
+            btn.addEventListener('click', () => {
+                navigator.clipboard.writeText(PHONE_NUMBER).then(() => {
+                    btn.classList.add('copied');
+                    showToast(translations[currentLang].phoneCopied || 'Nomor telepon berhasil disalin!');
+                    
+                    setTimeout(() => {
+                        btn.classList.remove('copied');
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy phone:', err);
+                    showToast('Gagal menyalin nomor telepon');
+                });
             });
 
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.toggle('active', parseInt(content.dataset.content) === tabNum);
+            // Drag functionality
+            let isDragging = false;
+            let offsetX = 0;
+            let offsetY = 0;
+            let hasMoved = false;
+
+            btn.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                hasMoved = false;
+                offsetX = e.clientX - btn.getBoundingClientRect().left;
+                offsetY = e.clientY - btn.getBoundingClientRect().top;
+                btn.style.animation = 'none';
             });
 
-            updatePreview(tabNum);
+            document.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    hasMoved = true;
+                    let newX = e.clientX - offsetX;
+                    let newY = e.clientY - offsetY;
+
+                    newX = Math.max(30, Math.min(newX, window.innerWidth - 30));
+                    newY = Math.max(30, Math.min(newY, window.innerHeight - 30));
+
+                    btn.style.left = newX + 'px';
+                    btn.style.top = newY + 'px';
+                    btn.style.right = 'auto';
+                    btn.style.bottom = 'auto';
+                }
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            document.addEventListener('mouseup', () => {
+                if (isDragging && hasMoved) {
+                    // Prevent click event if dragged
+                    setTimeout(() => {
+                        isDragging = false;
+                    }, 100);
+                } else {
+                    isDragging = false;
+                }
+                btn.style.animation = 'float 3s ease-in-out infinite';
+            });
+
+            // Touch support
+            btn.addEventListener('touchstart', (e) => {
+                isDragging = true;
+                hasMoved = false;
+                const touch = e.touches[0];
+                offsetX = touch.clientX - btn.getBoundingClientRect().left;
+                offsetY = touch.clientY - btn.getBoundingClientRect().top;
+                btn.style.animation = 'none';
+            });
+
+            document.addEventListener('touchmove', (e) => {
+                if (isDragging) {
+                    hasMoved = true;
+                    const touch = e.touches[0];
+                    let newX = touch.clientX - offsetX;
+                    let newY = touch.clientY - offsetY;
+
+                    newX = Math.max(30, Math.min(newX, window.innerWidth - 30));
+                    newY = Math.max(30, Math.min(newY, window.innerHeight - 30));
+
+                    btn.style.left = newX + 'px';
+                    btn.style.top = newY + 'px';
+                    btn.style.right = 'auto';
+                    btn.style.bottom = 'auto';
+                }
+            });
+
+            document.addEventListener('touchend', () => {
+                isDragging = false;
+                btn.style.animation = 'float 3s ease-in-out infinite';
+            });
         }
 
-        // ==================== EVENT LISTENERS ====================
+        // Name Sync
+        function syncName(name) {
+            userName = name;
+            document.querySelectorAll('.template-name').forEach(input => {
+                input.value = name;
+            });
+            document.getElementById('displayName').textContent = name;
+            document.getElementById('avatarInitial').textContent = name.charAt(0).toUpperCase();
+        }
+
+        // Initialization
         document.addEventListener('DOMContentLoaded', () => {
-            createParticles();
-            createOrbs();
-            createSpeedLines();
-            createSakuras();
-            createShootingStars();
+            resizeCanvas();
+            initParticles();
+            animate();
 
-            updateTime();
-            setInterval(updateTime, 1000);
-
-            getLocation();
-
-            document.addEventListener('mousemove', updateMascotEyes);
-
-            mascot.addEventListener('click', () => {
-                mascot.style.animation = 'none';
-                mascot.offsetHeight;
-                mascot.style.animation = 'bounce 0.5s ease';
+            window.addEventListener('resize', () => {
+                resizeCanvas();
+                initParticles();
             });
 
-            submitNameBtn.addEventListener('click', () => {
-                userName = userNameInput.value.trim();
-                if (userName) {
+            document.getElementById('langSelector').addEventListener('change', (e) => {
+                updateLanguage(e.target.value);
+            });
+
+            document.getElementById('submitName').addEventListener('click', () => {
+                const name = document.getElementById('nameInput').value.trim();
+                if (name) {
+                    syncName(name);
                     showPage(2);
+                } else {
+                    showToast('Silakan masukkan nama Anda');
                 }
             });
 
-            userNameInput.addEventListener('keypress', (e) => {
+            document.getElementById('nameInput').addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
-                    userName = userNameInput.value.trim();
-                    if (userName) {
-                        showPage(2);
-                    }
+                    document.getElementById('submitName').click();
                 }
             });
 
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    setLanguage(btn.dataset.lang);
-                });
+            document.getElementById('changeName').addEventListener('click', () => {
+                showPage(1);
+                document.getElementById('nameInput').focus();
             });
 
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    switchTab(parseInt(btn.dataset.tab));
-                });
-            });
-
-            for (let i = 1; i <= 6; i++) {
-                const inputs = document.querySelectorAll(`#tabContents [id^="tab${i}-"]`);
-                inputs.forEach(input => {
-                    input.addEventListener('input', () => updatePreview(i));
-                    input.addEventListener('change', () => updatePreview(i));
-                });
-            }
+            initTabs();
+            initPhoneButton();
+            updateClocks();
+            setInterval(updateClocks, 1000);
+            getLocation();
+            updateLanguage('id');
         });
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+        }
     </script>
 </body>
 </html>
